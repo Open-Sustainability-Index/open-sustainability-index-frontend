@@ -1,6 +1,7 @@
-import { AppBar, Toolbar, Typography, Button, IconButton, Box, Link, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import React, { useState } from 'react'
+import Link from 'next/link'
+import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 
 function Header (): React.ReactElement {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -11,18 +12,37 @@ function Header (): React.ReactElement {
     setMobileOpen(!mobileOpen)
   }
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+  const links = [
+    { name: 'Companies', path: '/companies' },
+    { name: 'Industries', path: '/industries' },
+    { name: 'Countries', path: '/countries' },
+    { name: 'Partners', path: '/partners' },
+    { name: 'About', path: '/about' },
+    { name: 'API', path: '/api' },
+    { name: 'FAQ', path: '/faq' },
+    { name: 'Governance', path: '/governance' }
+  ]
+
+  const menuLinks = (
+    <>
       <List>
-        {['Companies', 'Industries', 'Countries', 'Partners', 'About', 'API', 'FAQ', 'Governance'].map((text) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
+        {links.map((link) => (
+          <Link href={link.path} key={link.name} passHref>
+            <ListItem button component='a'>
+              <ListItemText primary={link.name} />
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Button variant='contained' color='secondary' sx={{ margin: 2 }}>
         Report Emissions
       </Button>
+    </>
+  )
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      {menuLinks}
     </Box>
   )
 
@@ -45,9 +65,11 @@ function Header (): React.ReactElement {
             )
           : (
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-              {['Companies', 'Industries', 'Countries', 'Partners', 'About', 'API', 'FAQ', 'Governance'].map((text) => (
-                <Link href='#' color='secondary' key={text} sx={{ margin: 1 }}>
-                  {text}
+              {links.map((link) => (
+                <Link href={link.path} key={link.name} passHref>
+                  <ListItem button component='a'>
+                    <ListItemText primary={link.name} />
+                  </ListItem>
                 </Link>
               ))}
               <Button variant='contained' color='secondary' sx={{ marginLeft: 2 }}>
