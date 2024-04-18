@@ -4,11 +4,11 @@ import Router from 'next/router'
 import { ThemeProvider } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 
-import { googlePageview } from '../components/page/GoogleAnalytics'
-import PageHead from '../components/page/PageHead'
-import Notifications from '../components/page/Notifications'
-import '../styles/globals.css'
-import theme from '../theme/theme'
+import { googlePageview } from '../app/components/page/GoogleAnalytics'
+import PageHead from '../app/components/page/PageHead'
+import Notifications from '../app/components/page/Notifications'
+import '../app/theme/globals.css'
+import theme from '../app/theme/theme'
 
 Router.events.on('routeChangeComplete', path => googlePageview(path))
 

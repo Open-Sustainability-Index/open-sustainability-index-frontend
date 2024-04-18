@@ -1,5 +1,5 @@
-import { config } from '../../config/config'
-import isDevelopment from '../../lib/isDevelopment'
+import { config } from '../../../config/config'
+import isDevelopment from '../../../lib/isDevelopment'
 
 declare global {
   interface Window {

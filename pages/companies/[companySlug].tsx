@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from 'querystring'
 
 // import { Company } from 'graphql/__generated__/graphql'
 // import { useGetCompany } from '../../graphql/collections/company/hooks'
-import CompanyDetails from '../../components/companies/CompanyDetails'
+import CompanyDetails from '../../app/components/companies/CompanyDetails'
 
 interface CompanyPageParams extends ParsedUrlQuery {
   companyId: string

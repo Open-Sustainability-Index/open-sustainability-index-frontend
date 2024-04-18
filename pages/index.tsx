@@ -5,11 +5,11 @@ import { BarChart } from '@mui/x-charts'
 import dayjs from 'dayjs'
 
 // import { useGetCompaniesStatistics } from 'graphql/collections/statistics/hooks'
-import { COLORS } from 'theme/theme'
-import DatePeriodInput from 'components/input/DatePeriodInput'
-import DateIntervalInput from 'components/input/DateIntervalInput'
-import CompanySelect from 'components/companies/CompanySelect'
-import PaperCard from 'components/common/PaperCard'
+import { COLORS } from 'app/theme/theme'
+import DatePeriodInput from 'app/components/input/DatePeriodInput'
+import DateIntervalInput from 'app/components/input/DateIntervalInput'
+import CompanySelect from 'app/components/companies/CompanySelect'
+import PaperCard from 'app/components/common/PaperCard'
 
 export const DEFAULT_DATE_TO = dayjs(new Date()).add(1, 'month').toDate()
 export const DEFAULT_DATE_FROM = dayjs(DEFAULT_DATE_TO).subtract(2, 'month').toDate()

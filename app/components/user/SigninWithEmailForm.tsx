@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 // import { firebaseApp } from 'lib/firebase'
 // import showNotification from 'lib/showNotification'
 // import makeRestRequest from 'lib/makeRestRequest'
-// import { googleEvent } from 'components/page/GoogleAnalytics'
+// import { googleEvent } from 'app/components/page/GoogleAnalytics'
 
 // const anonymizeEmail = email => email.split('@').map((part, isDomain) => isDomain ? part : part[0] + new Array(part.length).join('•')).join('@')
 

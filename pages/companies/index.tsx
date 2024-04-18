@@ -3,8 +3,8 @@ import type { GetStaticPropsResult } from 'next'
 
 import { config } from 'config/config'
 
-import CompanyList from 'components/companies/CompanyList'
-import CreateCompanyForm from 'components/companies/CreateCompanyForm'
+import CompanyList from 'app/components/companies/CompanyList'
+import CreateCompanyForm from 'app/components/companies/CreateCompanyForm'
 
 interface CompanyListPageProps {
   title: string
