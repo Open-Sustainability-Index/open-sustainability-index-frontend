@@ -12,7 +12,7 @@ interface Company {
   Source: string
   Year: string
   'Company DB Input': string
-  Sector: string
+  Industry: string
   'ISIC Rev. 4.': string
   'HQ Country (move)': string
   'Fr. Client (y/n)': string

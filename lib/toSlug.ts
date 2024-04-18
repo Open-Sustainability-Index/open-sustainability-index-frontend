@@ -1,2 +1,2 @@
-const toSlug = (str: string): string => str?.replace(/ /g, '-')?.replace(/[^\w-]+/g, '')?.toLowerCase()
+const toSlug = (str: string): string => str?.replace(/ /g, '-')?.toLowerCase()
 export default toSlug

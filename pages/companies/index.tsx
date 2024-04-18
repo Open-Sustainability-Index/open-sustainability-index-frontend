@@ -1,35 +1,32 @@
 import React from 'react'
 import type { GetStaticPropsResult } from 'next'
 
-import { config } from 'config/config'
+import { fetchCompanies } from 'app/services/companies'
 
 import CompanyList from 'app/components/companies/CompanyList'
-import CreateCompanyForm from 'app/components/companies/CreateCompanyForm'
 
 interface CompanyListPageProps {
   title: string
+  companies?: Company[]
 }
 
-function CompanyListPage ({ title }: CompanyListPageProps): React.ReactElement {
+function CompanyListPage ({ companies }: CompanyListPageProps): React.ReactElement {
   // Note: 'query' contains both /:params and ?query=value from url
+  console.log('companies:', companies)
   return (
-    <>
-      <h1>{config.appName}: {title}</h1>
-      <p><em>{config.appTagline}</em></p>
-
-      <CompanyList />
-      <CreateCompanyForm />
-
-      <h2>GraphQL</h2>
-      <p>Try the <a target='_blank' rel='noopener noreferrer' href='/api/graphiql'>GraphQL Explorer</a></p>
-    </>
+    <CompanyList companies={companies} />
   )
 }
 
 export default CompanyListPage
 
-export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => ({
-  props: {
-    title: 'Companies List'
+export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
+  const companies = await fetchCompanies()
+  const first100Companies = companies.slice(0, 100)
+  return {
+    props: {
+      title: 'Companies',
+      companies: first100Companies
+    }
   }
-})
+}

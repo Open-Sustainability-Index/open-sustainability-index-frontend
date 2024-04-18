@@ -27,6 +27,7 @@
 import React, { createContext, useContext, useState } from 'react'
 
 import makeRestRequest from 'lib/makeRestRequest'
+import toSlug from 'lib/toSlug'
 
 interface CompaniesInputProps {
   children: React.ReactNode
@@ -34,6 +35,11 @@ interface CompaniesInputProps {
 
 interface CompaniesReturnProps {
   companies?: Company[]
+}
+
+export const fetchCompanies = async (): Promise<Company[]> => {
+  const results = await makeRestRequest('GET', 'companies')
+  return results?.data
 }
 
 const CompaniesContext = createContext<Partial<CompaniesReturnProps>>({})
@@ -63,6 +69,8 @@ interface CompanyInputProps {
 interface CompanyReturnProps {
   company?: Company
 }
+
+export const companyPath = (company: Company): string => `/companies/${toSlug(company.Name)}`
 
 export const fetchCompany = async (companySlug: string): Promise<Company> => {
   const results = await makeRestRequest('GET', `companies/${companySlug}/`)

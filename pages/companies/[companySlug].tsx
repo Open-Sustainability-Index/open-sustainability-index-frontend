@@ -31,7 +31,7 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
   const company = await fetchCompany(companySlug as string)
   return {
     props: {
-      title: `Company ${companySlug as string}`,
+      title: company.Name ?? companySlug,
       companySlug,
       company
     }
