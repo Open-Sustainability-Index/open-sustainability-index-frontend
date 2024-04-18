@@ -72,6 +72,11 @@ interface CompanyReturnProps {
 
 export const companyPath = (company: Company): string => `/companies/${toSlug(company.Name)}`
 
+export const companySeoProps = (company: Company): SeoProps => ({
+  title: `${company.Name} - Company emissions and industry benchmarking`,
+  description: `${company.Name} GHG emission data (scope 1, scope 2 and scope 3) per year and company emission intensity based on t CO₂e per USDm revenue.`
+})
+
 export const fetchCompany = async (companySlug: string): Promise<Company> => {
   const results = await makeRestRequest('GET', `companies/${companySlug}/`)
   return results?.data

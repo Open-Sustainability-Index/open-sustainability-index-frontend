@@ -4,7 +4,7 @@ import { ParsedUrlQuery } from 'querystring'
 
 // import { Company } from 'graphql/__generated__/graphql'
 // import { useGetCompany } from '../../graphql/collections/company/hooks'
-import { fetchCompany } from 'app/services/companies'
+import { fetchCompany, companySeoProps } from 'app/services/companies'
 import CompanyDetails from '../../app/components/companies/CompanyDetails'
 
 interface CompanyPageParams extends ParsedUrlQuery {
@@ -20,7 +20,10 @@ interface CompanyPageProps {
 const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
   console.log('{ title, company, companySlug }:', { title, company, companySlug })
   return (
-    <CompanyDetails company={company} />
+    <CompanyDetails
+      company={company}
+      title={title}
+    />
   )
 }
 
@@ -31,7 +34,7 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
   const company = await fetchCompany(companySlug as string)
   return {
     props: {
-      title: company.Name ?? companySlug,
+      ...companySeoProps(company),
       companySlug,
       company
     }

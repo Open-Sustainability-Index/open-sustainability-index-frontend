@@ -7,6 +7,11 @@ declare global {
   }
 }
 
+interface SeoProps {
+  title: string
+  description: string
+}
+
 interface Company {
   Name: string
   Source: string
