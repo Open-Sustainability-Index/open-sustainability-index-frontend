@@ -1,4 +1,4 @@
-# ClimateWiki
+# Climate Wiki (frontend)
 
 ## How to use
 
