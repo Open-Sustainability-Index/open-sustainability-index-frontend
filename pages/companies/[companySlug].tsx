@@ -18,7 +18,7 @@ interface CompanyPageProps {
 
 const CompanyPage = ({ title, company, companyHistory, companySlug }: CompanyPageProps): React.ReactElement => {
   console.log('{ title, company, companySlug }:', { title, company, companySlug })
-  if (!company) {
+  if (!company || !companyHistory) {
     return <div>Company not found</div>
   } else return (
     <CompanyDetails
