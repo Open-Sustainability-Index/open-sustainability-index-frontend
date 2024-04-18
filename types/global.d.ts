@@ -21,7 +21,7 @@ interface Company {
   'ISIC Rev. 4.': string
   'HQ Country (move)': string
   'Fr. Client (y/n)': string
-  'Scope 1\n(CO₂e)': string
+  'Scope 1\n(t CO₂e)': string
   'Scope 2\n(t CO₂e)': string
   'Scope 2 type': string
   'Scope 2\n(CO₂e) \nMarket-based': string
@@ -53,7 +53,7 @@ interface Company {
   'Share Upstream of Scope 3': string
   'Scope 1 share of total upstream emissions': string
   'Total Upstream Emissions\n(t CO₂e) ': string
-  Revenue: string
+  'Revenue (million)': string
   'Factor (x1000, etc.)': string
   Currency: string
   'Revenue \n(SEK)': string

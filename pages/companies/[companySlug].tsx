@@ -2,9 +2,7 @@ import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-// import { Company } from 'graphql/__generated__/graphql'
-// import { useGetCompany } from '../../graphql/collections/company/hooks'
-import { fetchCompany, companySeoProps } from 'app/services/companies'
+import { fetchCompany, fetchCompanyHistory, companySeoProps } from 'app/services/companies'
 import CompanyDetails from '../../app/components/companies/CompanyDetails'
 
 interface CompanyPageParams extends ParsedUrlQuery {
@@ -13,15 +11,19 @@ interface CompanyPageParams extends ParsedUrlQuery {
 
 interface CompanyPageProps {
   company: Company | undefined
+  companyHistory: Company[] | undefined
   companySlug?: string | null
   title: string
 }
 
-const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
+const CompanyPage = ({ title, company, companyHistory, companySlug }: CompanyPageProps): React.ReactElement => {
   console.log('{ title, company, companySlug }:', { title, company, companySlug })
-  return (
+  if (!company) {
+    return <div>Company not found</div>
+  } else return (
     <CompanyDetails
       company={company}
+      companyHistory={companyHistory}
       title={title}
     />
   )
@@ -32,11 +34,13 @@ export default CompanyPage
 export async function getStaticProps (context: GetStaticPropsContext<CompanyPageParams>): Promise<GetStaticPropsResult<CompanyPageProps>> {
   const companySlug = context.params?.companySlug
   const company = await fetchCompany(companySlug as string)
+  const companyHistory = await fetchCompanyHistory(companySlug as string)
   return {
     props: {
       ...companySeoProps(company),
       companySlug,
-      company
+      company,
+      companyHistory
     }
   }
 }

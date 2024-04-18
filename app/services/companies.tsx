@@ -90,6 +90,11 @@ export const fetchCompany = async (companySlug: string): Promise<Company> => {
   return results?.data
 }
 
+export const fetchCompanyHistory = async (companySlug: string): Promise<Company[]> => {
+  const results = await makeRestRequest('GET', `companies/${companySlug}/all-years`)
+  return results?.data
+}
+
 const CompanyContext = createContext<Partial<CompanyReturnProps>>({})
 
 export const CompanyContextProvider = (props: CompanyInputProps): React.ReactElement => {
