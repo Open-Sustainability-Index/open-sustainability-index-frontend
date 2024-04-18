@@ -1,7 +1,7 @@
 import React from 'react'
 import type { GetStaticPropsResult } from 'next'
 
-import { fetchCompanies } from 'app/services/companies'
+import { fetchCompanies, companiesSeoProps } from 'app/services/companies'
 
 import CompanyList from 'app/components/companies/CompanyList'
 
@@ -25,7 +25,7 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   const first100Companies = companies.slice(0, 100)
   return {
     props: {
-      title: 'Companies',
+      ...companiesSeoProps(),
       companies: first100Companies
     }
   }

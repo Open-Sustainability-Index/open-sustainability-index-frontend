@@ -37,6 +37,11 @@ interface CompaniesReturnProps {
   companies?: Company[]
 }
 
+export const companiesSeoProps = (): SeoProps => ({
+  title: 'Global company GHG emission data per industry and year',
+  description: 'Open-source global company GHG emission data (scope 1, scope 2, scope 3) with company emissions per year, industry, country and company intensity factors.'
+})
+
 export const fetchCompanies = async (): Promise<Company[]> => {
   const results = await makeRestRequest('GET', 'companies')
   return results?.data
