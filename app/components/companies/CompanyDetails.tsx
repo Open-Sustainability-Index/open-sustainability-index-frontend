@@ -9,9 +9,7 @@ const CompanyDetails = ({ company, companyHistory, title }: { company: Company, 
       <h1>{title ?? company?.Name}</h1>
       <p>{company?.Industry}</p>
       <p>{company?.['Scope 1\n(t CO₂e)']}</p>
-      <p>
-        <CompanyChart companyHistory={companyHistory} />
-      </p>
+      <CompanyChart companyHistory={companyHistory} />
     </>
   )
 }

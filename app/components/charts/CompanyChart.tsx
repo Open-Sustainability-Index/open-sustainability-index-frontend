@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { ChartsLegend, AllSeriesType } from '@mui/x-charts'
-import { ChartContainer } from '@mui/x-charts/ChartContainer'
+// import { ChartContainer } from '@mui/x-charts/ChartContainer'
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer'
 import { BarPlot } from '@mui/x-charts/BarChart'
 import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart'

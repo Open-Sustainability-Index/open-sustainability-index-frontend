@@ -28,7 +28,7 @@ function Header (): React.ReactElement {
       <List>
         {links.map((link) => (
           <Link href={link.path} key={link.name} passHref>
-            <ListItem button component='a'>
+            <ListItem>
               <ListItemText primary={link.name} />
             </ListItem>
           </Link>
@@ -67,7 +67,7 @@ function Header (): React.ReactElement {
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
               {links.map((link) => (
                 <Link href={link.path} key={link.name} passHref>
-                  <ListItem button component='a'>
+                  <ListItem>
                     <ListItemText primary={link.name} />
                   </ListItem>
                 </Link>
