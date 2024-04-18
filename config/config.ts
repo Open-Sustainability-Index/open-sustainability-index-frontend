@@ -24,7 +24,7 @@ interface EnvironmentConfiguration {
   databaseUrl?: string
   allowedHostsList?: string[]
 
-  isProduction?: boolean
+  isDevelopment: boolean
   sendRealMessages?: boolean
 }
 
@@ -45,6 +45,7 @@ const completeConfig: AllConfigurations = {
     appName: manifest.name,
     appTagline: manifest.description,
     appDescription: manifest.description,
+    isDevelopment,
     locale: 'en_US',
     googleAnalyticsId: 'UA-XXXXXXX-X',
     databaseUrl: process.env.POSTGRES_URL,
