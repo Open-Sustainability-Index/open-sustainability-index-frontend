@@ -3,7 +3,9 @@ import Link from 'next/link'
 // import { Company } from 'graphql/__generated__/graphql'
 // import { companyPath, useUpdateCompany, useDeleteCompany } from '../../graphql/collections/company/hooks'
 
-const companyPath = (company: Company): string => `/companies/${company.id as number}-${company.name}`
+import toSlug from 'lib/toSlug'
+
+const companyPath = (company: Company): string => `/companies/${toSlug(company.Name)}`
 
 type VoidFunction = () => Promise<void>
 
@@ -16,7 +18,7 @@ const usePromptAndUpdateCompany = (company: Company, fieldName: keyof Company): 
       // const companyPatch = {
       //   [fieldName]: newValue
       // }
-      // await updateCompany({ variables: { id: company.id, companyPatch } })
+      // await updateCompany({ variables: { id: company.Name, companyPatch } })
     }
   }
 
@@ -27,9 +29,9 @@ const usePromptAndDeleteCompany = (company: Company): VoidFunction => {
   // const deleteCompany = useDeleteCompany()
 
   const handleDelete = async (): Promise<void> => {
-    if (window.confirm(`Delete ${company.name}?`)) {
+    if (window.confirm(`Delete ${company.Name}?`)) {
       // const variables = {
-      //   id: company.id
+      //   id: company.Name
       // }
       // await deleteCompany({ variables })
     }
@@ -44,12 +46,12 @@ interface CompanyListItemProps {
 }
 
 const CompanyListItem = ({ company, inProgress = false }: CompanyListItemProps): React.ReactElement => {
-  const promptAndUpdateCompany = usePromptAndUpdateCompany(company, 'name')
+  const promptAndUpdateCompany = usePromptAndUpdateCompany(company, 'Name')
   const promptAndDeleteCompany = usePromptAndDeleteCompany(company)
 
   return (
-    <div className={inProgress === company.id ? 'inProgress' : ''} title={`id: ${company.id as number}`}>
-      <Link legacyBehavior href={companyPath(company)}><a>{company.name}</a></Link>
+    <div className={inProgress === company.Name ? 'inProgress' : ''} title={`id: ${company.Name as number}`}>
+      <Link legacyBehavior href={companyPath(company)}><a>{company.Name}</a></Link>
       <a className='action update' onClick={() => { void promptAndUpdateCompany() }}>Update</a>
       <a className='action delete' onClick={() => { void promptAndDeleteCompany() }}>Delete</a>
       <style jsx>{`

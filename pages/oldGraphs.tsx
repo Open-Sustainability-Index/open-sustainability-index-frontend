@@ -18,7 +18,7 @@ function GraphsPage (): React.ReactElement {
   const [dateFrom, setDateFrom] = useState(DEFAULT_DATE_FROM)
   const [dateTo, setDateTo] = useState(DEFAULT_DATE_TO)
   const [dateInterval, setDateInterval] = useState('day')
-  const [selectedCompanyId, setSelectedCompanyId] = useState(1)
+  const [selectedCompanyId, setSelectedCompanyId] = useState('3m')
 
   return (
     <>
@@ -61,8 +61,8 @@ interface GraphsSettingsProps {
   setDateTo: (date: Date) => void
   dateInterval: string
   setDateInterval: (dateInterval: string) => void
-  selectedCompanyId: number
-  setSelectedCompanyId: (companyId: number) => void
+  selectedCompanyId: string
+  setSelectedCompanyId: (companyId: string) => void
 }
 
 const GraphsSettings = ({
@@ -101,7 +101,7 @@ interface ChartProps {
   startDate?: Date
   endDate?: Date
   dateInterval?: string
-  selectedCompanyId?: number
+  selectedCompanyId?: string
 }
 
 const CompaniesOverTimeChart = ({ startDate, endDate, dateInterval, selectedCompanyId }: ChartProps): React.ReactElement | null => {

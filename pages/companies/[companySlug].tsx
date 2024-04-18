@@ -1,58 +1,39 @@
 import React from 'react'
-import Link from 'next/link'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
 // import { Company } from 'graphql/__generated__/graphql'
 // import { useGetCompany } from '../../graphql/collections/company/hooks'
+import { fetchCompany } from 'app/services/companies'
 import CompanyDetails from '../../app/components/companies/CompanyDetails'
 
 interface CompanyPageParams extends ParsedUrlQuery {
-  companyId: string
+  companySlug: string
 }
 
 interface CompanyPageProps {
-  companyId: number | null
+  company: Company | undefined
+  companySlug?: string | null
   title: string
 }
 
-const CompanyPage = ({ companyId }: CompanyPageProps): React.ReactElement => {
-  // const { data, loading, error } = useGetCompany(companyId ?? 0)
-  // if (error != null || (data !== undefined && (data.companyById === undefined || data.companyById === null))) {
-  //   throw new Error(`Error: ${error?.message as string}`)
-  // }
-  const loading = false
-  const companyById: Company | undefined = undefined
-
+const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
+  console.log('{ title, company, companySlug }:', { title, company, companySlug })
   return (
-    <>
-      {loading
-        ? (
-          <div>Loading...</div>
-          )
-        : (
-          <CompanyDetails company={companyById} />
-          )}
-
-      <ul>
-        <li>
-          <Link legacyBehavior href='/'>
-            <a>Home</a>
-          </Link>
-        </li>
-      </ul>
-    </>
+    <CompanyDetails company={company} />
   )
 }
 
 export default CompanyPage
 
 export async function getStaticProps (context: GetStaticPropsContext<CompanyPageParams>): Promise<GetStaticPropsResult<CompanyPageProps>> {
-  const companyId = (context.params?.companySlug as string)?.split('-')?.pop() ?? null
+  const companySlug = context.params?.companySlug
+  const company = await fetchCompany(companySlug as string)
   return {
     props: {
-      title: `Company ${companyId as string}`,
-      companyId: companyId !== null ? parseInt(companyId) : null
+      title: `Company ${companySlug as string}`,
+      companySlug,
+      company
     }
   }
 }

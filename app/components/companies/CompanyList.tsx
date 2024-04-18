@@ -13,7 +13,7 @@ const CompanyList = (): React.ReactElement | string => {
     <>
       {data?.allCompaniesList?.map((company) => (
         <CompanyListItem
-          key={company.id}
+          key={company.Name}
           company={company}
         />
       ))}

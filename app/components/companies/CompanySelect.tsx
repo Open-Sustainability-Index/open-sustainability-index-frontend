@@ -11,8 +11,8 @@ import CheckIcon from '@mui/icons-material/Check'
 const SELECTED_STOCK_NONE = -1
 
 interface CompanySelectProps {
-  selectedCompanyId: number | undefined
-  setSelectedCompanyId: (companyId: number) => void
+  selectedCompanyId: string | undefined
+  setSelectedCompanyId: (companyId: string) => void
 }
 
 export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId }: CompanySelectProps): React.ReactElement {
@@ -38,7 +38,7 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
 
   const isNoneSelected = useMemo(
     () => {
-      const firstCompanyId = allCompanies?.allCompaniesList?.[0]?.id
+      const firstCompanyId = allCompanies?.allCompaniesList?.[0]?.Name
       // Auto-select first company
       if (firstCompanyId !== undefined) {
         setSelectedCompanyId?.(firstCompanyId)
@@ -52,8 +52,8 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
 
   const selectedCompaniesText = useMemo(
     () => availableCompanies
-      ?.find((currentCompany) => (typeof selectedCompanyId !== 'undefined' ? parseInt(selectedCompanyId.toString()) : SELECTED_STOCK_NONE) === currentCompany?.id)
-      ?.name,
+      ?.find((currentCompany) => (typeof selectedCompanyId !== 'undefined' ? selectedCompanyId : SELECTED_STOCK_NONE) === currentCompany?.Name)
+      ?.Name,
     [selectedCompanyId, availableCompanies]
   )
 
@@ -80,7 +80,7 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
       >
         {availableCompanies?.map((availableCompany) => (
           <CompanyButton
-            key={availableCompany?.id}
+            key={availableCompany?.Name}
             company={availableCompany}
             handleClose={handleClose}
             selectedCompanyId={selectedCompanyId}
@@ -95,15 +95,15 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
 interface CompanyButtonProps {
   company: Company
   handleClose: () => void
-  selectedCompanyId: number | undefined
-  setSelectedCompanyId: (companyId: number) => void
+  selectedCompanyId: string | undefined
+  setSelectedCompanyId: (companyId: string) => void
 }
 
 const CompanyButton = ({ company, handleClose, selectedCompanyId, setSelectedCompanyId }: CompanyButtonProps): React.ReactElement => {
-  const isSelected = selectedCompanyId === company.id
+  const isSelected = selectedCompanyId === company.Name
 
   const handleClickOnCompany = (): void => {
-    setSelectedCompanyId?.(company.id ?? -1)
+    setSelectedCompanyId?.(company.Name ?? -1)
     // void router.push(config.startPagePath as string)
     handleClose()
   }
@@ -111,7 +111,7 @@ const CompanyButton = ({ company, handleClose, selectedCompanyId, setSelectedCom
   return (
     <MenuItem onClick={handleClickOnCompany}>
       {isSelected ? <CheckIcon /> : null}
-      {company.name}
+      {company.Name}
     </MenuItem>
   )
 }

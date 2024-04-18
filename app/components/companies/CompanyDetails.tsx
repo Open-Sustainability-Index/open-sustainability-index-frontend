@@ -5,8 +5,8 @@ import React from 'react'
 const CompanyDetails = ({ company }: { company?: Company }): React.ReactElement => {
   return (
     <>
-      <h1>{company?.name}</h1>
-      <p>{company?.symbol}</p>
+      <h1>{company?.Name ?? company?.['Company DB Input']}</h1>
+      <p>{company?.['Scope 1\n(CO₂e)']}</p>
     </>
   )
 }
