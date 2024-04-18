@@ -9,6 +9,8 @@ import PageHead from '../app/components/page/PageHead'
 import Notifications from '../app/components/page/Notifications'
 import '../app/theme/globals.css'
 import theme from '../app/theme/theme'
+import Header from '../app/components/navigation/Header'
+import Footer from '../app/components/navigation/Footer'
 
 Router.events.on('routeChangeComplete', path => googlePageview(path))
 
@@ -17,12 +19,14 @@ export default function App ({ Component, pageProps, router }: AppProps): React.
   return (
     <ThemeProvider theme={theme}>
       <PageHead {...pageProps} />
+      <Header />
       <Container>
         <Component
           {...pageProps}
           {...router}
         />
       </Container>
+      <Footer />
       <Notifications />
     </ThemeProvider>
   )

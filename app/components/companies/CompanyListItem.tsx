@@ -3,7 +3,7 @@ import Link from 'next/link'
 // import { Company } from 'graphql/__generated__/graphql'
 // import { companyPath, useUpdateCompany, useDeleteCompany } from '../../graphql/collections/company/hooks'
 
-const companyPath = (company: Company): string => `/companies/${company.id}-${company.name}`
+const companyPath = (company: Company): string => `/companies/${company.id as number}-${company.name}`
 
 type VoidFunction = () => Promise<void>
 
