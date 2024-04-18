@@ -21,12 +21,12 @@ function CompanyListPage ({ companies }: CompanyListPageProps): React.ReactEleme
 export default CompanyListPage
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
-  const companies = await fetchCompanies()
-  const first100Companies = companies.slice(0, 100)
+  const allCompanies = await fetchCompanies()
+  const companies = allCompanies.slice(0, 100)
   return {
     props: {
-      ...companiesSeoProps(),
-      companies: first100Companies
+      ...companiesSeoProps(companies),
+      companies
     }
   }
 }
