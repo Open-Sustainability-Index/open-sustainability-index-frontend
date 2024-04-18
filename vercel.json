@@ -1,0 +1,13 @@
+{
+  "crons": [
+    {
+      "path": "/api/companies/getRates",
+      "schedule": "0 18 * * *"
+    }
+  ],
+  "functions": {
+    "pages/api/**/*": {
+      "maxDuration": 180
+    }
+  }
+}
