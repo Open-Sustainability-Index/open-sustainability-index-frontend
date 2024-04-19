@@ -41,7 +41,7 @@ const completeConfig: AllConfigurations = {
     serverPort,
     appSlug,
     appVersion: packageJson.version,
-    appUrl: process.env.APP_URL ?? '',
+    appUrl: process.env.APP_URL ?? 'https://climate-wiki-frontend.vercel.app/',
     appName: manifest.name,
     appTagline: manifest.description,
     appDescription: manifest.description,
