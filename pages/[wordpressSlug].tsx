@@ -5,30 +5,29 @@ import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-import { getPostDetails } from 'app/services/wordpress'
+import { getPostDetails, postSeoProps } from 'app/services/wordpress'
 
 interface WordpressPageParams extends ParsedUrlQuery {
   wordpressSlug: string
 }
 
 interface WordpressPageProps {
-  wordpress: Wordpress | undefined
+  wordpressPost: Wordpress | undefined
   wordpressHistory: Wordpress[] | undefined
   wordpressSlug?: string | null
   title: string
 }
 
-const WordpressPage = ({ title, wordpress, wordpressSlug }: WordpressPageProps): React.ReactElement => {
+const WordpressPage = ({ wordpressPost }: WordpressPageProps): React.ReactElement => {
   if (
-    wordpress === null
+    wordpressPost === null
   ) {
     return <div>Wordpress not found</div>
   } else {
     return (
       <>
-        {wordpress?.content &&
-          <div dangerouslySetInnerHTML={{ __html: wordpress.content }} />
-        }
+        {wordpressPost?.content &&
+          <div dangerouslySetInnerHTML={{ __html: wordpressPost.content }} />}
       </>
     )
   }
@@ -38,11 +37,12 @@ export default WordpressPage
 
 export async function getStaticProps (context: GetStaticPropsContext<CompanyPageParams>): Promise<GetStaticPropsResult<WordpressPageProps>> {
   const wordpressSlug = context.params?.wordpressSlug
-  const wordpress = await getPostDetails(wordpressSlug as string)
+  const wordpressPost = await getPostDetails(wordpressSlug as string)
   return {
     props: {
+      ...postSeoProps(wordpressPost),
       wordpressSlug,
-      wordpress,
+      wordpressPost
     },
     revalidate: 5 * 60
   }

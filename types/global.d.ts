@@ -10,6 +10,7 @@ declare global {
 interface SeoProps {
   title: string
   description: string
+  imageUrl?: string
 }
 
 interface Company {
