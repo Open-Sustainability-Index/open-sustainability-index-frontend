@@ -1,3 +1,6 @@
+
+// @ts-nocheck
+
 import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'

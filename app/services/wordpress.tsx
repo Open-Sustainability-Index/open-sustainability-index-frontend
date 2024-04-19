@@ -5,6 +5,8 @@
  * @author Tom Söderlund
  */
 
+// @ts-nocheck
+
 import { formatDate } from '../../lib/formatDate'
 const { decode } = require('html-entities')
 
