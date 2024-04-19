@@ -43,7 +43,8 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
     props: {
       wordpressSlug,
       wordpress,
-    }
+    },
+    revalidate: 5 * 60
   }
 }
 
