@@ -41,7 +41,7 @@ export const companiesSeoProps = (companies: Company[]): SeoProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => company.Name).join(', ')
   return {
     title: 'Global company GHG emission data per industry and year',
-    description: `Open-source global company GHG emission data (scope 1, scope 2, scope 3) with company emissions per year, industry, country and company intensity factors, for companies such as ${first3CompanyNames}.`
+    description: `Get open-source global GHG emission data (scope 1/2/3) for companies such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
   }
 }
 
@@ -82,7 +82,7 @@ export const companyPath = (company: Company): string => `/companies/${toSlug(co
 
 export const companySeoProps = (company: Company): SeoProps => ({
   title: `${company.Name} - Company emissions and industry benchmarking`,
-  description: `${company.Name} GHG emission data (scope 1, scope 2 and scope 3) per year and company emission intensity based on t CO₂e per USDm revenue.`
+  description: `See GHG emission data for ${company.Name} (scope 1/2/3) per year, and company emission intensity based on t CO₂e per M USD revenue.`
 })
 
 export const fetchCompany = async (companySlug: string): Promise<Company> => {
