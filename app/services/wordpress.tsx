@@ -25,7 +25,7 @@ const fixWordpressPost = post => {
     ...post,
     title: title || getFirstSentence(description),
     description,
-    category: Object.values(post.categories)[0].slug,
+//    category: Object.values(post.categories)[0]?.slug,
     date: new Date(post.date).toString(),
     dateFormatted: formatDate(new Date(post.date)),
     // url: getURL(post),
