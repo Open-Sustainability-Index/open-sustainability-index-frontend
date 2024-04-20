@@ -47,6 +47,9 @@ const completeConfig: AllConfigurations = {
     appDescription: manifest.description,
     isDevelopment,
     locale: 'en_US',
+    fonts: [
+      ['Open Sans', 'wght@300;400;500;700']
+    ],
     googleAnalyticsId: 'UA-XXXXXXX-X',
     databaseUrl: process.env.POSTGRES_URL,
     graphqlPath: '/api/graphql',
