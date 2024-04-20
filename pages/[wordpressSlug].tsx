@@ -35,7 +35,7 @@ const WordpressPage = ({ wordpressPost }: WordpressPageProps): React.ReactElemen
 
 export default WordpressPage
 
-export async function getStaticProps (context: GetStaticPropsContext<CompanyPageParams>): Promise<GetStaticPropsResult<WordpressPageProps>> {
+export async function getStaticProps (context: GetStaticPropsContext<WordpressPageParams>): Promise<GetStaticPropsResult<WordpressPageProps>> {
   const wordpressSlug = context.params?.wordpressSlug
   const wordpressPost = await getPostDetails(wordpressSlug as string)
   return {
@@ -48,7 +48,7 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
   }
 }
 
-export async function getStaticPaths (context: GetStaticPathsContext): Promise<GetStaticPathsResult<CompanyPageParams>> {
+export async function getStaticPaths (context: GetStaticPathsContext): Promise<GetStaticPathsResult<WordpressPageParams>> {
   // const locales = context.locales ?? ['en']
   return {
     paths: [],
