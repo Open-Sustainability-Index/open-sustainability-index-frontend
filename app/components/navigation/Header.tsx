@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
+import links from './links'
+
 function Header (): React.ReactElement {
   const [mobileOpen, setMobileOpen] = useState(false)
   const theme = useTheme()
@@ -12,25 +14,10 @@ function Header (): React.ReactElement {
     setMobileOpen(!mobileOpen)
   }
 
-  const links = [
-    { name: 'Companies', path: '/companies' },
-    { name: 'Industries', path: '/industries' },
-    { name: 'Countries', path: '/countries' },
-    { name: 'Documentation', path: '/documentation' },
-    { name: 'About', path: '/about' }
-    // { name: 'Support', path: '/support' },
-    // { name: 'Contact', path: '/contact' },
-    // { name: 'API', path: '/api' },
-    // { name: 'FAQ', path: '/faq' },
-    // { name: 'Roadmap', path: '/roadmap' }
-    // { name: 'Partners', path: '/partners' },
-    // { name: 'Governance', path: '/governance' },
-  ]
-
   const menuLinks = (
     <>
       <List>
-        {links.map((link) => (
+        {links.filter(link => link.display.includes('header')).map((link) => (
           <Link href={link.path} key={link.name} passHref>
             <ListItem>
               <ListItemText primary={link.name} />
@@ -69,7 +56,7 @@ function Header (): React.ReactElement {
             )
           : (
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-              {links.map((link) => (
+              {links.filter(link => link.display.includes('header')).map((link) => (
                 <Link href={link.path} key={link.name} passHref>
                   <ListItem>
                     <ListItemText primary={link.name} />

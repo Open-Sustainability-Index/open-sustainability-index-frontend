@@ -1,21 +1,14 @@
 import { Box, Typography, Link } from '@mui/material'
 import React from 'react'
 
-function Footer (): React.ReactElement {
-  const links = [
-    { name: 'About', path: '/about' },
-    { name: 'Support', path: '/support' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'API', path: '/api' },
-    { name: 'FAQ', path: '/faq' },
-    { name: 'Roadmap', path: '/roadmap' }
-  ]
+import links from './links'
 
+function Footer (): React.ReactElement {
   return (
     <Box sx={{ bgcolor: 'primary.main', p: 2, mt: 'auto', color: 'white', textAlign: 'center' }}>
       <Typography variant='h6'>ClimateWiki</Typography>
       <Typography variant='body1'>
-        {links.map((link) => (
+        {links.filter(link => link.display.includes('footer')).map((link) => (
           <Link key={link.name} href={link.path} color='secondary' style={{ marginRight: '0.5em' }}>
             {link.name}
           </Link>
