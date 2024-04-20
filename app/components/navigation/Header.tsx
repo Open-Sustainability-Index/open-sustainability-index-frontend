@@ -16,11 +16,15 @@ function Header (): React.ReactElement {
     { name: 'Companies', path: '/companies' },
     { name: 'Industries', path: '/industries' },
     { name: 'Countries', path: '/countries' },
-    { name: 'Partners', path: '/partners' },
-    { name: 'About', path: '/about' },
-    { name: 'API', path: '/api' },
-    { name: 'FAQ', path: '/faq' },
-    { name: 'Governance', path: '/governance' }
+    { name: 'Documentation', path: '/documentation' },
+    { name: 'About', path: '/about' }
+    // { name: 'Support', path: '/support' },
+    // { name: 'Contact', path: '/contact' },
+    // { name: 'API', path: '/api' },
+    // { name: 'FAQ', path: '/faq' },
+    // { name: 'Roadmap', path: '/roadmap' }
+    // { name: 'Partners', path: '/partners' },
+    // { name: 'Governance', path: '/governance' },
   ]
 
   const menuLinks = (
@@ -50,7 +54,7 @@ function Header (): React.ReactElement {
     <AppBar position='sticky' sx={{ bgcolor: 'primary.main' }}>
       <Toolbar>
         <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
-          ClimateWiki
+          <Link href='/'>ClimateWiki</Link>
         </Typography>
         {isMobile
           ? (
