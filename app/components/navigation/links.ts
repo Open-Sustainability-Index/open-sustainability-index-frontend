@@ -1,7 +1,7 @@
 const links = [
   { name: 'Companies', path: '/companies', display: ['header'], wordpressPage: false },
-  { name: 'Industries', path: '/industries', display: ['header'], wordpressPage: false },
-  { name: 'Countries', path: '/countries', display: ['header'], wordpressPage: false },
+  // { name: 'Industries', path: '/industries', display: ['header'], wordpressPage: false },
+  // { name: 'Countries', path: '/countries', display: ['header'], wordpressPage: false },
   { name: 'Documentation', path: '/documentation', display: ['header'] },
   { name: 'About', path: '/about', display: ['header', 'footer'] },
   { name: 'Support', path: '/support', display: ['footer'] },
