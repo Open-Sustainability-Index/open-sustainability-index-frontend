@@ -3,6 +3,7 @@ import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext
 import { ParsedUrlQuery } from 'querystring'
 
 import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
+import links from 'app/components/navigation/links'
 
 interface WordpressPageParams extends ParsedUrlQuery {
   wordpressSlug: string
@@ -33,6 +34,12 @@ export default WordpressPage
 export async function getStaticProps (context: GetStaticPropsContext<WordpressPageParams>): Promise<GetStaticPropsResult<WordpressPageProps>> {
   const wordpressSlug = context.params?.wordpressSlug
   const wordpressPost = await getPostDetails(wordpressSlug as string)
+  console.log('Building static WordPress page:', wordpressSlug)
+  if (wordpressPost === undefined) {
+    return {
+      notFound: true
+    }
+  }
   return {
     props: {
       ...postSeoProps(wordpressPost),
@@ -45,8 +52,9 @@ export async function getStaticProps (context: GetStaticPropsContext<WordpressPa
 
 export async function getStaticPaths (context: GetStaticPathsContext): Promise<GetStaticPathsResult<WordpressPageParams>> {
   // const locales = context.locales ?? ['en']
+  const wordpressSlugs = links.filter(link => link.wordpressPage !== false).map(link => link.path)
   return {
-    paths: [],
+    paths: wordpressSlugs,
     fallback: true // false → 404, true: Next.js tries to generate page
   }
 }

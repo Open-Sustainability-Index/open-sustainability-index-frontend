@@ -12,7 +12,6 @@ interface CompanyListPageProps {
 
 function CompanyListPage ({ companies }: CompanyListPageProps): React.ReactElement {
   // Note: 'query' contains both /:params and ?query=value from url
-  console.log('companies:', companies)
   return (
     <CompanyList companies={companies} />
   )
