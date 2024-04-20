@@ -20,7 +20,7 @@ const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, ''
 const stripNewLines = str => str.replace(/\n/g, '')
 const getFirstSentence = str => str.replace(/[!?:;(–]/g, '.').split('.')[0]
 
-interface WordpressPost {
+export interface WordpressPost {
   title: string
   description: string
   category: string
@@ -29,6 +29,7 @@ interface WordpressPost {
   url: string
   articleImage: string
   bigImageUrl: string
+  content: string
 }
 
 const fixWordpressPost = post => {
@@ -50,32 +51,32 @@ const fixWordpressPost = post => {
 // Returns { thumbnail, medium, large }
 const getAttachmentImages = post => {
   const attachment0 = post.attachments && Object.values(post.attachments)[0]
-  return (attachment0 ? attachment0.thumbnails : {})
+  return (attachment0 !== undefined ? attachment0.thumbnails : {})
 }
 
 // Public API
 
-export const getCategories = async function () {
+export const getCategories = async function (): Promise<any[]> {
   const url = `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/categories`
   return await fetch(url) // eslint-disable-line no-undef
     .then(async res => await res.json())
     .then(res => res.categories.map(({ meta, feed_url, ...category }) => category)) // eslint-disable-line camelcase
 }
 
-export const getCategoryDetails = async function (slug) {
+export const getCategoryDetails = async function (slug): Promise<any[]> {
   const url = `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/categories/slug:${slug}`
   return await fetch(url) // eslint-disable-line no-undef
     .then(async res => await res.json())
 }
 
-export const getPostsList = async function (options = {}) {
+export const getPostsList = async function (options = {}): Promise<WordpressPost[]> {
   const { fields = 'ID,slug,title,featured_image,date,description,attachments,categories,tags,sticky' } = options
   const url = [
     `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/posts/?`,
-    `fields=${fields}`,
-    options.order ? `&order_by=${options.order}&order=ASC` : '',
-    options.category ? `&category=${options.category}` : '',
-    options.search ? `&search=${options.search}` : '',
+    `fields=${fields as string}`,
+    options.order !== undefined ? `&order_by=${options.order as string}&order=ASC` : '',
+    options.category !== undefined ? `&category=${options.category as string}` : '',
+    options.search !== undefined ? `&search=${options.search as string}` : '',
     `&number=${POSTS_LIMIT}`
   ].join('')
   return await fetch(url) // eslint-disable-line no-undef
@@ -83,14 +84,14 @@ export const getPostsList = async function (options = {}) {
     .then(res => res.posts.map(fixWordpressPost))
 }
 
-export const getPostDetails = async function (slug, { fields = 'ID,slug,title,featured_image,date,excerpt,content,attachments,categories,tags,sticky' } = {}) {
+export const getPostDetails = async function (slug, { fields = 'ID,slug,title,featured_image,date,excerpt,content,attachments,categories,tags,sticky' } = {}): Promise<WordpressPost> {
   const url = `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/posts/slug:${slug}?fields=${fields}`
   return await fetch(url) // eslint-disable-line no-undef
     .then(async res => await res.json())
-    .then(res => res.error ? undefined : fixWordpressPost(res))
+    .then(res => res.error !== undefined ? undefined : fixWordpressPost(res))
 }
 
-export const getAllPosts = async function (options = {}) {
+export const getAllPosts = async function (options = {}): Promise<WordpressPost[]> {
   const categories = await getCategories()
   const articlePromiseArray = categories.map(async category => await getPostsList({ category: category.slug }))
   const articleArray = await Promise.all(articlePromiseArray)

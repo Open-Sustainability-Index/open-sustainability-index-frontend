@@ -1,32 +1,27 @@
-
-// @ts-nocheck
-
 import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-import { getPostDetails, postSeoProps } from 'app/services/wordpress'
+import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
 
 interface WordpressPageParams extends ParsedUrlQuery {
   wordpressSlug: string
 }
 
 interface WordpressPageProps {
-  wordpressPost: Wordpress | undefined
-  wordpressHistory: Wordpress[] | undefined
+  wordpressPost?: WordpressPost
+  wordpressHistory?: WordpressPost[]
   wordpressSlug?: string | null
   title: string
 }
 
 const WordpressPage = ({ wordpressPost }: WordpressPageProps): React.ReactElement => {
-  if (
-    wordpressPost === null
-  ) {
-    return <div>Wordpress not found</div>
+  if (wordpressPost === null) {
+    return <div>Wordpress page not found</div>
   } else {
     return (
       <>
-        {wordpressPost?.content &&
+        {wordpressPost?.content !== undefined &&
           <div dangerouslySetInnerHTML={{ __html: wordpressPost.content }} />}
       </>
     )
