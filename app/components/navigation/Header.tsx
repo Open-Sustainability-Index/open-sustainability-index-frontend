@@ -25,7 +25,7 @@ function Header (): React.ReactElement {
           </Link>
         ))}
       </List>
-      <Button variant='contained' color='secondary' sx={{ margin: 2 }}>
+      <Button href='/report' variant='contained' color='secondary' sx={{ margin: 2 }}>
         Report Emissions
       </Button>
     </>
@@ -63,7 +63,7 @@ function Header (): React.ReactElement {
                   </ListItem>
                 </Link>
               ))}
-              <Button variant='contained' color='secondary' sx={{ marginLeft: 2 }}>
+              <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2 }}>
                 Report Emissions
               </Button>
             </Box>
