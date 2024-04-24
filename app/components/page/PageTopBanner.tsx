@@ -17,8 +17,8 @@ const PageTopBanner = ({
       sx={{
         backgroundColor: 'var(--wp--preset--color--tertiary)',
         color: 'white',
-        py: 2,
-        px: 3
+        px: 4,
+        py: 6
       }}
     >
       <Typography variant='subtitle1' component='h2'>
