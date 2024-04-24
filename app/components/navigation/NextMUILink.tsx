@@ -10,7 +10,7 @@ interface NextMUILinkProps {
 const NextMUILink = ({ href, children, ...props }: NextMUILinkProps) => {
   return (
     <NextLink href={href} passHref>
-      <MUILink {...props}>{children}</MUILink>
+      <MUILink component='span' {...props}>{children}</MUILink>
     </NextLink>
   )
 }
