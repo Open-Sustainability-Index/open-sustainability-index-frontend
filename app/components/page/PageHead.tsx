@@ -21,7 +21,8 @@ const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', path
   const thumbnailUrl = imageUrl ?? `${config.appUrl as string}images/preview_default.jpg` // ?? `https://screens.myscreenshooterserver.com/?url=${config.appUrl}${path.slice(1)}${(path.includes('?') ? '&' : '?')}thumbnail=true`
 
   // SEO: title 60 characters, description 160 characters
-  if (config.isDevelopment === true) console.log(`PageHead (dev):\n• title (${60 - pageTitle.length}): “${pageTitle}”\n• description (${160 - pageDescription.length}): “${pageDescription}”\n• imageUrl: ${thumbnailUrl}`)
+  // if (config.isDevelopment === true)
+  console.log(`SEO Metadata:\n• title (${60 - pageTitle.length}): “${pageTitle}”\n• description (${160 - pageDescription.length}): “${pageDescription}”\n• imageUrl: ${thumbnailUrl}`)
 
   return (
     <Head>
