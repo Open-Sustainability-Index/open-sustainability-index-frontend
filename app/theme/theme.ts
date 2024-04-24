@@ -56,6 +56,9 @@ const theme = createTheme({
       '@media (max-width:600px)': {
         fontSize: '1em'
       }
+    },
+    caption: {
+      color: '#171d3a',
     }
   },
   components: {
