@@ -8,8 +8,9 @@ export const COLORS = {
   GRAY_LIGHT: '#f5f6f7',
   WHITE: '#fff',
 
-  BLUE_MEDIUM: '#3F37C9',
-  BLUE_HOVER: '#5D55DF',
+  BLUE_LIGHT: '#edf2fb',
+  BLUE_MEDIUM: '#3f37c9',
+  BLUE_HOVER: '#5d55df',
 
   PINK_LIGHT: '#f9b6ff',
   PURPLE_LIGHT: '#cd9aff',

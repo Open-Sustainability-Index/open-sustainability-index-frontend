@@ -31,7 +31,8 @@ const appBarTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          boxShadow: 'none'
+          boxShadow: 'none',
+          borderBottom: `1px solid ${COLORS.BLUE_LIGHT}`
         }
       }
     },
