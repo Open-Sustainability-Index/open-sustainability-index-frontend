@@ -4,7 +4,8 @@ import { ParsedUrlQuery } from 'querystring'
 import { Typography } from '@mui/material'
 
 import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
-import Placeholder from 'app/components/common/Placeholder'
+// import Placeholder from 'app/components/common/Placeholder'
+import SearchBlock from 'app/components/navigation/SearchBlock'
 import PageTopBanner from 'app/components/page/PageTopBanner'
 
 interface HomePageParams extends ParsedUrlQuery {
@@ -26,8 +27,11 @@ const HomePage = ({ title, description, wordpressPost }: HomePageProps): React.R
     return (
       <>
         <PageTopBanner title={title} description={description} />
+        {/*
         <Placeholder title='Search Block' />
         <Placeholder title='3 Graphs' height='20em' />
+         */}
+        <SearchBlock />
         {wordpressPost?.content !== undefined && (
           <Typography
             className='wordpress-container'
