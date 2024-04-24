@@ -3,6 +3,7 @@ import type { GetStaticPropsResult } from 'next'
 
 import { fetchCompanies, companiesSeoProps } from 'app/services/companies'
 
+import { Company } from 'types/global'
 import CompanyList from 'app/components/companies/CompanyList'
 
 interface CompanyListPageProps {

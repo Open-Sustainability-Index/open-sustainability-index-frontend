@@ -15,7 +15,7 @@ const showNotification = (message: string, type = 'info', options?: any): any =>
   } else {
     // Create new notification
     toast.dismiss()
-    return toast[type](message, { ...defaultOptions, ...options })
+    return (toast as any)[type](message, { ...defaultOptions, ...options })
   }
 }
 

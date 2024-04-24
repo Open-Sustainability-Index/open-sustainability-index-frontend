@@ -2,8 +2,9 @@ import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-import { fetchCompany, fetchCompanyHistory, companySeoProps } from 'app/services/companies'
+import { fetchCompanyHistory, companySeoProps } from 'app/services/companies'
 import CompanyDetails from '../../app/components/companies/CompanyDetails'
+import { Company } from 'types/global'
 
 interface CompanyPageParams extends ParsedUrlQuery {
   companySlug: string
@@ -41,7 +42,7 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
     props: {
       ...companySeoProps(company),
       companySlug,
-      company,
+      company
     }
   }
 }
