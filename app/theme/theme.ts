@@ -1,6 +1,22 @@
 import { createTheme } from '@mui/material/styles'
 
-// Define your custom theme
+export const COLORS = {
+  BLACK: '#1c1b1f',
+  GRAY_DARK: '#838c8e',
+  GRAY_MEDIUM: '#aeaaae',
+  GRAY_LIGHTER: '#e6e1e5',
+  GRAY_LIGHT: '#f5f6f7',
+  WHITE: '#fff',
+
+  BLUE_MEDIUM: '#3F37C9',
+  BLUE_HOVER: '#5D55DF',
+
+  PINK_LIGHT: '#f9b6ff',
+  PURPLE_LIGHT: '#cd9aff',
+  PURPLE_DARK: '#ba08e6'
+}
+
+// Define custom MUI theme
 const theme = createTheme({
   palette: {
     primary: {
@@ -33,27 +49,30 @@ const theme = createTheme({
       fontWeight: 'bold'
     },
     subtitle1: {
-      color: '#4361EE',
+      color: COLORS.BLUE_MEDIUM,
       fontSize: '1.5em',
       fontWeight: 'bold',
       '@media (max-width:600px)': {
         fontSize: '1em'
       }
     }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: COLORS.BLUE_MEDIUM,
+          color: 'white',
+          borderRadius: '20px',
+          boxShadow: 'none',
+          '&:hover': {
+            backgroundColor: COLORS.BLUE_HOVER,
+            boxShadow: 'none'
+          }
+        }
+      }
+    }
   }
 })
 
 export default theme
-
-export const COLORS = {
-  BLACK: '#1c1b1f',
-  GRAY_DARK: '#838c8e',
-  GRAY_MEDIUM: '#aeaaae',
-  GRAY_LIGHTER: '#e6e1e5',
-  GRAY_LIGHT: '#f5f6f7',
-  WHITE: '#fff',
-
-  PINK_LIGHT: '#f9b6ff',
-  PURPLE_LIGHT: '#cd9aff',
-  PURPLE_DARK: '#ba08e6'
-}

@@ -5,12 +5,48 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import config from 'config/config'
 import links from './links'
-import theme from 'app/theme/theme'
+import theme, { COLORS } from 'app/theme/theme'
+import NextMUILink from './NextMUILink'
 
 const appBarTheme = createTheme({
   ...theme,
+  palette: {
+    background: {
+      default: '#FFFFFF'
+    },
+    text: {
+      primary: COLORS.BLUE_MEDIUM
+    }
+  },
   typography: {
-    fontSize: 15
+    fontSize: 15,
+    h6: {
+      '@media (max-width:600px)': {
+        fontSize: '1em'
+      }
+    }
+  },
+  components: {
+    ...theme.components,
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none'
+        }
+      }
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: COLORS.BLUE_MEDIUM,
+          textDecoration: 'none',
+          '&:hover': {
+            color: COLORS.BLUE_HOVER,
+            textDecoration: 'underline'
+          }
+        }
+      }
+    }
   }
 })
 
@@ -27,11 +63,11 @@ function Header (): React.ReactElement {
     <>
       <List>
         {links.filter(link => link.display.includes('header')).map((link) => (
-          <Link href={link.path} key={link.name} passHref>
+          <NextMUILink href={link.path} key={link.name} passHref>
             <ListItem>
               <ListItemText primary={link.name} />
             </ListItem>
-          </Link>
+          </NextMUILink>
         ))}
       </List>
       <Button href='/report' variant='contained' color='secondary' sx={{ margin: 2 }}>
@@ -48,9 +84,9 @@ function Header (): React.ReactElement {
 
   return (
     <ThemeProvider theme={appBarTheme}>
-      <AppBar position='sticky' sx={{ bgcolor: 'primary.main' }}>
+      <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
         <Toolbar>
-          <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
+          <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1, textTransform: 'uppercase', fontWeight: 'bold' }}>
             <Link href='/'>{config.appName}</Link>
           </Typography>
           {isMobile
@@ -67,11 +103,11 @@ function Header (): React.ReactElement {
             : (
               <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
                 {links.filter(link => link.display.includes('header')).map((link) => (
-                  <Link href={link.path} key={link.name} passHref>
+                  <NextMUILink href={link.path} key={link.name} passHref>
                     <ListItem>
                       <ListItemText primary={link.name} />
                     </ListItem>
-                  </Link>
+                  </NextMUILink>
                 ))}
                 <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2 }}>
                   Report Emissions
