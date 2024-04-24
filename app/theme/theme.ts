@@ -15,7 +15,12 @@ const theme = createTheme({
       'Open Sans',
       'Arial',
       'sans-serif'
-    ].join(',')
+    ].join(','),
+    subtitle1: {
+      color: '#4361EE',
+      fontSize: '24px',
+      fontWeight: 'bold'
+    }
   }
 })
 

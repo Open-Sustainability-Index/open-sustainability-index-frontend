@@ -4,6 +4,7 @@ import { ParsedUrlQuery } from 'querystring'
 
 import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
 import Placeholder from 'app/components/common/Placeholder'
+import PageTopBanner from 'app/components/page/PageTopBanner'
 
 interface HomePageParams extends ParsedUrlQuery {
   wordpressSlug: string
@@ -14,15 +15,16 @@ interface HomePageProps {
   wordpressHistory?: WordpressPost[]
   wordpressSlug?: string | null
   title: string
+  description: string
 }
 
-const HomePage = ({ wordpressPost }: HomePageProps): React.ReactElement => {
+const HomePage = ({ title, description, wordpressPost }: HomePageProps): React.ReactElement => {
   if (wordpressPost === null) {
     return <div>Wordpress page not found</div>
   } else {
     return (
       <>
-        <Placeholder title='Top Header' />
+        <PageTopBanner title={title} description={description} />
         <Placeholder title='Search Block' />
         <Placeholder title='3 Graphs' height='20em' />
         {wordpressPost?.content !== undefined && (

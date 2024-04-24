@@ -85,6 +85,8 @@
   border-color: var(--wp--preset--color--tertiary) !important;
 }
 
+/* ----- Typography ----- */
+
 .has-small-font-size {
   font-size: var(--wp--preset--font-size--small) !important;
 }
@@ -107,6 +109,12 @@
 
 .has-xxx-large-font-size {
   font-size: var(--wp--preset--font-size--xxx-large) !important;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-style: normal;
+  font-weight: 700;
+  line-height: calc(1em + 0.75rem);
 }
 
 /* ----- Columns ----- */
