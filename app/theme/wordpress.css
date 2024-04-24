@@ -3,7 +3,7 @@
   --wp--preset--color--secondary: #787670;
   --wp--preset--color--foreground: #555451;
   --wp--preset--color--background: #ffffff;
-  --wp--preset--color--tertiary: #d9d9d6;
+  --wp--preset--color--tertiary: #edf2fb; /* Figma */
 
   --wp--preset--font-size--small: 0.833rem;
   --wp--preset--font-size--medium: clamp(0.833rem, 0.833rem + ((1vw - 0.2rem) * 0.393), 1rem);
@@ -258,4 +258,10 @@ a {
 .wp-block-button.is-style-outline > .wp-block-button__link {
   border: 1px solid var(--wp--preset--color--foreground);
   padding: calc(8px - 1px) calc(32px - 1px)
+}
+
+/* ----- Images ----- */
+
+.wp-block-image img {
+  height: auto;
 }
