@@ -68,7 +68,7 @@ const headerTheme = createTheme({
 function Header (): React.ReactElement {
   const [mobileOpen, setMobileOpen] = useState(false)
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const showHamburgerMenu = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleDrawerToggle = (): void => {
     setMobileOpen(!mobileOpen)
@@ -100,11 +100,11 @@ function Header (): React.ReactElement {
   return (
     <ThemeProvider theme={headerTheme}>
       <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
-        <Toolbar>
-          <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1, textTransform: 'uppercase', fontWeight: 'bold' }}>
+        <Toolbar sx={{ minHeight: { md: '110px' } }}>
+          <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: { xs: 1 }, textTransform: 'uppercase', fontWeight: 'bold' }}>
             <NextMUILink href='/'>{config.appName}</NextMUILink>
           </Typography>
-          {isMobile
+          {showHamburgerMenu
             ? (
               <IconButton
                 color='inherit'
@@ -116,14 +116,16 @@ function Header (): React.ReactElement {
               </IconButton>
               )
             : (
-              <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-                {links.filter(link => link.display.includes('header')).map((link) => (
-                  <NextMUILink href={link.path} key={link.name} passHref>
-                    <ListItem>
-                      <ListItemText primary={link.name} />
-                    </ListItem>
-                  </NextMUILink>
-                ))}
+              <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
+                  {links.filter(link => link.display.includes('header')).map((link) => (
+                    <NextMUILink href={link.path} key={link.name} passHref>
+                      <ListItem>
+                        <ListItemText primary={link.name} />
+                      </ListItem>
+                    </NextMUILink>
+                  ))}
+                </Box>
                 <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2 }}>
                   Report Emissions
                 </Button>

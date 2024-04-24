@@ -58,7 +58,7 @@ const theme = createTheme({
       }
     },
     caption: {
-      color: '#171d3a',
+      color: '#171d3a'
     }
   },
   components: {
