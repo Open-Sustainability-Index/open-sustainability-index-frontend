@@ -21,8 +21,12 @@ const WordpressHomePage = ({ wordpressPost }: WordpressHomePageProps): React.Rea
   } else {
     return (
       <>
-        {wordpressPost?.content !== undefined &&
-          <div dangerouslySetInnerHTML={{ __html: wordpressPost.content }} />}
+        {wordpressPost?.content !== undefined && (
+          <div
+            className='wordpress-container'
+            dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
+          />
+        )}
       </>
     )
   }

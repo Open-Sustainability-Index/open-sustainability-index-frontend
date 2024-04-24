@@ -22,8 +22,12 @@ const WordpressPage = ({ wordpressPost }: WordpressPageProps): React.ReactElemen
   } else {
     return (
       <>
-        {wordpressPost?.content !== undefined &&
-          <div dangerouslySetInnerHTML={{ __html: wordpressPost.content }} />}
+        {wordpressPost?.content !== undefined && (
+          <div
+            className='wordpress-container'
+            dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
+          />
+        )}
       </>
     )
   }
