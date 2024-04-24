@@ -28,6 +28,7 @@ import React, { createContext, useContext, useState } from 'react'
 
 import makeRestRequest from 'lib/makeRestRequest'
 import toSlug from 'lib/toSlug'
+import { Company, SeoProps } from 'types/global'
 
 interface CompaniesInputProps {
   children: React.ReactNode
@@ -38,7 +39,7 @@ interface CompaniesReturnProps {
 }
 
 export const companiesSeoProps = (companies: Company[]): SeoProps => {
-  const first3CompanyNames = companies.slice(0, 3).map((company) => company.Name).join(', ')
+  const first3CompanyNames = companies.slice(0, 3).map((company) => company.company_name).join(', ')
   return {
     title: 'Global company GHG emission data per industry and year',
     description: `Get open-source global GHG emission data (scope 1/2/3) for companies such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
@@ -78,11 +79,11 @@ interface CompanyReturnProps {
   company?: Company
 }
 
-export const companyPath = (company: Company): string => `/companies/${toSlug(company.Name)}`
+export const companyPath = (company: Company): string => `/companies/${toSlug(company.company_name)}`
 
 export const companySeoProps = (company: Company): SeoProps => ({
-  title: `${company.Name} - Company emissions and industry benchmarking`,
-  description: `See GHG emission data for ${company.Name} (scope 1/2/3) per year, and company emission intensity based on t CO₂e per M USD revenue.`
+  title: `${company.company_name} - Company emissions and industry benchmarking`,
+  description: `See GHG emission data for ${company.company_name} (scope 1/2/3) per year, and company emission intensity based on t CO₂e per M USD revenue.`
 })
 
 export const fetchCompany = async (companySlug: string): Promise<Company> => {

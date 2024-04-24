@@ -1,4 +1,5 @@
 import React from 'react'
+import { Company } from 'types/global'
 
 // import { Company } from 'graphql/__generated__/graphql'
 // import { useCreateCompany } from '../../graphql/collections/company/hooks'
@@ -10,18 +11,18 @@ interface CreateCompanyFormProps {
 }
 
 const useCreateCompanyForm = (): CreateCompanyFormProps => {
-  const [inputs, setInputs] = React.useState<Partial<Company>>({ Name: '' })
+  const [inputs, setInputs] = React.useState<Partial<Company>>({ company_name: '' })
   // const createCompany = useCreateCompany()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event?.preventDefault()
-    if (inputs.Name === '') {
+    if (inputs.company_name === '') {
       window.alert('No name provided')
       return
     }
     // await createCompany({ variables: { input: { company: inputs } } })
     // Clear input form when done
-    setInputs({ Name: '' })
+    setInputs({ company_name: '' })
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -41,7 +42,7 @@ const CreateCompanyForm = (): React.ReactElement => {
         placeholder='Enter a company name'
         name='name'
         required
-        value={inputs.Name}
+        value={inputs.company_name}
         onChange={handleInputChange}
       />
       <button type='submit'>Add company</button>

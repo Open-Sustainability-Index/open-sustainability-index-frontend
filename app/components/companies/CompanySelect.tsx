@@ -4,6 +4,7 @@ import { Button, Box, Menu, MenuItem } from '@mui/material'
 // import MoreVertIcon from '@mui/icons-material/MoreVert'
 import BusinessIcon from '@mui/icons-material/Business'
 import CheckIcon from '@mui/icons-material/Check'
+import { Company } from 'types/global'
 
 // import { useListCompanies } from 'graphql/collections/company/hooks'
 // import { Company } from 'graphql/__generated__/graphql'
@@ -38,7 +39,7 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
 
   const isNoneSelected = useMemo(
     () => {
-      const firstCompanyId = allCompanies?.allCompaniesList?.[0]?.Name
+      const firstCompanyId = allCompanies?.allCompaniesList?.[0]?.company_name
       // Auto-select first company
       if (firstCompanyId !== undefined) {
         setSelectedCompanyId?.(firstCompanyId)
@@ -52,8 +53,8 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
 
   const selectedCompaniesText = useMemo(
     () => availableCompanies
-      ?.find((currentCompany) => (typeof selectedCompanyId !== 'undefined' ? selectedCompanyId : SELECTED_STOCK_NONE) === currentCompany?.Name)
-      ?.Name,
+      ?.find((currentCompany) => (typeof selectedCompanyId !== 'undefined' ? selectedCompanyId : SELECTED_STOCK_NONE) === currentCompany?.company_name)
+      ?.company_name,
     [selectedCompanyId, availableCompanies]
   )
 
@@ -80,7 +81,7 @@ export default function CompanySelect ({ selectedCompanyId, setSelectedCompanyId
       >
         {availableCompanies?.map((availableCompany) => (
           <CompanyButton
-            key={availableCompany?.Name}
+            key={availableCompany?.company_name}
             company={availableCompany}
             handleClose={handleClose}
             selectedCompanyId={selectedCompanyId}
@@ -100,10 +101,10 @@ interface CompanyButtonProps {
 }
 
 const CompanyButton = ({ company, handleClose, selectedCompanyId, setSelectedCompanyId }: CompanyButtonProps): React.ReactElement => {
-  const isSelected = selectedCompanyId === company.Name
+  const isSelected = selectedCompanyId === company.company_name
 
   const handleClickOnCompany = (): void => {
-    setSelectedCompanyId?.(company.Name ?? -1)
+    setSelectedCompanyId?.(company.company_name ?? -1)
     // void router.push(config.startPagePath as string)
     handleClose()
   }
@@ -111,7 +112,7 @@ const CompanyButton = ({ company, handleClose, selectedCompanyId, setSelectedCom
   return (
     <MenuItem onClick={handleClickOnCompany}>
       {isSelected ? <CheckIcon /> : null}
-      {company.Name}
+      {company.company_name}
     </MenuItem>
   )
 }

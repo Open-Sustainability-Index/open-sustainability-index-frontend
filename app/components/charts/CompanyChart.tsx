@@ -8,12 +8,13 @@ import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart'
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis'
 
 import { COLORS } from 'app/theme/theme'
+import { Company } from 'types/global'
 
-const CompanyChart = ({ companyHistory }: { companyHistory: Company[] }): React.ReactElement | null => {
+const CompanyChart = ({ company }: { company: Company }): React.ReactElement | null => {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  if (companyHistory === undefined || companyHistory.length === 0) {
+  if (company === undefined || company.emissions.length === 0) {
     return null
   }
 
@@ -22,11 +23,11 @@ const CompanyChart = ({ companyHistory }: { companyHistory: Company[] }): React.
     return parseInt(value?.replace(/\s/g, ''))
   }
 
-  const dataLabels = companyHistory.reverse().map((company) => company.Year)
-  const emissions = companyHistory.reverse().map((company) => cleanValue(company['Scope 1\n(t CO₂e)']) / 100)
-  const revenue = companyHistory.reverse().map((company) => cleanValue(company['Revenue (million)']))
+  const dataLabels = company.emissions.map((company) => company.year)
+  const emissions = company.emissions.map((company) => cleanValue(company.scope_1) / 100)
+  const revenue = company.emissions.map((company) => cleanValue(company.revenue))
   const intensity = emissions.map((emission, index) => emission / revenue[index] * 50000)
-  console.log('companyHistory:', { emissions, revenue, intensity }, companyHistory)
+  console.log('companyHistory:', { emissions, revenue, intensity }, company)
 
   // Gather data values and labels
   const dataValues: AllSeriesType[] = [
