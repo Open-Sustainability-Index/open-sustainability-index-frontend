@@ -16,10 +16,29 @@ const theme = createTheme({
       'Arial',
       'sans-serif'
     ].join(','),
+    fontSize: 18,
+
+    h1: {
+      fontWeight: 'bold',
+      fontSize: '2em',
+      color: 'black',
+      '@media (max-width:600px)': {
+        fontSize: '1.2em'
+      }
+    },
+    h2: {
+      fontWeight: 'bold'
+    },
+    h3: {
+      fontWeight: 'bold'
+    },
     subtitle1: {
       color: '#4361EE',
-      fontSize: '24px',
-      fontWeight: 'bold'
+      fontSize: '1.5em',
+      fontWeight: 'bold',
+      '@media (max-width:600px)': {
+        fontSize: '1em'
+      }
     }
   }
 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
+import { Typography } from '@mui/material'
 
 import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
 import links from 'app/components/navigation/links'
@@ -18,12 +19,12 @@ interface WordpressPageProps {
 
 const WordpressPage = ({ wordpressPost }: WordpressPageProps): React.ReactElement => {
   if (wordpressPost === null) {
-    return <div>Wordpress page not found</div>
+    return <Typography>Wordpress page not found</Typography>
   } else {
     return (
       <>
         {wordpressPost?.content !== undefined && (
-          <div
+          <Typography
             className='wordpress-container'
             dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
           />

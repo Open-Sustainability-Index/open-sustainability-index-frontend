@@ -14,10 +14,10 @@ const PageTopBanner = ({
         px: 3
       }}
     >
-      <Typography variant='subtitle1' component='h1'>
+      <Typography variant='subtitle1' component='h2'>
         {title}
       </Typography>
-      <Typography variant='h2' sx={{ marginTop: '8px', color: 'black', fontSize: '36px' }}>
+      <Typography variant='h1' sx={{ marginTop: '8px' }}>
         {description}
       </Typography>
     </Box>
