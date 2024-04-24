@@ -214,14 +214,14 @@
 
 /* ----- Links ----- */
 
-a {
+.wordpress-container a {
   color: var(--wp--preset--color--primary);
   text-decoration-color: var(--wp--preset--color--primary);
   text-decoration-thickness: 0.5px !important;
   text-underline-offset: 0.1em
 }
 
-a:hover:not(.wp-element-button) {
+.wordpress-container a:hover:not(.wp-element-button) {
   text-decoration: underline;
 }
 
