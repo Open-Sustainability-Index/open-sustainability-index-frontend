@@ -31,6 +31,7 @@ const HomePage = ({ title, description, wordpressPost }: HomePageProps): React.R
         {wordpressPost?.content !== undefined && (
           <Typography
             className='wordpress-container'
+            component='div'
             dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
           />
         )}

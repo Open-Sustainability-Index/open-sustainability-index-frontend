@@ -5,6 +5,7 @@ import { Typography } from '@mui/material'
 
 import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
 import links from 'app/components/navigation/links'
+import PageTopBanner from 'app/components/page/PageTopBanner'
 
 interface WordpressPageParams extends ParsedUrlQuery {
   wordpressSlug: string
@@ -15,17 +16,20 @@ interface WordpressPageProps {
   wordpressHistory?: WordpressPost[]
   wordpressSlug?: string | null
   title: string
+  description: string
 }
 
-const WordpressPage = ({ wordpressPost }: WordpressPageProps): React.ReactElement => {
+const WordpressPage = ({ title, description, wordpressPost }: WordpressPageProps): React.ReactElement => {
   if (wordpressPost === null) {
     return <Typography>Wordpress page not found</Typography>
   } else {
     return (
       <>
+        <PageTopBanner title={title} description={description} />
         {wordpressPost?.content !== undefined && (
           <Typography
             className='wordpress-container'
+            component='div'
             dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
           />
         )}
