@@ -1,7 +1,7 @@
 import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { Typography } from '@mui/material'
+import { Typography, Container } from '@mui/material'
 
 import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
 import links from 'app/components/navigation/links'
@@ -27,11 +27,13 @@ const WordpressPage = ({ title, description, wordpressPost }: WordpressPageProps
       <>
         <PageTopBanner title={title} description={description} />
         {wordpressPost?.content !== undefined && (
-          <Typography
-            className='wordpress-container'
-            component='div'
-            dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
-          />
+          <Container>
+            <Typography
+              className='wordpress-container entry-content wp-block-post-content is-layout-constrained wp-block-post-content-is-layout-constrained' // has-global-padding
+              component='div'
+              dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
+            />
+          </Container>
         )}
       </>
     )

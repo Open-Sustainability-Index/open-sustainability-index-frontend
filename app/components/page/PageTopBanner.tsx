@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 
 interface PageTopBannerProps {
   title?: string
@@ -21,13 +21,15 @@ const PageTopBanner = ({
         py: 6
       }}
     >
-      <Typography variant='subtitle1' component='h2'>
-        {title}
-      </Typography>
-      <Typography variant='h1' sx={{ marginTop: '8px' }}>
-        {description}
-      </Typography>
-      {children}
+      <Container>
+        <Typography variant='subtitle1' component='h2'>
+          {title}
+        </Typography>
+        <Typography variant='h1' sx={{ marginTop: '8px' }}>
+          {description}
+        </Typography>
+        {children}
+      </Container>
     </Box>
   )
 }

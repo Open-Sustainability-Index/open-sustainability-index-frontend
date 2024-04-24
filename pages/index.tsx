@@ -34,7 +34,7 @@ const HomePage = ({ title, description, wordpressPost }: HomePageProps): React.R
         <SearchBlock />
         {wordpressPost?.content !== undefined && (
           <Typography
-            className='wordpress-container'
+            className='wordpress-container entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained'
             component='div'
             dangerouslySetInnerHTML={{ __html: wordpressPost.content }}
           />
