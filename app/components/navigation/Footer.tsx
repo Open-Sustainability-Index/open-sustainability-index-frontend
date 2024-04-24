@@ -1,23 +1,72 @@
-import { Box, Typography, Link } from '@mui/material'
 import React from 'react'
+import {
+  Grid,
+  Typography,
+  Box,
+  createTheme,
+  ThemeProvider
+} from '@mui/material'
 
 import config from 'config/config'
 import links from './links'
+import theme, { COLORS } from 'app/theme/theme'
+import NextMUILink from './NextMUILink'
 
-function Footer (): React.ReactElement {
+const footerTheme = createTheme({
+  ...theme,
+  palette: {
+    background: {
+      default: '#FFFFFF'
+    },
+    text: {
+      primary: COLORS.BLUE_MEDIUM
+    }
+  },
+  typography: {
+    fontSize: 15
+  },
+  components: {
+    ...theme.components,
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: 'inherit',
+          textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'underline'
+          }
+        }
+      }
+    }
+  }
+})
+
+const Footer = () => {
   return (
-    <Box sx={{ bgcolor: 'primary.main', p: 2, mt: 'auto', color: 'white', textAlign: 'center' }}>
-      <Typography variant='h6'>{config.appName}</Typography>
-      <Typography variant='body1'>
-        {links.filter(link => link.display.includes('footer')).map((link) => (
-          <Link key={link.name} href={link.path} color='secondary' style={{ marginRight: '0.5em' }}>
-            {link.name}
-          </Link>
-        ))}
-      </Typography>
-      <Typography variant='body2'>hello@climatewiki.io</Typography>
-      <Typography variant='body2'>+46 (8) 880 880</Typography>
-    </Box>
+    <ThemeProvider theme={footerTheme}>
+      <Box sx={{ backgroundColor: 'white', color: '#8C8C8C', px: 3, py: 10, textAlign: { sm: 'left', xs: 'center' } }}>
+        <Grid container spacing={2} justifyContent='space-around'>
+          <Grid item xs={12} sm={3}>
+            <Typography variant='h6' color='inherit' sx={{ flexGrow: 1, textTransform: 'uppercase', fontWeight: 'bold' }}>
+              <NextMUILink href='/'>{config.appName}</NextMUILink>
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            {links.map((link) => (
+              <Typography key={link.name}>
+                <NextMUILink href={link.path} color='inherit' sx={{ textDecoration: 'none' }}>
+                  {link.name}
+                </NextMUILink>
+              </Typography>
+            ))}
+          </Grid>
+        </Grid>
+        <Typography variant='caption' display='block' gutterBottom sx={{ textAlign: 'center', marginTop: '2em' }}>
+          Licensed under CC BY-SA 4.0
+        </Typography>
+      </Box>
+    </ThemeProvider>
   )
 }
 

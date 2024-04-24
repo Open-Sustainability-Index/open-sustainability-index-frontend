@@ -1,6 +1,20 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
-import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery, createTheme, ThemeProvider } from '@mui/material'
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  useTheme,
+  useMediaQuery,
+  createTheme,
+  ThemeProvider
+} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
 import config from 'config/config'
@@ -8,7 +22,7 @@ import links from './links'
 import theme, { COLORS } from 'app/theme/theme'
 import NextMUILink from './NextMUILink'
 
-const appBarTheme = createTheme({
+const headerTheme = createTheme({
   ...theme,
   palette: {
     background: {
@@ -84,11 +98,11 @@ function Header (): React.ReactElement {
   )
 
   return (
-    <ThemeProvider theme={appBarTheme}>
+    <ThemeProvider theme={headerTheme}>
       <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
         <Toolbar>
           <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1, textTransform: 'uppercase', fontWeight: 'bold' }}>
-            <Link href='/'>{config.appName}</Link>
+            <NextMUILink href='/'>{config.appName}</NextMUILink>
           </Typography>
           {isMobile
             ? (
