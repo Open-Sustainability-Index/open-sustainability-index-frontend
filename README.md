@@ -1,4 +1,4 @@
-# Climate Wiki (frontend)
+# Open Sustainability Index (frontend)
 
 ## How to use
 

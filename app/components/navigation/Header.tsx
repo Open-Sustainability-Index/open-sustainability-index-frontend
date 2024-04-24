@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
+import config from 'config/config'
 import links from './links'
 
 function Header (): React.ReactElement {
@@ -41,7 +42,7 @@ function Header (): React.ReactElement {
     <AppBar position='sticky' sx={{ bgcolor: 'primary.main' }}>
       <Toolbar>
         <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
-          <Link href='/'>ClimateWiki</Link>
+          <Link href='/'>{config.appName}</Link>
         </Typography>
         {isMobile
           ? (
