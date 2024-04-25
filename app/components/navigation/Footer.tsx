@@ -23,6 +23,7 @@ const footerTheme = createTheme({
     }
   },
   typography: {
+    ...theme.typography,
     fontSize: 15
   },
   components: {
