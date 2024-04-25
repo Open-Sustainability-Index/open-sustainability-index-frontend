@@ -16,7 +16,7 @@ interface PageProps {
 
 export interface Industry {
   name: string
-  slug: string
+  slug?: string
 }
 
 export interface Company {
