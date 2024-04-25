@@ -17,7 +17,7 @@ export async function getStaticProps (): Promise<GetStaticPropsResult<PageProps>
   return {
     props: {
       title: 'Report emissions',
-      description: `${config.appName} enables companies to self-report and verify their sustainability data, offering a space where community-edited content meets corporate transparency.`,
+      description: `${config.appName as string} enables companies to self-report and verify their sustainability data, offering a space where community-edited content meets corporate transparency.`,
       showFooter: false
     }
   }
