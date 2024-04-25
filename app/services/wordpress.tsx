@@ -28,7 +28,7 @@ export interface WordpressPost {
   date: string
   dateFormatted: string
   url: string
-  articleImage: string
+  imageUrl: string
   bigImageUrl: string
   content: string
 }
@@ -44,7 +44,7 @@ const fixWordpressPost = post => {
     date: new Date(post.date).toString(),
     dateFormatted: formatDate(new Date(post.date)),
     // url: getURL(post),
-    articleImage: post.featured_image || getAttachmentImages(post).medium || null,
+    imageUrl: post.featured_image || /* getAttachmentImages(post).medium || */ null,
     bigImageUrl: post.featured_image || getAttachmentImages(post).large || null
   }
 }
@@ -102,5 +102,5 @@ export const getAllPosts = async function (options = {}): Promise<WordpressPost[
 export const postPageProps = (post: WordpressPost): PageProps => ({
   title: post.title,
   description: post.description,
-  imageUrl: post.articleImage
+  imageUrl: post.imageUrl
 })
