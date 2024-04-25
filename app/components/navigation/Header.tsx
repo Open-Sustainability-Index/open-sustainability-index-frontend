@@ -33,6 +33,7 @@ const headerTheme = createTheme({
     }
   },
   typography: {
+    ...theme.typography,
     fontSize: 15,
     h6: {
       '@media (max-width:600px)': {
