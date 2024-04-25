@@ -9,7 +9,9 @@ import {
   Paper,
   Chip,
   Stack,
-  Pagination
+  Pagination,
+  useTheme,
+  useMediaQuery
 } from '@mui/material'
 import { useRouter } from 'next/router'
 
@@ -23,6 +25,7 @@ export interface DataTableHeader {
   width?: string
   sortable?: boolean
   statusField?: string // Value in row.statusField can be: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+  displayOnMobile?: boolean
 }
 
 type DataTableRow = Record<string, any>
@@ -42,7 +45,10 @@ const DataTable = ({
   detailPageLink,
   pageNr = 1
 }: DataTableProps): React.ReactElement => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
+  const headersToDisplay = headers.filter((header) => header.displayOnMobile === true || (!isMobile))
 
   const handleRowClick = (row: DataTableRow): void => {
     if (row[rowKeyField as keyof typeof row] !== undefined && detailPageLink !== undefined) {
@@ -59,10 +65,10 @@ const DataTable = ({
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+        <Table aria-label='simple table'>
           <TableHead sx={{ backgroundColor: COLORS.BLUE_LIGHT }}>
             <TableRow>
-              {headers.map((header, index) => (
+              {headersToDisplay.map((header, index) => (
                 <DataTableHeaderCell
                   key={index}
                   header={header}
@@ -78,7 +84,7 @@ const DataTable = ({
                 onClick={() => handleRowClick(row)}
                 style={{ cursor: 'pointer' }}
               >
-                {headers.map((header, index) => (
+                {headersToDisplay.map((header, index) => (
                   <DataTableCell
                     key={index}
                     index={index}

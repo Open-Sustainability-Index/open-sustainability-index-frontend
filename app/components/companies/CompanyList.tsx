@@ -7,7 +7,8 @@ import SearchBlock from '../navigation/SearchBlock'
 const headers: readonly DataTableHeader[] = [
   {
     field: 'company_name',
-    label: 'Company'
+    label: 'Company',
+    displayOnMobile: true
   },
   {
     field: 'jurisdiction',
@@ -27,7 +28,8 @@ const headers: readonly DataTableHeader[] = [
     field: 'netZero',
     label: 'Net Zero',
     type: 'status',
-    statusField: 'netZeroStatus'
+    statusField: 'netZeroStatus',
+    displayOnMobile: true
   },
   {
     field: 'emissions',
@@ -45,7 +47,8 @@ const headers: readonly DataTableHeader[] = [
     field: 'intensity',
     label: 'Intensity',
     type: 'number',
-    align: 'right'
+    align: 'right',
+    displayOnMobile: true
   },
   {
     field: 'year',
