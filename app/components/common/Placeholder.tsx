@@ -7,7 +7,7 @@ interface PlaceholderProps {
   height?: string
 }
 
-const Placeholder = ({ title = 'Placeholder', height = '10em' }: PlaceholderProps) => {
+const Placeholder = ({ title = 'Placeholder', height = '10em' }: PlaceholderProps): React.ReactElement => {
   return (
     <Box
       sx={{

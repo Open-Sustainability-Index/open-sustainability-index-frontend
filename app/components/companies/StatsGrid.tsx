@@ -1,7 +1,7 @@
 import { Grid, Typography, Box } from '@mui/material'
 import { Emission } from 'types/global'
 
-export default function StatsGrid ({ emission }: { emission: Emission }) {
+export default function StatsGrid ({ emission }: { emission: Emission }): React.ReactElement {
   return (
     <Box sx={{ flexGrow: 1 }} pb={3}>
       <Grid container spacing={4}>
@@ -15,7 +15,7 @@ export default function StatsGrid ({ emission }: { emission: Emission }) {
   )
 };
 
-function StatsBlock ({ value, description }: { value: string | number, description: string }) {
+function StatsBlock ({ value, description }: { value: string | number, description: string }): React.ReactElement {
   return (
     <Grid item xs={6} sm={3} mt={6}>
       <Typography variant='h6' fontWeight='bold' color='primary'>

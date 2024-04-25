@@ -41,7 +41,7 @@ const footerTheme = createTheme({
   }
 })
 
-const Footer = () => {
+const Footer = (): React.ReactElement => {
   return (
     <ThemeProvider theme={footerTheme}>
       <Box sx={{ backgroundColor: 'white', color: '#8C8C8C', px: 3, py: 10, textAlign: { sm: 'left', xs: 'center' } }}>

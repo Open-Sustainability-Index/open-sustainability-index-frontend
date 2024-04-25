@@ -7,7 +7,7 @@ interface NextMUILinkProps {
   [key: string]: any
 }
 
-const NextMUILink = ({ href, children, ...props }: NextMUILinkProps) => {
+const NextMUILink = ({ href, children, ...props }: NextMUILinkProps): React.ReactElement => {
   return (
     <NextLink href={href} passHref>
       <MUILink component='span' {...props}>{children}</MUILink>

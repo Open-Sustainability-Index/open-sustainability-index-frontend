@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 // interface SearchBlockProps {
 // }
 
-const SearchBlock = () => {
+const SearchBlock = (): React.ReactElement => {
   return (
     <Box
       sx={{

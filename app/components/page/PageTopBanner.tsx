@@ -11,7 +11,7 @@ const PageTopBanner = ({
   title = 'Welcome',
   description = 'Welcome to a world of open, accessible, transparent, actionable sustainability data. We just launched.',
   children
-}: PageTopBannerProps) => {
+}: PageTopBannerProps): React.ReactElement => {
   return (
     <Box
       sx={{
