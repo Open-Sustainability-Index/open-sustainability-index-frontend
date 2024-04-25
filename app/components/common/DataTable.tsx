@@ -43,7 +43,7 @@ const DataTable = ({
   data,
   rowKeyField,
   detailPageLink,
-  pageNr = 1
+  pageNr
 }: DataTableProps): React.ReactElement => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
@@ -98,14 +98,16 @@ const DataTable = ({
         </Table>
       </TableContainer>
 
-      <Stack spacing={2}>
-        <Pagination
-          sx={{ display: 'flex', justifyContent: 'center' }}
-          count={Math.max(pageNr + 1, 10)}
-          page={pageNr}
-          onChange={handlePageClick}
-        />
-      </Stack>
+      {pageNr !== undefined && (
+        <Stack spacing={2} mt={1}>
+          <Pagination
+            sx={{ display: 'flex', justifyContent: 'center' }}
+            count={Math.max(pageNr + 1, 10)}
+            page={pageNr}
+            onChange={handlePageClick}
+          />
+        </Stack>
+      )}
     </>
   )
 }

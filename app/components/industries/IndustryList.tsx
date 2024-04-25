@@ -21,7 +21,6 @@ const IndustryList = ({ industries, pageNr }: { industries?: Industry[], pageNr:
         headers={headers}
         rowKeyField='slug'
         detailPageLink='/companies?industry=:key'
-        pageNr={pageNr}
       />
     </>
   )
