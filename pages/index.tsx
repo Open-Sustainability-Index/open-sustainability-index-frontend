@@ -52,6 +52,7 @@ export async function getStaticProps (context: GetStaticPropsContext<HomePagePar
   return {
     props: {
       ...postSeoProps(wordpressPost),
+      title: null, // To force tagline to show in PageHead
       wordpressSlug,
       wordpressPost
     },
