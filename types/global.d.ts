@@ -14,6 +14,11 @@ interface PageProps {
   showFooter?: boolean
 }
 
+export interface Industry {
+  name: string
+  slug: string
+}
+
 export interface Company {
   company_name: string
   industry: null
