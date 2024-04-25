@@ -55,7 +55,7 @@ const headers: readonly DataTableHeader[] = [
   }
 ]
 
-const CompanyList = ({ companies }: { companies?: Company[] }): React.ReactElement | string => {
+const CompanyList = ({ companies, pageNr }: { companies?: Company[], pageNr: number }): React.ReactElement | string => {
   return (
     <>
       <SearchBlock />
@@ -64,6 +64,7 @@ const CompanyList = ({ companies }: { companies?: Company[] }): React.ReactEleme
         headers={headers}
         rowKeyField='slug'
         detailPageLink='/companies/:key'
+        pageNr={pageNr}
       />
     </>
   )

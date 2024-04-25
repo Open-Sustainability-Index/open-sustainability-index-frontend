@@ -1,5 +1,16 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip } from '@mui/material'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Chip,
+  Stack,
+  Pagination
+} from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { COLORS } from 'app/theme/theme'
@@ -21,52 +32,75 @@ interface DataTableProps {
   data: readonly DataTableRow[]
   rowKeyField?: string
   detailPageLink?: string
+  pageNr?: number
 }
 
-const DataTable = ({ headers, data, rowKeyField, detailPageLink }: DataTableProps): React.ReactElement => {
+const DataTable = ({
+  headers,
+  data,
+  rowKeyField,
+  detailPageLink,
+  pageNr = 1
+}: DataTableProps): React.ReactElement => {
   const router = useRouter()
 
   const handleRowClick = (row: DataTableRow): void => {
-    console.log('Row clicked:', row)
     if (row[rowKeyField as keyof typeof row] !== undefined && detailPageLink !== undefined) {
-      router.push(detailPageLink.replace(':key', row[rowKeyField as keyof typeof row] as string))
+      void router.push(detailPageLink.replace(':key', row[rowKeyField as keyof typeof row] as string))
+    }
+  }
+
+  const handlePageClick = (event: any, value: number): void => {
+    if (detailPageLink !== undefined) {
+      void router.push((detailPageLink.replace(':key', `p/${value}`)).replace('/p/1', ''))
     }
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-        <TableHead sx={{ backgroundColor: COLORS.BLUE_LIGHT }}>
-          <TableRow>
-            {headers.map((header, index) => (
-              <DataTableHeaderCell
-                key={index}
-                header={header}
-              />
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row, index) => (
-            <TableRow
-              key={index}
-              hover
-              onClick={() => handleRowClick(row)}
-              style={{ cursor: 'pointer' }}
-            >
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <TableHead sx={{ backgroundColor: COLORS.BLUE_LIGHT }}>
+            <TableRow>
               {headers.map((header, index) => (
-                <DataTableCell
+                <DataTableHeaderCell
                   key={index}
-                  index={index}
-                  row={row}
                   header={header}
                 />
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.map((row, index) => (
+              <TableRow
+                key={index}
+                hover
+                onClick={() => handleRowClick(row)}
+                style={{ cursor: 'pointer' }}
+              >
+                {headers.map((header, index) => (
+                  <DataTableCell
+                    key={index}
+                    index={index}
+                    row={row}
+                    header={header}
+                  />
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Stack spacing={2}>
+        <Pagination
+          sx={{ display: 'flex', justifyContent: 'center' }}
+          count={Math.max(pageNr + 1, 10)}
+          page={pageNr}
+          onChange={handlePageClick}
+        />
+      </Stack>
+    </>
   )
 }
 
