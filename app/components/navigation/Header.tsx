@@ -78,7 +78,7 @@ function Header (): React.ReactElement {
     <>
       <List>
         {links.filter(link => link.display.includes('header')).map((link) => (
-          <NextMUILink href={link.path} key={link.name} passHref>
+          <NextMUILink href={link.path} key={link.name}>
             <ListItem>
               <ListItemText primary={link.name} />
             </ListItem>
@@ -119,7 +119,7 @@ function Header (): React.ReactElement {
               <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
                   {links.filter(link => link.display.includes('header')).map((link) => (
-                    <NextMUILink href={link.path} key={link.name} passHref>
+                    <NextMUILink href={link.path} key={link.name}>
                       <ListItem>
                         <ListItemText primary={link.name} />
                       </ListItem>
