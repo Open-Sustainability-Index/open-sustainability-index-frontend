@@ -47,7 +47,7 @@ export const companiesSeoProps = (companies: Company[]): SeoProps => {
 }
 
 export const fetchCompanies = async (): Promise<Company[]> => {
-  const results = await makeRestRequest('GET', 'companies')
+  const results = await makeRestRequest('GET', 'companies?limit=1000&offset=0')
   return results?.data
 }
 
