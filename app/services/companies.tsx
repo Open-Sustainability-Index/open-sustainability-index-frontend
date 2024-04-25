@@ -26,7 +26,7 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
-import { Company, SeoProps } from 'types/global'
+import { Company, PageProps } from 'types/global'
 import makeRestRequest from 'lib/makeRestRequest'
 import toSlug from 'lib/toSlug'
 import { titleCase } from 'lib/strings'
@@ -39,7 +39,7 @@ interface CompaniesReturnProps {
   companies?: Company[]
 }
 
-export const companiesSeoProps = (companies: Company[]): SeoProps => {
+export const companiesPageProps = (companies: Company[]): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   return {
     title: 'Global company GHG emission data per industry and year',
@@ -83,7 +83,7 @@ interface CompanyReturnProps {
 
 export const companyPath = (company: Company): string => `/companies/${toSlug(company.company_name)}`
 
-export const companySeoProps = (company: Company): SeoProps => ({
+export const companyPageProps = (company: Company): PageProps => ({
   title: `${company.company_name} - Company emissions and industry benchmarking`,
   description: `See GHG emission data for ${company.company_name} (scope 1/2/3) per year, and company emission intensity based on t CO₂e per M USD revenue.`
 })

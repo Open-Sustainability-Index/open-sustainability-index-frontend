@@ -99,7 +99,7 @@ export const getAllPosts = async function (options = {}): Promise<WordpressPost[
   return articleArray.flat()
 }
 
-export const postSeoProps = (post: WordpressPost): SeoProps => ({
+export const postPageProps = (post: WordpressPost): PageProps => ({
   title: post.title,
   description: post.description,
   imageUrl: post.articleImage

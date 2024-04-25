@@ -2,7 +2,7 @@ import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-import { fetchCompanies, companiesSeoProps } from 'app/services/companies'
+import { fetchCompanies, companiesPageProps } from 'app/services/companies'
 
 import { Company } from 'types/global'
 import { titleCase, parseFloatSpaces } from 'lib/strings'
@@ -69,7 +69,7 @@ export const getStaticProps = async (context: GetStaticPropsContext<CompanyListP
   // console.log('cleanedCompanies:', JSON.stringify(cleanedCompanies, null, 2))
   return {
     props: {
-      ...companiesSeoProps(pageCompanies),
+      ...companiesPageProps(pageCompanies),
       pageNr,
       companies: cleanedCompanies
     }

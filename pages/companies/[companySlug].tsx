@@ -2,7 +2,7 @@ import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-import { fetchCompanyHistory, companySeoProps } from 'app/services/companies'
+import { fetchCompanyHistory, companyPageProps } from 'app/services/companies'
 import CompanyDetails from '../../app/components/companies/CompanyDetails'
 import { Company } from 'types/global'
 
@@ -40,7 +40,7 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
   const company = await fetchCompanyHistory(companySlug as string)
   return {
     props: {
-      ...companySeoProps(company),
+      ...companyPageProps(company),
       companySlug,
       company
     }

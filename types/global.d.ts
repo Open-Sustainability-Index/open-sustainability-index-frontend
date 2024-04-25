@@ -7,10 +7,11 @@ declare global {
   }
 }
 
-interface SeoProps {
+interface PageProps {
   title: string
   description: string
   imageUrl?: string
+  showFooter?: boolean
 }
 
 export interface Company {

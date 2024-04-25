@@ -3,7 +3,7 @@ import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { Typography } from '@mui/material'
 
-import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
+import { getPostDetails, postPageProps, WordpressPost } from 'app/services/wordpress'
 // import Placeholder from 'app/components/common/Placeholder'
 import SearchBlock from 'app/components/navigation/SearchBlock'
 import PageTopBanner from 'app/components/page/PageTopBanner'
@@ -51,7 +51,7 @@ export async function getStaticProps (context: GetStaticPropsContext<HomePagePar
   const wordpressPost = await getPostDetails(wordpressSlug as string)
   return {
     props: {
-      ...postSeoProps(wordpressPost),
+      ...postPageProps(wordpressPost),
       title: null, // To force tagline to show in PageHead
       wordpressSlug,
       wordpressPost

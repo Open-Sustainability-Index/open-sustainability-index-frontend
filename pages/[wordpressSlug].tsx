@@ -3,7 +3,7 @@ import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext
 import { ParsedUrlQuery } from 'querystring'
 import { Typography, Container } from '@mui/material'
 
-import { getPostDetails, postSeoProps, WordpressPost } from 'app/services/wordpress'
+import { getPostDetails, postPageProps, WordpressPost } from 'app/services/wordpress'
 import links from 'app/components/navigation/links'
 import PageTopBanner from 'app/components/page/PageTopBanner'
 
@@ -53,7 +53,7 @@ export async function getStaticProps (context: GetStaticPropsContext<WordpressPa
   }
   return {
     props: {
-      ...postSeoProps(wordpressPost),
+      ...postPageProps(wordpressPost),
       wordpressSlug,
       wordpressPost
     },
