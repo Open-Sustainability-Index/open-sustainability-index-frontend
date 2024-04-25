@@ -26,9 +26,10 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
+import { Company, SeoProps } from 'types/global'
 import makeRestRequest from 'lib/makeRestRequest'
 import toSlug from 'lib/toSlug'
-import { Company, SeoProps } from 'types/global'
+import { titleCase } from 'lib/strings'
 
 interface CompaniesInputProps {
   children: React.ReactNode
@@ -39,7 +40,7 @@ interface CompaniesReturnProps {
 }
 
 export const companiesSeoProps = (companies: Company[]): SeoProps => {
-  const first3CompanyNames = companies.slice(0, 3).map((company) => company.company_name).join(', ')
+  const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   return {
     title: 'Global company GHG emission data per industry and year',
     description: `Get open-source global GHG emission data (scope 1/2/3) for companies such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
