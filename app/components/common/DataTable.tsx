@@ -52,7 +52,7 @@ const DataTable = ({
 
   const handlePageClick = (event: any, value: number): void => {
     if (detailPageLink !== undefined) {
-      void router.push((detailPageLink.replace(':key', `p/${value}`)).replace('/p/1', ''))
+      void router.push((detailPageLink.replace(':key', `p/${value}`)).replace(/\/p\/1$/, ''))
     }
   }
 

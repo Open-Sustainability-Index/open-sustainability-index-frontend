@@ -60,12 +60,11 @@ const formatCompanyData = (company: Company): any => {
 
 export const getStaticProps = async (context: GetStaticPropsContext<CompanyListPageParams>): Promise<GetStaticPropsResult<{}>> => {
   const pageNr = parseInt(context.params?.pageNr ?? '1')
-  console.log('pageNr:', pageNr)
   const pageCompanies = await fetchCompanies(pageNr)
   const companiesWithData = pageCompanies.filter(company => company.emissions.length > 0)
   const companiesWithoutData = pageCompanies.filter(company => company.emissions.length === 0)
   const cleanedCompanies = [...companiesWithData, ...companiesWithoutData].map(formatCompanyData)
-  console.log('companiesWithData:', companiesWithData.length, companiesWithoutData.length)
+  // console.log('companiesWithData:', companiesWithData.length, companiesWithoutData.length)
   // console.log('companies:', JSON.stringify(companies.filter(company => company.emissions.length > 0), null, 2))
   // console.log('cleanedCompanies:', JSON.stringify(cleanedCompanies, null, 2))
   return {

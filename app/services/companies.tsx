@@ -47,8 +47,7 @@ export const companiesSeoProps = (companies: Company[]): SeoProps => {
 }
 
 export const fetchCompanies = async (pageNr = 1, pageSize = 20): Promise<Company[]> => {
-  const url = `companies?limit=${pageSize}&offset=${pageNr - 1}`
-  console.log('url:', url)
+  const url = `companies?limit=${pageSize}&offset=${(pageNr - 1) * pageSize}`
   const results = await makeRestRequest('GET', url)
   return results?.data
 }
