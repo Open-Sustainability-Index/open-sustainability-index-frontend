@@ -1,5 +1,4 @@
 import { Industry, PageProps } from 'types/global'
-import { titleCase } from 'lib/strings'
 
 export const industriesPageProps = (industries: Industry[]): PageProps => {
   const first3IndustryNames = industries.slice(0, 3).map((industry) => industry.name).join(', ')
