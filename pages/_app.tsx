@@ -16,6 +16,7 @@ Router.events.on('routeChangeComplete', path => googlePageview(path))
 
 export default function App ({ Component, pageProps, router }: AppProps): React.ReactElement {
   // this.props (Server + Client): Component, err, pageProps, router
+  const { showFooter } = pageProps
   return (
     <ThemeProvider theme={theme}>
       <PageHead {...pageProps} />
@@ -24,7 +25,9 @@ export default function App ({ Component, pageProps, router }: AppProps): React.
         {...pageProps}
         {...router}
       />
-      <Footer />
+      {showFooter !== false && (
+        <Footer />
+      )}
       <Notifications />
     </ThemeProvider>
   )
