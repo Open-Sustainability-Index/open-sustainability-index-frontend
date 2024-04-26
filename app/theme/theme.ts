@@ -39,7 +39,7 @@ const theme = createTheme({
       fontWeight: 'bold',
       fontSize: '2em',
       color: 'black',
-      '@media (max-width:600px)': {
+      '@media (maxWidth:600px)': {
         fontSize: '1.2em'
       }
     },
@@ -53,7 +53,7 @@ const theme = createTheme({
       color: COLORS.BLUE_MEDIUM,
       fontSize: '1.5em',
       fontWeight: 'bold',
-      '@media (max-width:600px)': {
+      '@media (maxWidth:600px)': {
         fontSize: '1em'
       }
     },
