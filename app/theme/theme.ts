@@ -44,10 +44,12 @@ const theme = createTheme({
       }
     },
     h2: {
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      fontSize: '2em'
     },
     h3: {
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      fontSize: '1.5em'
     },
     subtitle1: {
       color: COLORS.BLUE_MEDIUM,

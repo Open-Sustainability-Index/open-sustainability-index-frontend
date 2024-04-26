@@ -1,14 +1,23 @@
 import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
-import { ChartsLegend, AllSeriesType } from '@mui/x-charts'
-// import { ChartContainer } from '@mui/x-charts/ChartContainer'
-import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer'
-import { BarPlot } from '@mui/x-charts/BarChart'
-import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart'
-import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis'
+import {
+  // ChartContainer
+  ResponsiveChartContainer,
+  ChartsLegend,
+  AllSeriesType,
+  ChartsXAxis,
+  ChartsYAxis,
+  ChartsGrid,
+  BarPlot,
+  LinePlot,
+  MarkPlot,
+  legendClasses
+} from '@mui/x-charts'
 
 import { COLORS } from 'app/theme/theme'
 import { Company } from 'types/global'
+import { parseFloatSpaces } from 'lib/strings'
+import PaperCard from '../common/PaperCard'
 
 const CompanyChart = ({ company }: { company: Company }): React.ReactElement | null => {
   const theme = useTheme()
@@ -18,19 +27,15 @@ const CompanyChart = ({ company }: { company: Company }): React.ReactElement | n
     return null
   }
 
-  const cleanValue = (value: string): number => {
-    console.log('cleanValue:', value, value?.replace(/\s/g, ''), parseInt(value?.replace(/\s/g, '')))
-    return parseInt(value?.replace(/\s/g, ''))
-  }
-
   const dataLabels = company.emissions.map((company) => company.year)
-  const emissions = company.emissions.map((company) => cleanValue(company.scope_1) / 100)
-  const revenue = company.emissions.map((company) => cleanValue(company.revenue))
-  const intensity = emissions.map((emission, index) => emission / revenue[index] * 50000)
-  console.log('companyHistory:', { emissions, revenue, intensity }, company)
+  const emissions = company.emissions.map((company) => parseFloatSpaces(company.scope_1))
+  const revenue = company.emissions.map((company) => parseFloatSpaces(company.revenue))
+  const intensity = emissions.map((emission, index) => emission / revenue[index])
+
+  console.log('companyHistory:', { dataLabels, emissions, revenue, intensity })
 
   // Gather data values and labels
-  const dataValues: AllSeriesType[] = [
+  const dataSeries: AllSeriesType[] = [
     {
       label: 'Emissions',
       type: 'bar',
@@ -41,13 +46,16 @@ const CompanyChart = ({ company }: { company: Company }): React.ReactElement | n
       label: 'Revenue',
       type: 'bar',
       color: COLORS.PURPLE_LIGHT,
-      data: revenue
+      data: revenue,
+      yAxisKey: 'revenueAxis'
     },
     {
       label: 'Intensity',
       type: 'line',
       color: COLORS.PURPLE_DARK,
-      data: intensity
+      data: intensity,
+      yAxisKey: 'intensityAxis',
+      connectNulls: true
     }
   ]
 
@@ -55,9 +63,9 @@ const CompanyChart = ({ company }: { company: Company }): React.ReactElement | n
   const sizingProps = isSmallScreen ? {} : { width: 500, height: 300 }
 
   return (
-    <>
+    <PaperCard>
       <ResponsiveChartContainer
-        series={dataValues}
+        series={dataSeries}
         xAxis={[
           {
             data: dataLabels,
@@ -65,19 +73,43 @@ const CompanyChart = ({ company }: { company: Company }): React.ReactElement | n
             id: 'x-axis-id'
           }
         ]}
+        yAxis={[
+          { id: 'emissionsAxis', scaleType: 'linear' },
+          { id: 'revenueAxis', scaleType: 'linear' },
+          { id: 'intensityAxis', scaleType: 'linear' }
+        ]}
         {...sizingProps}
       >
-        <BarPlot />
+        <BarPlot
+          leftAxis='emissionsAxis'
+          rightAxis='revenueAxis'
+        />
         <LinePlot />
         <MarkPlot />
-        <ChartsXAxis
-          label='Years'
-          position='bottom'
-          axisId='x-axis-id'
+        <ChartsGrid horizontal />
+        <ChartsXAxis position='bottom' />
+        <ChartsYAxis
+          axisId='emissionsAxis'
+          label='Emissions'
+          position='left'
         />
-        <ChartsLegend direction='row' />
+        <ChartsYAxis
+          axisId='revenueAxis'
+          label='Revenue'
+          position='right'
+        />
+        <ChartsLegend
+          direction='row'
+          itemMarkWidth={10}
+          itemMarkHeight={10}
+          sx={(theme: any) => ({
+            [`.${legendClasses.root} text`]: {
+              fontSize: '10px'
+            }
+          })}
+        />
       </ResponsiveChartContainer>
-    </>
+    </PaperCard>
   )
 }
 

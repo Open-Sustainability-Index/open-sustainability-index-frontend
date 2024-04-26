@@ -1,4 +1,5 @@
 import React from 'react'
+import { Container, Grid, Typography } from '@mui/material'
 
 // import { Company } from 'graphql/__generated__/graphql'
 import CompanyChart from '../charts/CompanyChart'
@@ -12,7 +13,19 @@ const CompanyDetails = ({ company, title }: { company: Company, title: string })
       <PageTopBanner title='Company' description={company.company_name}>
         <StatsGrid emission={company.emissions[company.emissions.length - 1]} />
       </PageTopBanner>
-      <CompanyChart company={company} />
+      <Container>
+        <Grid container spacing={4}>
+          <Grid item md={6} xs={12}>
+            <Typography variant='h2'>Ambition  & Development</Typography>
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <Typography variant='h2'>Targets</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <CompanyChart company={company} />
+          </Grid>
+        </Grid>
+      </Container>
     </>
   )
 }
