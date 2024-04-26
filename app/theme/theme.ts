@@ -2,10 +2,7 @@ import { createTheme } from '@mui/material/styles'
 
 export const COLORS = {
   BLACK: '#1c1b1f',
-  GRAY_DARK: '#838c8e',
-  GRAY_MEDIUM: '#aeaaae',
-  GRAY_LIGHTER: '#e6e1e5',
-  GRAY_LIGHT: '#f5f6f7',
+  GRAY_MEDIUM: '#676767',
   WHITE: '#fff',
 
   BLUE_LIGHT: '#edf2fb',
@@ -50,6 +47,10 @@ const theme = createTheme({
     h3: {
       fontWeight: 'bold',
       fontSize: '1.5em'
+    },
+    body2: {
+      color: COLORS.GRAY_MEDIUM,
+      marginTop: '1em'
     },
     subtitle1: {
       color: COLORS.BLUE_MEDIUM,
