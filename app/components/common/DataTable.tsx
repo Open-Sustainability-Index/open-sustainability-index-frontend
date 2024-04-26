@@ -52,13 +52,15 @@ const DataTable = ({
 
   const handleRowClick = (row: DataTableRow): void => {
     if (row[rowKeyField as keyof typeof row] !== undefined && detailPageLink !== undefined) {
-      void router.push(detailPageLink.replace(':key', row[rowKeyField as keyof typeof row] as string))
+      const newPath = detailPageLink.replace(':key', row[rowKeyField as keyof typeof row] as string)
+      void router.push(newPath)
     }
   }
 
   const handlePageClick = (event: any, value: number): void => {
     if (detailPageLink !== undefined) {
-      void router.push((detailPageLink.replace(':key', `p/${value}`)).replace(/\/p\/1$/, ''))
+      const newPath = (detailPageLink.replace(':key', `p/${value}`)).replace(/\/p\/1$/, '')
+      void router.push(newPath)
     }
   }
 

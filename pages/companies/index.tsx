@@ -35,26 +35,24 @@ export default CompanyListPage
 const formatCompanyData = (company: Company): any => {
   // Find company.emissions with highest year
   const hasEmissions = company.emissions.length > 0
-  if (!hasEmissions) {
-    return {
-      company_name: titleCase(company.company_name)
-    }
-  }
   const emissionLastYear = company.emissions.sort((a, b) => b.year - a.year)[0]
   return {
     company_name: titleCase(company.company_name),
     slug: toSlug(company.company_name),
-    industry: titleCase(emissionLastYear?.industry),
-    nearTerm: company.targets.filter(target => target.target === 'near-term').length > 0 ? 'Target set' : null,
-    nearTermStatus: 'success',
-    netZero: company.targets.filter(target => target.target === 'net-zero').length > 0 ? 'Target set' : null,
-    netZeroStatus: 'success',
-    emissions: emissionLastYear?.['total_reported_emission_scope_1+2+3'],
-    revenue: emissionLastYear?.revenue,
-    intensity: emissionLastYear?.['total_reported_emission_scope_1+2+3'] !== '' && emissionLastYear?.revenue !== ''
-      ? (parseFloatSpaces(emissionLastYear?.['total_reported_emission_scope_1+2+3']) / parseFloatSpaces(emissionLastYear?.revenue)).toFixed(1)
-      : null,
-    year: emissionLastYear?.year
+    // Only include emissions data if company has emissions data:
+    ...(hasEmissions && {
+      industry: titleCase(emissionLastYear?.industry),
+      nearTerm: company.targets.filter(target => target.target === 'near-term').length > 0 ? 'Target set' : null,
+      nearTermStatus: 'success',
+      netZero: company.targets.filter(target => target.target === 'net-zero').length > 0 ? 'Target set' : null,
+      netZeroStatus: 'success',
+      emissions: emissionLastYear?.['total_reported_emission_scope_1+2+3'],
+      revenue: emissionLastYear?.revenue,
+      intensity: emissionLastYear?.['total_reported_emission_scope_1+2+3'] !== '' && emissionLastYear?.revenue !== ''
+        ? (parseFloatSpaces(emissionLastYear?.['total_reported_emission_scope_1+2+3']) / parseFloatSpaces(emissionLastYear?.revenue)).toFixed(1)
+        : null,
+      year: emissionLastYear?.year
+    })
   }
 }
 
