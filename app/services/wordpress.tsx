@@ -27,6 +27,7 @@ export interface WordpressPost {
   category: string
   date: string
   dateFormatted: string
+  slug: string
   url: string
   imageUrl: string
   bigImageUrl: string
