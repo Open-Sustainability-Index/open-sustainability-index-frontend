@@ -28,9 +28,9 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
   }
 
   const dataLabels = company.emissions.map((company) => company.year)
-  const emissions = company.emissions.map((company) => parseFloatSpaces(company?.['total_reported_emission_scope_1+2+3']))
-  const revenue = company.emissions.map((company) => parseFloatSpaces(company.revenue))
-  const intensity = emissions.map((emission, index) => emission / revenue[index])
+  const emissions = company.emissions.map((company) => company.total_reported_emission_scope_1_2_3)
+  const revenue = company.emissions.map((company) => company.revenue)
+  const intensity = company.emissions.map(emission => emission.emission_intensity)
 
   console.log('CompanyIntensityChart:', { dataLabels, emissions, revenue, intensity })
 

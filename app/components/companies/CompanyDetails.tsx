@@ -4,7 +4,7 @@ import { Container, Grid, Typography } from '@mui/material'
 // import { Company } from 'graphql/__generated__/graphql'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
 import { Company } from 'types/global'
-import { titleCase, parseFloatSpaces } from 'lib/strings'
+import { titleCase } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
 
@@ -13,19 +13,19 @@ const CompanyDetails = ({ company, title }: { company: Company, title: string })
   const lastEmission = company.emissions[company.emissions.length - 1]
   const targetNearTerm = company.targets.find(target => target.target === 'near-term')
   const targetNetZero = company.targets.find(target => target.target === 'net-zero')
-  const intensity = (parseFloatSpaces(lastEmission?.['total_reported_emission_scope_1+2+3']) / parseFloatSpaces(lastEmission?.revenue)).toFixed(1)
+  const intensity = lastEmission.emission_intensity
   console.log({ targetNearTerm, targetNetZero, lastEmission })
 
   const ambitionAndDevelopment = [
     (targetNetZero !== undefined || targetNearTerm !== undefined)
       ? (
+        [
+          `${companyName} has set`,
           [
-    `${companyName} has set`,
-    [
-      ...(targetNetZero !== undefined ? [`a Net Zero-target for ${targetNetZero?.target_year},`] : []),
-      ...(targetNearTerm !== undefined ? [`a near-term target to reduce it’s scope 1+2+3 emissions with ${targetNearTerm?.target_value} to ${targetNearTerm?.target_year}, from its base year ${targetNearTerm?.base_year}.`] : [])
-    ].join(' and ')
-          ].join(' '))
+            ...(targetNetZero !== undefined ? [`a Net Zero-target for ${targetNetZero?.target_year},`] : []),
+            ...(targetNearTerm !== undefined ? [`a near-term target to reduce it’s scope 1+2+3 emissions with ${targetNearTerm?.target_value} to ${targetNearTerm?.target_year}, from its base year ${targetNearTerm?.base_year}.`] : [])
+          ].join(' and ')
+        ].join(' '))
       : '',
     `In ${lastEmission.year}, ${companyName} reported a total of ${lastEmission?.['total_reported_emission_scope_1+2+3']} ton CO₂e, and a net revenue of ${lastEmission.revenue} M USD, resulting in a emissions intensity of ${intensity} t CO₂e / M USD.`
     // `Based on currently available data, ${companyName} is trending above its near term target, reducing its emissions on average with 4% / year.`,

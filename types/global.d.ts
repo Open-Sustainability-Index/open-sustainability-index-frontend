@@ -94,58 +94,58 @@ export interface Commitment {
 }
 
 export interface Emission {
-  year: number
-  'cat._1': string
-  'cat._2': string
-  'cat._3': string
-  'cat._4': string
-  'cat._5': string
-  'cat._6': string
-  'cat._7': string
-  'cat._8': string
-  'cat._9': string
-  source: string
-  status: string
-  'cat._10': string
-  'cat._11': string
-  'cat._12': string
-  'cat._13': string
-  'cat._14': string
-  'cat._15': string
-  comment: string
-  revenue: string
-  scope_1: string
-  scope_2: string
-  currency: string
-  industry: string
-  'all_cats?': string
-  fiscal_year: string
-  revenue_sek: string
-  company_name: string
-  ghg_standard: string
-  'isic_rev._4.': string
-  page_revenue: string
-  scope_2_type: string
-  emission_page: string
-  total_scope_3: string
-  source_revenue: string
-  hq_country_move: string
-  scope_2_unknown: string
-  publication_date: string
-  upstream_scope_3: string
-  emission_intensity: string
-  'scope_2_market-based': string
-  'scope_2_location-based': string
-  'source_emission_/_report': string
-  total_upstream_emissions: string
-  share_upstream_of_scope_3: string
-  source_emisions_page_move: string
-  'total_emission_market-based': string
-  'total_emission_location-based': string
-  'cradle-to-gate_emissions_/_sek': string
-  'total_reported_emission_scope_1+2': string
-  'total_reported_emission_scope_1+2+3': string
-  scope_1_share_of_total_upstream_emissions: string
+  year: number | null;
+  cat_1: string | null;
+  cat_2: string | null;
+  cat_3: string | null;
+  cat_4: string | null;
+  cat_5: string | null;
+  cat_6: string | null;
+  cat_7: string | null;
+  cat_8: string | null;
+  cat_9: string | null;
+  cat_10: string | null;
+  cat_11: string | null;
+  cat_12: string | null;
+  cat_13: string | null;
+  cat_14: string | null;
+  cat_15: string | null;
+  source: string | null;
+  status: string | null;
+  comment: string | null;
+  revenue: number | null;
+  scope_1: number | null;
+  all_cats: string | null;
+  currency: string | null;
+  industry: string | null;
+  isic_rev_4: string | null;
+  fiscal_year: string | null;
+  company_name: string | null;
+  ghg_standard: string | null;
+  page_revenue: string | null;
+  emission_page: string | null;
+  total_scope_3: string | null;
+  cradle_to_gate: number | null;
+  source_revenue: string | null;
+  hq_country_move: string | null;
+  revenue_million: number | null;
+  scope_2_unknown: string | null;
+  publication_date: string | null;
+  upstream_scope_3: string | null;
+  emission_intensity: number | null;
+  source_revenue_link: string | null;
+  scope_2_market_based: string | null;
+  source_emission_link: string | null;
+  scope_2_location_based: string | null;
+  source_emission_report: string | null;
+  total_upstream_emissions: number | null;
+  share_upstream_of_scope_3: string | null;
+  source_emisions_page_move: string | null;
+  total_emission_market_based: string | null;
+  total_emission_location_based: string | null;
+  total_reported_emission_scope_1_2: number | null;
+  total_reported_emission_scope_1_2_3: number | null;
+  scope_1_share_of_total_upstream_emissions: string | null;
 }
 
 export interface Target {
