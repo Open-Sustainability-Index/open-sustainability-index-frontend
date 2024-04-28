@@ -28,9 +28,9 @@ const CompanyChart = ({ company }: { company: Company }): React.ReactElement | n
   }
 
   const dataLabels = company.emissions.map((company) => company.year)
-  const emissions = company.emissions.map((company) => parseFloatSpaces(company.scope_1))
-  const revenue = company.emissions.map((company) => parseFloatSpaces(company.revenue))
-  const intensity = emissions.map((emission, index) => emission / revenue[index])
+  const emissions = company.emissions.map((company) => company.total_reported_emission_scope_1_2_3)
+  const revenue = company.emissions.map((company) => company.revenue)
+  const intensity = company.emissions.map(emission => emission.emission_intensity)
 
   console.log('companyHistory:', { dataLabels, emissions, revenue, intensity })
 

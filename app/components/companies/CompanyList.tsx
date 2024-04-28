@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Company } from 'types/global'
+import { CompaniesCompany, Company } from 'types/global'
 import DataTable, { DataTableHeader } from '../common/DataTable'
 import SearchBlock from '../navigation/SearchBlock'
 
@@ -58,7 +58,7 @@ const headers: readonly DataTableHeader[] = [
   }
 ]
 
-const CompanyList = ({ companies, pageNr }: { companies?: Company[], pageNr: number }): React.ReactElement | string => {
+const CompanyList = ({ companies, pageNr }: { companies?: CompaniesCompany[], pageNr: number }): React.ReactElement | string => {
   return (
     <>
       <SearchBlock />

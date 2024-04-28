@@ -39,7 +39,7 @@ interface CompaniesReturnProps {
   companies?: Company[]
 }
 
-export const companiesPageProps = (companies: Company[]): PageProps => {
+export const companiesPageProps = (companies: CompaniesCompany[]): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   return {
     title: 'Global company GHG emission data per industry and year',
