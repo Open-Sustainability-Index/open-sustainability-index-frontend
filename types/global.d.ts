@@ -19,6 +19,32 @@ export interface Industry {
   slug?: string
 }
 
+export interface CompaniesCompany {
+  company_name: string;
+  commitment_type: null | string;
+  status: Status | null;
+  commitment_deadline: null | string;
+  total_reported_emission_scope_1_2_3: number;
+  revenue: number | null;
+  hq_country_move: string;
+  year: number;
+  industry: string;
+  currency: Currency | null;
+  emission_intensity: number | null;
+  target_type: TargetType | null;
+  target_scope: null | string;
+  target_year: number | null;
+  target: Target | null;
+}
+
+export type Currency = "USD" | "SEK" | "EUR";
+
+export type Status = "Active" | "Target set" | "Removed" | "Extended";
+
+export type Target = "Near-term" | "Net-zero";
+
+export type TargetType = "Absolute" | "Net-zero" | "Intensity";
+
 export interface Company {
   company_name: string
   industry: null

@@ -26,7 +26,7 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
-import { Company, PageProps } from 'types/global'
+import { CompaniesCompany, Company, PageProps } from 'types/global'
 import makeRestRequest from 'lib/makeRestRequest'
 import toSlug from 'lib/toSlug'
 import { titleCase } from 'lib/strings'
@@ -47,7 +47,7 @@ export const companiesPageProps = (companies: Company[]): PageProps => {
   }
 }
 
-export const fetchCompanies = async (pageNr = 1, pageSize = 20): Promise<Company[]> => {
+export const fetchCompanies = async (pageNr = 1, pageSize = 20): Promise<CompaniesCompany[]> => {
   const url = `companies?limit=${pageSize}&offset=${(pageNr - 1) * pageSize}`
   const results = await makeRestRequest('GET', url)
   return results?.data

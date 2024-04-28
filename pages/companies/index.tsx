@@ -4,8 +4,7 @@ import { ParsedUrlQuery } from 'querystring'
 
 import { fetchCompanies, companiesPageProps } from 'app/services/companies'
 
-import { Company } from 'types/global'
-import { titleCase, parseFloatSpaces } from 'lib/strings'
+import { CompaniesCompany } from 'types/global'
 import toSlug from 'lib/toSlug'
 import CompanyList from 'app/components/companies/CompanyList'
 import PageTopBanner from 'app/components/page/PageTopBanner'
@@ -18,7 +17,7 @@ interface CompanyListPageProps {
   title: string
   description: string
   pageNr: number
-  companies?: Company[]
+  companies?: CompaniesCompany[]
 }
 
 function CompanyListPage ({ companies, pageNr }: CompanyListPageProps): React.ReactElement {
@@ -32,26 +31,24 @@ function CompanyListPage ({ companies, pageNr }: CompanyListPageProps): React.Re
 
 export default CompanyListPage
 
-const formatCompanyData = (company: Company): any => {
+const formatCompanyData = (company: CompaniesCompany): any => {
   // Find company.emissions with highest year
-  const hasEmissions = company.emissions.length > 0
-  const emissionLastYear = company.emissions.sort((a, b) => b.year - a.year)[0]
+  const hasEmissions = !!company.total_reported_emission_scope_1_2_3
+
   return {
-    company_name: titleCase(company.company_name),
+    company_name: company.company_name,
     slug: toSlug(company.company_name),
     // Only include emissions data if company has emissions data:
     ...(hasEmissions && {
-      industry: titleCase(emissionLastYear?.industry),
-      nearTerm: company.targets.filter(target => target.target === 'near-term').length > 0 ? 'Target set' : null,
+      industry: company.industry,
+      nearTerm: company.target?.toLowerCase() === 'near-term' ? 'Target set' : null,
       nearTermStatus: 'success',
-      netZero: company.targets.filter(target => target.target === 'net-zero').length > 0 ? 'Target set' : null,
+      netZero: company.target?.toLowerCase() === 'net-zero' ? 'Target set' : null,
       netZeroStatus: 'success',
-      emissions: emissionLastYear?.['total_reported_emission_scope_1+2+3'],
-      revenue: emissionLastYear?.revenue,
-      intensity: emissionLastYear?.['total_reported_emission_scope_1+2+3'] !== '' && emissionLastYear?.revenue !== ''
-        ? (parseFloatSpaces(emissionLastYear?.['total_reported_emission_scope_1+2+3']) / parseFloatSpaces(emissionLastYear?.revenue)).toFixed(1)
-        : null,
-      year: emissionLastYear?.year
+      emissions: company.total_reported_emission_scope_1_2_3,
+      revenue: company.revenue,
+      intensity: company.emission_intensity,
+      year: company.year,
     })
   }
 }
@@ -59,8 +56,8 @@ const formatCompanyData = (company: Company): any => {
 export const getStaticProps = async (context: GetStaticPropsContext<CompanyListPageParams>): Promise<GetStaticPropsResult<{}>> => {
   const pageNr = parseInt(context.params?.pageNr ?? '1')
   const pageCompanies = (await fetchCompanies(pageNr)) ?? []
-  const companiesWithData = pageCompanies.filter(company => company.emissions.length > 0)
-  const companiesWithoutData = pageCompanies.filter(company => company.emissions.length === 0)
+  const companiesWithData = pageCompanies.filter(company => !!company.total_reported_emission_scope_1_2_3)
+  const companiesWithoutData = pageCompanies.filter(company => !company.total_reported_emission_scope_1_2_3)
   const cleanedCompanies = [...companiesWithData, ...companiesWithoutData].map(formatCompanyData)
   // console.log('companiesWithData:', companiesWithData.length, companiesWithoutData.length)
   // console.log('companies:', JSON.stringify(companies.filter(company => company.emissions.length > 0), null, 2))
