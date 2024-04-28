@@ -408,3 +408,311 @@
 }
 
 /* End Input from Petter 2024-04-26 */
+
+/* from Petter 2024-04-28 */
+/* -- HOME -- */
+
+/* Main Menu Links */
+.css-zizdh3  {
+  font-size: 1.2rem;
+  font-weight: 500; /* 500 for SemiBold I think */
+}
+
+
+/* Main Menu Submit Button */
+.css-kzwnku {
+  padding: 10px 30px;
+  border-radius: 50px; /* allt över 50% av knappens höjd */
+  font-size: 1rem;
+  text-transform: none;
+}
+
+
+
+/* Main banner */
+.css-qiwutx {
+  padding: 100px 32px; /* more space top/bottom */
+}
+
+
+
+/* Examples (Industries, Intensities, Tqargets)
+- mer space mellan kolumner
+
+*/
+.wp-block-columns-is-layout-flex {
+  gap: 80px; /* inte säker  */
+}
+
+.wp-block-group-is-layout-flow p {
+  font-size: 1rem;
+}
+
+.wp-block-image size-medium {
+  margin-top: 2rem;
+}
+
+
+/* USPs / Fature set
+- minska textstorleken
+- linje till vänster om USP
+*/
+
+.wp-block-column-is-layout-flow
+.css-3narwu {
+  text-size: 1rem;
+  border-left: 1px solid #D7E3FC;
+  padding-left: 2rem;
+}
+
+.wp-block-column-is-layout-flow
+.css-3narwu:hover {
+  border-left: 1px solid #4361EE;
+
+  /* animations */
+  -webkit-transition: border .35s linear;
+  -o-transition: border .35s linear;
+  transition: border .35s linear;
+
+}
+
+
+
+/* Ikoner
+- vänsterlinjera ikoner
+*/
+.wp-block-image /* alternativt figure */
+figure {
+  margin-inline-start: 0px;
+}
+
+
+/* By the numbers / KPI's
+- minska avståndet mellan h3 och p
+
+*/
+
+.is-layout-flow /* alt */
+.wp-block-group-is-layout-flow h3.wp-block-heading {
+  margin-block-end: 0em;
+}
+.is-layout-flow /* alt */
+.wp-block-group-is-layout-flow p {
+  margin-block-start: 0em;
+}
+
+
+
+/* Report & Support
+- border-left of text section
+
+*/
+
+{
+  border-left: 1px solid #B6CCFE;
+  padding-left: 4rem;
+}
+
+
+
+
+
+
+/* -- COMPANIES -- */
+
+/* List
+- all text color: #6C757D
+- break row in header e.g. (MUSD) / (tCO2e)
+- hover background
+- US/UK locale (comma for thousand seperator)
+- remove border radius on table
+*/
+
+/* header, general for all pages */
+{
+  border-left: 3px solid #D7E3FC;
+}
+
+
+/* table - remove border radius */
+.css-13xy2my {
+  border-radius: 0px;
+}
+
+
+table or
+.MuiTable-root {
+  text-color: #6C757D;
+  font-size: 0.8rem;	/* or 14px, on thead + company names at least */
+}
+
+thead {
+}
+
+.MuiTable-root:hover {
+  background: rgb(242, 247, 255, 0.5);
+  border-left: 4px solid #3F37C9;
+
+  /* animations */
+  -webkit-transition: background .35s linear;
+  -o-transition: background .35s linear;
+  transition: background .35s linear;
+
+  -webkit-transition: border .35s linear;
+  -o-transition: border .35s linear;
+  transition: border .35s linear;
+
+}
+
+tr {
+  border-bottom: 1px solid #F2F7FF;
+}
+
+
+
+
+/* Color Tags
+- other background colors
+- more left & right padding
+- smaller font-size
+
+*/
+
+.css-1yp334a {
+  font-size: 0.8rem;
+}
+
+
+.css-9iedg7 {
+  padding: 10px 20px;
+  font-width: 500;
+}
+
+
+/* Green / Target Set */
+.css-1yp334a {
+  background: #06D6A0;
+}
+
+/* Yellow / Committed */
+.css-1yp334a {
+  background: #FFD166;
+}
+
+
+/* -- COMPANY -- */
+
+/*
+Header
+
+*/
+
+.header .quickfacts {
+  text-color: #343A40;
+  border-left: 4px solid #C1D3FE;
+
+}
+
+
+/*
+Detailed  - below header
+- increase line height
+- increase top padding
+*/
+.css-1qsxih2 {
+  padding: 50px 24px;
+}
+
+.css-iol86l h2 {
+  font-size: 2.2rem;
+}
+
+.css-iol86l p {
+  font-size: 1.25rem;
+  line-height: 1.8rem;
+}
+
+
+
+/*
+Graph box
+- increase border radius
+- soften + widen box shadow
+*/
+
+.css-2njjrf {
+  border-radius: 8px;
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 0px 16px 0px rgba(0,0,0,0.08);
+}
+
+/*
+Graph
+-
+-
+*/
+
+.MuiChartsLegend-row {
+  font-size: 0.9rem;
+  text-color: #6C757D;
+}
+
+.MuiChartsLegend-mark {
+
+}
+
+.MuiChartsAxis-label {
+  y:"100"; /* för att texten ska hamna utanför x-värdena */
+}
+
+
+
+/* -- ABOUT et al  -- */
+
+.wp-block-spacer {
+
+}
+
+.css-3narwu {
+  margin-left: 33%;
+  line-height: 2;
+}
+
+.css-3narwu h2 {
+  border-left: 4px solid #C1D3FE;
+}
+
+/* -- DOCUMENTATION  -- */
+
+/*
+Sections
+- increase top/bottom spacing
+- left border on right column
+- increase line height
+- decrease font-size
+
+*/
+
+.wp-block-columns-is-layout-flex alt
+.wp-container-core-columns-is-layout-1
+
+{
+  padding: 2rem 0;
+}
+
+hr {
+  display: none;
+}
+
+/* Right column */
+.wp-block-column-is-layout-flow {
+  border-left: 1px solid #C1D3FE;
+  padding-left: 3rem;
+
+}
+
+.css-3narwu {
+  font-size: 1rem;
+  line-height: 2;
+}
+
+/* END from Petter 2024-04-28 */
