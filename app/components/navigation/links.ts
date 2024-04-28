@@ -4,6 +4,7 @@ const links = [
   // { name: 'Countries', path: '/countries', display: ['header'], wordpressPage: false },
   { name: 'Documentation', path: '/documentation', display: ['header'] },
   { name: 'About', path: '/about', display: ['header', 'footer'] },
+  { name: 'News', path: '/news', display: ['footer'] },
   { name: 'Support', path: '/support', display: ['footer'] },
   { name: 'Contact', path: '/contact', display: ['footer'] },
   { name: 'API', path: '/api', display: ['footer'] },
