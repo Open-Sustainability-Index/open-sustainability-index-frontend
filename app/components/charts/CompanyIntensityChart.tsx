@@ -32,7 +32,7 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
   const revenue = company.emissions.map((company) => company.revenue)
   const intensity = company.emissions.map(emission => emission.emission_intensity)
 
-  console.log('CompanyIntensityChart:', { dataLabels, emissions, revenue, intensity })
+  // console.log('CompanyIntensityChart:', { dataLabels, emissions, revenue, intensity })
 
   // Gather data values and labels
   const dataSeries: AllSeriesType[] = [
