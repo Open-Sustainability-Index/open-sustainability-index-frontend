@@ -16,6 +16,7 @@ import {
 import { useRouter } from 'next/router'
 
 import { COLORS } from 'app/theme/theme'
+import { changeQueryString } from 'lib/strings'
 
 export interface DataTableHeader {
   field: string
@@ -52,14 +53,14 @@ const DataTable = ({
 
   const handleRowClick = (row: DataTableRow): void => {
     if (row[rowKeyField as keyof typeof row] !== undefined && detailPageLink !== undefined) {
-      const newPath = detailPageLink.replace(':key', row[rowKeyField as keyof typeof row] as string)
+      const newPath = detailPageLink + '/' + (row[rowKeyField as keyof typeof row] as string)
       void router.push(newPath)
     }
   }
 
   const handlePageClick = (event: any, value: number): void => {
     if (detailPageLink !== undefined) {
-      const newPath = (detailPageLink.replace('%3Akey', value.toString())).replace('&page=1', '')
+      const newPath = detailPageLink + '?' + changeQueryString(router.query, 'page', value)
       void router.push(newPath)
     }
   }
