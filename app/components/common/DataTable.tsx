@@ -60,7 +60,6 @@ const DataTable = ({
   const handlePageClick = (event: any, value: number): void => {
     if (detailPageLink !== undefined) {
       const newPath = (detailPageLink.replace('%3Akey', value.toString())).replace('&page=1', '')
-      console.log('detailPageLink:', detailPageLink, value)
       void router.push(newPath)
     }
   }
