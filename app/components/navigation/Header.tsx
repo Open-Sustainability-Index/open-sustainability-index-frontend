@@ -86,8 +86,8 @@ function Header (): React.ReactElement {
           </NextMUILink>
         ))}
       </List>
-      <Button href='/report' variant='contained' color='secondary' sx={{ margin: 2 }}>
-        Report Emissions
+      <Button href='/report' variant='contained' color='secondary' sx={{ margin: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
+        Report Data
       </Button>
     </>
   )
@@ -127,8 +127,8 @@ function Header (): React.ReactElement {
                     </NextMUILink>
                   ))}
                 </Box>
-                <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2 }}>
-                  Report Emissions
+                <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
+                  Report Data
                 </Button>
               </Box>
               )}
