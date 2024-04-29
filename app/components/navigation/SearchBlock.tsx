@@ -7,21 +7,24 @@ import TextField from '@mui/material/TextField'
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchCompanies } from 'app/services/companies'
 
-// interface SearchBlockProps {
-// }
+interface SearchBlockProps {
+  children?: React.ReactNode
+}
 
-const SearchBlock = (): React.ReactElement => {
+const SearchBlock = ({ children }: SearchBlockProps): React.ReactElement => {
   return (
     <Box
       sx={{
         width: '100%',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         padding: '1em 0 3em'
       }}
     >
       <SearchField />
+      {children}
     </Box>
   )
 }

@@ -3,6 +3,7 @@ import React from 'react'
 import { CompaniesCompany } from 'types/global'
 import DataTable, { DataTableHeader } from '../common/DataTable'
 import SearchBlock from '../navigation/SearchBlock'
+import FiltersBlock from '../navigation/FiltersBlock'
 
 const headers: readonly DataTableHeader[] = [
   {
@@ -67,7 +68,9 @@ interface CompanyListProps {
 const CompanyList = ({ companies, page, detailPageLink = '/companies/:key' }: CompanyListProps): React.ReactElement | string => {
   return (
     <>
-      <SearchBlock />
+      <SearchBlock>
+        <FiltersBlock />
+      </SearchBlock>
       <DataTable
         data={companies ?? []}
         headers={headers}
