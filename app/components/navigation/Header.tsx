@@ -66,7 +66,7 @@ const headerTheme = createTheme({
       styleOverrides: {
         root: {
           fontSize: '1.2rem',
-          fontWeight: 500,
+          fontWeight: 500
         }
       }
     }
@@ -123,7 +123,7 @@ function Header (): React.ReactElement {
                 >
                   <MenuIcon />
                 </IconButton>
-              )
+                )
               : (
                 <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
                   <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
@@ -139,7 +139,7 @@ function Header (): React.ReactElement {
                     Report Data
                   </Button>
                 </Box>
-              )}
+                )}
           </Toolbar>
         </Box>
         <Drawer
