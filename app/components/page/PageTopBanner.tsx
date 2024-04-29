@@ -20,7 +20,7 @@ const PageTopBanner = ({
         px: '1.75rem',
         py: {
           xs: 6,
-          md: 12,
+          md: 12
         },
         mb: 4
       }}
