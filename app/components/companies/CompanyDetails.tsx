@@ -8,7 +8,39 @@ import { titleCase } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
 
-const CompanyDetails = ({ company, title }: { company: Company, title: string }): React.ReactElement => {
+const CompanyDetails = ({ company }: { company: Company }): React.ReactElement => {
+  console.log('company:', company)
+  const companyName = titleCase(company.company_name)
+  const lastEmission = company.emissions[company.emissions.length - 1]
+  const targetNearTerm = company.targets.find(target => target.target === 'near-term')
+  const targetNetZero = company.targets.find(target => target.target === 'net-zero')
+
+  console.log({ targetNearTerm, targetNetZero, lastEmission })
+
+  return (
+    <>
+      <PageTopBanner title='Company' description={companyName}>
+        <StatsGrid emission={lastEmission} />
+      </PageTopBanner>
+      <Container>
+        <Grid container spacing={4}>
+          <Grid item md={6} xs={12}>
+            <AmbitionAndDevelopment company={company} />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <Targets company={company} />
+          </Grid>
+          <Grid item xs={12}>
+            <CompanyIntensityChart company={company} />
+          </Grid>
+        </Grid>
+      </Container>
+    </>
+  )
+}
+export default CompanyDetails
+
+const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactElement => {
   const companyName = titleCase(company.company_name)
   const lastEmission = company.emissions[company.emissions.length - 1]
   const targetNearTerm = company.targets.find(target => target.target === 'near-term')
@@ -32,24 +64,22 @@ const CompanyDetails = ({ company, title }: { company: Company, title: string })
   ].join(' ')
   return (
     <>
-      <PageTopBanner title='Company' description={companyName}>
-        <StatsGrid emission={lastEmission} />
-      </PageTopBanner>
-      <Container>
-        <Grid container spacing={4}>
-          <Grid item md={6} xs={12}>
-            <Typography variant='h2'>Ambition & Development</Typography>
-            <Typography variant='body2'>{ambitionAndDevelopment}</Typography>
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Typography variant='h2'>Targets</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <CompanyIntensityChart company={company} />
-          </Grid>
-        </Grid>
-      </Container>
+      <Typography variant='h2'>Ambition & Development</Typography>
+      <Typography variant='body2'>{ambitionAndDevelopment}</Typography>
     </>
   )
 }
-export default CompanyDetails
+
+const Targets = ({ company }: { company: Company }): React.ReactElement => {
+  return (
+    <Typography variant='h2'>Targets</Typography>
+  )
+}
+
+/*
+const TemplateComponent = ({ company }: { company: Company }): React.ReactElement => {
+  return (
+
+  )
+}
+*/
