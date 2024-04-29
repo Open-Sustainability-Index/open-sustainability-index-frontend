@@ -20,7 +20,7 @@
   --wp--preset--spacing--80: 5.25rem;
 
   --wp--style--global--content-size: 620px;
-  --wp--style--global--wide-size: 1000px;
+  --wp--style--global--wide-size: 1200px;
   --wp--style--root--padding-top: var(--wp--preset--spacing--50);
   --wp--style--root--padding-right: var(--wp--preset--spacing--50);
   --wp--style--root--padding-bottom: var(--wp--preset--spacing--50);
@@ -396,7 +396,6 @@
 .css-3narwu {
   text-size: 1rem;
   border-left: 1px solid #D7E3FC;
-  padding-left: 2rem;
 }
 
 .wp-block-column-is-layout-flow
@@ -426,13 +425,10 @@ figure {
 
 */
 
-.is-layout-flow /* alt */
-.wp-block-group-is-layout-flow h3.wp-block-heading {
-  margin-block-end: 0em;
-}
-.is-layout-flow /* alt */
-.wp-block-group-is-layout-flow p {
-  margin-block-start: 0em;
+
+.wp-block-post-content .kpis p,
+.wp-block-post-content .kpis h3 {
+  margin: 0em;
 }
 
 
@@ -632,15 +628,19 @@ hr {
   display: none;
 }
 
-/* Right column */
-.wp-block-column-is-layout-flow {
-  padding-left: 3rem;
-
-}
 
 .css-3narwu {
   font-size: 1rem;
   line-height: 2;
+}
+
+.wp-block-columns figure {
+  margin: 0;
+}
+
+.wp-block-post-content .two-column-border div:nth-child(2) {
+  border-left: 1px solid #b6ccfe;
+  padding-left: 3rem;
 }
 
 /* END from Petter 2024-04-28 */
