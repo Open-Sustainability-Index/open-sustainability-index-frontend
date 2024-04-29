@@ -19,7 +19,7 @@ const IndustryList = ({ industries, page }: { industries?: Industry[], page: num
       <DataTable
         data={industries ?? []}
         headers={headers}
-        rowKeyField='slug'
+        rowKeyField='name'
         detailPageLink='/companies?industry=:key'
       />
     </>
