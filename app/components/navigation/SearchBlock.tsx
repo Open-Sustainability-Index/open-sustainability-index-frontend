@@ -66,7 +66,12 @@ const SearchField = (): React.ReactElement => {
       }}
       inputValue={userInput !== '' ? userInput : selectedOption}
       renderInput={(params) => (
-        <TextField {...params} label='Search for company' />
+        <TextField
+          {...params}
+          label='Search for company'
+          size='small'
+          margin='normal'
+        />
       )}
       onInputChange={(event, newInputValue) => {
         setUserInput(newInputValue)

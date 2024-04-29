@@ -1,13 +1,21 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Grid, Select, MenuItem, FormControl, InputLabel } from '@mui/material'
+import {
+  Grid,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  useTheme,
+  useMediaQuery
+} from '@mui/material'
 
 import { changeQueryString } from 'lib/strings'
 
 interface FilterField {
-  label: string
   value: string
-  options: Array<{ label: string, value: string }>
+  label: string
+  options: Array<{ value: string, label?: string }>
 }
 
 const filterFields = [
@@ -15,15 +23,15 @@ const filterFields = [
     label: 'Industry',
     value: 'industry',
     options: [
-      { label: 'All Industries', value: 'all' }
-      // Add other options here...
+      { label: 'All Industries', value: '' },
+      { value: 'Construction' }
     ]
   },
   {
     label: 'Jurisdiction',
     value: 'jurisdiction',
     options: [
-      { label: 'All Jurisdictions', value: 'all' }
+      { label: 'All Jurisdictions', value: '' }
       // Add other options here...
     ]
   },
@@ -31,15 +39,17 @@ const filterFields = [
     label: 'Org. type',
     value: 'orgType',
     options: [
-      { label: 'All Org. Types', value: 'all' }
-      // Add other options here...
+      { label: 'All Org. Types', value: '' },
+      { value: 'SME' },
+      { value: 'Company' },
+      { value: 'Financial Institution' }
     ]
   },
   {
     label: 'Net zero',
     value: 'netZero',
     options: [
-      { label: 'All Targets', value: 'all' }
+      { label: 'All Targets', value: '' }
       // Add other options here...
     ]
   },
@@ -47,7 +57,7 @@ const filterFields = [
     label: 'Near-term',
     value: 'nearTerm',
     options: [
-      { label: 'All Targets', value: 'all' }
+      { label: 'All Targets', value: '' }
       // Add other options here...
     ]
   },
@@ -55,23 +65,29 @@ const filterFields = [
     label: 'Year',
     value: 'year',
     options: [
-      { label: '2023', value: '2023' },
-      { label: '2022', value: '2022' }
+      { value: '2023' },
+      { value: '2022' }
     ]
   },
   {
     label: 'Currency',
     value: 'currency',
     options: [
-      { label: 'EUR', value: 'EUR' },
-      { label: 'USD', value: 'USD' },
-      { label: 'SEK', value: 'SEK' }
+      { value: 'EUR' },
+      { value: 'USD' },
+      { value: 'SEK' }
     ]
   }
 ]
 
-const FiltersBlock = (): React.ReactElement => {
+const FiltersBlock = (): React.ReactElement | null => {
   const router = useRouter()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  if (isMobile) {
+    return null
+  }
 
   const handleChange = (field: string, value: string): void => {
     const newPath = router.pathname + '?' + changeQueryString(router.query, field, value)
@@ -84,14 +100,14 @@ const FiltersBlock = (): React.ReactElement => {
       spacing={2}
       sx={{
         justifyContent: 'center',
-        marginTop: '1em'
+        marginTop: '0.5em'
       }}
     >
       {filterFields.map((field) => (
         <FilterSection
           key={field.value}
           field={field}
-          value='jurisdiction'
+          value={router.query[field.value] as string}
           onChange={handleChange}
         />
       ))}
@@ -116,15 +132,15 @@ const FilterSection = ({ field, value, onChange }: FilterSectionProps): React.Re
           value={value}
           onChange={(event) => onChange(field.value, event.target.value)}
           label={field.label}
-          sx={{ fontSize: '18px' }}
+          sx={{ fontSize: '14px' }}
         >
           {field.options.map((option) => (
             <MenuItem
               key={option.value}
               value={option.value}
-              sx={{ fontSize: '18px' }}
+              sx={{ fontSize: '14px' }}
             >
-              {option.label}
+              {option.label ?? option.value}
             </MenuItem>
           ))}
         </Select>
