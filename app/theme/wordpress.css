@@ -360,74 +360,8 @@
   height: auto;
 }
 
-/* Input from Petter 2024-04-26 */
-/* Main Menu Links */
-
-.css-zizdh3  {
-  font-size: 1.2rem;
-  font-weight: 500; /* 500 for SemiBold I think */
-}
-
-/* Main Menu Submit Button */
-
-.css-kzwnku {
-  padding: 10px 30px;
-  border-radius: 50px; /* allt över 50% av knappens höjd */
-  font-size: 1rem;
-  text-transform: none;
-}
-
-/* Main banner */
-
-.css-qiwutx {
-  padding: 100px 32px; /* more space top/bottom */
-}
-
-/* Examples (Industries, Intensities, Tqargets)
-
-- mer space mellan kolumner
-
-*/
-
-.wp-block-columns-is-layout-flex {
-  gap: 80px; /* inte säker  */
-}
-
-.wp-block-group-is-layout-flow p {
-  font-size: 1rem;
-}
-
-.wp-block-image size-medium {
-  margin-top: 2rem;
-}
-
-/* USPs / Fature set*/
-
-.css-3narwu {
-  text-size: 1rem;
-}
-
-/* End Input from Petter 2024-04-26 */
-
 /* from Petter 2024-04-28 */
 /* -- HOME -- */
-
-/* Main Menu Links */
-.css-zizdh3  {
-  font-size: 1.2rem;
-  font-weight: 500; /* 500 for SemiBold I think */
-}
-
-
-/* Main Menu Submit Button */
-.css-kzwnku {
-  padding: 10px 30px;
-  border-radius: 50px; /* allt över 50% av knappens höjd */
-  font-size: 1rem;
-  text-transform: none;
-}
-
-
 
 /* Main banner */
 .css-qiwutx {
@@ -507,11 +441,6 @@ figure {
 - border-left of text section
 
 */
-
-{
-  border-left: 1px solid #B6CCFE;
-  padding-left: 4rem;
-}
 
 
 
@@ -705,7 +634,6 @@ hr {
 
 /* Right column */
 .wp-block-column-is-layout-flow {
-  border-left: 1px solid #C1D3FE;
   padding-left: 3rem;
 
 }
