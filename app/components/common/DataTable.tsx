@@ -27,6 +27,7 @@ export interface DataTableHeader {
   sortable?: boolean
   statusField?: string // Value in row.statusField can be: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
   displayOnMobile?: boolean
+  isHorizontalHeader?: boolean
 }
 
 type DataTableRow = Record<string, any>
@@ -37,6 +38,7 @@ interface DataTableProps {
   rowKeyField?: string
   detailPageLink?: string
   page?: number
+  title?: string // Optional title for the table
 }
 
 const DataTable = ({
@@ -117,12 +119,12 @@ const DataTable = ({
 
 export default DataTable
 
-const DataTableHeaderCell = ({ header }: { header: DataTableHeader }): React.ReactElement => (
+const DataTableHeaderCell = ({ header, title }: { header: DataTableHeader, title?: string }): React.ReactElement => (
   <TableCell
     align={header.align ?? 'left'}
     sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
   >
-    {header.label ?? header.field}
+    {title ?? header.label ?? header.field}
   </TableCell>
 )
 
@@ -157,19 +159,32 @@ const DataTableCell = ({ index, row, header }: { index: number, row: DataTableRo
 
 export const DataTableHorizontal = ({
   headers,
-  data
+  data,
+  title
 }: DataTableProps): React.ReactElement => {
   return (
     <TableContainer component={Paper}>
       <Table aria-label='horizontal table'>
         <TableBody>
-          {headers.map((header, headerIndex) => (
-            <TableRow key={headerIndex}>
+          {/* A special first row for headers */}
+          <TableRow sx={{ backgroundColor: COLORS.BLUE_LIGHT }}>
+            <DataTableHeaderCell title={title} header={headers[0]} />
+            {data.map((row, rowIndex) => (
+              <DataTableHeaderCell
+                key={`header-${rowIndex}`}
+                header={{ field: String(rowIndex), label: `Header ${rowIndex + 1}` }}
+                title={row[headers[0]?.field]}
+              />
+            ))}
+          </TableRow>
+          {/* Rest of rows */}
+          {headers.slice(1).map((header, index) => (
+            <TableRow key={index} sx={header.isHorizontalHeader === true ? { backgroundColor: COLORS.GRAY_LIGHT } : null}>
               <DataTableHeaderCell header={header} />
               {data.map((row, rowIndex) => (
                 <DataTableCell
                   index={rowIndex}
-                  key={`${headerIndex}-${rowIndex}`}
+                  key={`${index}-${rowIndex}`}
                   row={row}
                   header={header}
                 />

@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles'
 
 export const COLORS = {
   BLACK: '#1c1b1f',
+  GRAY_LIGHT: '#f6f8fe',
   GRAY_MEDIUM: '#676767',
   WHITE: '#fff',
 
