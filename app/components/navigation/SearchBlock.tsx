@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Box from '@mui/material/Box'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -31,6 +32,7 @@ const SearchField = (): React.ReactElement => {
   const [userInput, setUserInput] = useState<string>('')
   const debouncedUserInput = useDebounce(userInput, 500)
 
+  const router = useRouter()
   const [listOptions, setListOptions] = useState<string[]>([])
   const [selectedOption, setSelectedOption] = useState<string>('')
 
@@ -53,11 +55,15 @@ const SearchField = (): React.ReactElement => {
       )}
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption ?? '')
-        window.alert('What did you expect to happen right now: Go to the company page, or update list?')
+        if (newSelectedOption !== null) {
+          void router.push(`/companies?company_name=${newSelectedOption}`)
+        } else {
+          void router.push('/companies')
+        }
       }}
       inputValue={userInput !== '' ? userInput : selectedOption}
       renderInput={(params) => (
-        <TextField {...params} label='Search...' />
+        <TextField {...params} label='Search for company' />
       )}
       onInputChange={(event, newInputValue) => {
         setUserInput(newInputValue)
