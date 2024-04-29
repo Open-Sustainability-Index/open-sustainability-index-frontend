@@ -39,13 +39,13 @@ const headers: readonly DataTableHeader[] = [
   },
   {
     field: 'revenue',
-    label: 'Revenue (MUSD)',
+    label: 'Revenue (M USD)',
     type: 'number',
     align: 'right'
   },
   {
     field: 'intensity',
-    label: 'Intensity',
+    label: 'Intensity (t CO₂e / M USD)',
     type: 'number',
     align: 'right',
     displayOnMobile: true
