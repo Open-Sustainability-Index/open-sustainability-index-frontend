@@ -17,7 +17,8 @@ interface PageProps {
 export interface ListPageOptions {
   sortBy?: string
   sortDirection?: string
-  detailPageLink?: string
+  sortSeoDescription?: string // to use in meta title
+  detailPageLink?: string // for links in DataTable
 }
 
 export interface Industry {

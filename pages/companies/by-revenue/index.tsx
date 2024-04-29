@@ -4,5 +4,5 @@ import { CompanyListPageParams, CompanyListPageProps, getCompaniesListProps } fr
 export { default } from '../'
 
 export const getStaticProps = async (context: GetStaticPropsContext<CompanyListPageParams>): Promise<GetStaticPropsResult<CompanyListPageProps>> => {
-  return await getCompaniesListProps(context, { sortBy: 'revenue', sortDirection: 'desc' })
+  return await getCompaniesListProps(context, { sortBy: 'revenue', sortDirection: 'desc', sortSeoDescription: 'sorted by revenue' })
 }
