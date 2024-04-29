@@ -107,39 +107,41 @@ function Header (): React.ReactElement {
 
   return (
     <ThemeProvider theme={headerTheme}>
-      <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary', maxWidth: '1248px' }}>
-        <Toolbar sx={{ minHeight: { md: '110px' }, display: 'flex', justifyContent: 'space-between' }}>
-          <NextMUILink href='/'>
-            <Image src='/images/logo.svg' alt='Open Sustainability Index Logo' width={62} height={62} />
-          </NextMUILink>
-          {showHamburgerMenu
-            ? (
-              <IconButton
-                color='inherit'
-                aria-label='open drawer'
-                edge='end'
-                onClick={handleDrawerToggle}
-              >
-                <MenuIcon />
-              </IconButton>
+      <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
+        <Box sx={{ maxWidth: '1248px', width: '100%', margin: '0 auto' }}>
+          <Toolbar sx={{ minHeight: { md: '110px' }, display: 'flex', justifyContent: 'space-between' }}>
+            <NextMUILink href='/'>
+              <Image src='/images/logo.svg' alt='Open Sustainability Index Logo' width={62} height={62} />
+            </NextMUILink>
+            {showHamburgerMenu
+              ? (
+                <IconButton
+                  color='inherit'
+                  aria-label='open drawer'
+                  edge='end'
+                  onClick={handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
               )
-            : (
-              <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
-                <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
-                  {links.filter(link => link.display.includes('header')).map((link) => (
-                    <NextMUILink href={link.path} key={link.name}>
-                      <ListItem>
-                        <ListItemText primary={link.name} />
-                      </ListItem>
-                    </NextMUILink>
-                  ))}
+              : (
+                <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
+                  <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
+                    {links.filter(link => link.display.includes('header')).map((link) => (
+                      <NextMUILink href={link.path} key={link.name}>
+                        <ListItem>
+                          <ListItemText primary={link.name} />
+                        </ListItem>
+                      </NextMUILink>
+                    ))}
+                  </Box>
+                  <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
+                    Report Data
+                  </Button>
                 </Box>
-                <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
-                  Report Data
-                </Button>
-              </Box>
               )}
-        </Toolbar>
+          </Toolbar>
+        </Box>
         <Drawer
           anchor='right'
           open={mobileOpen}
