@@ -100,7 +100,7 @@ function Header (): React.ReactElement {
 
   return (
     <ThemeProvider theme={headerTheme}>
-      <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
+      <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary', maxWidth: '1248px' }}>
         <Toolbar sx={{ minHeight: { md: '110px' } }}>
           <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: { xs: 1 }, textTransform: 'uppercase', fontWeight: 'bold' }}>
             <NextMUILink href='/'>{config.appName}</NextMUILink>
