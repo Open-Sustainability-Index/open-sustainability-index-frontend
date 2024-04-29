@@ -16,7 +16,7 @@ import {
 
 import { COLORS } from 'app/theme/theme'
 import { Company } from 'types/global'
-import { parseFloatSpaces } from 'lib/strings'
+// import { parseFloatSpaces } from 'lib/strings'
 import PaperCard from '../common/PaperCard'
 
 const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactElement | null => {

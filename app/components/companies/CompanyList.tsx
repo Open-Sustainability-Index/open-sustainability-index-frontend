@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CompaniesCompany, Company } from 'types/global'
+import { CompaniesCompany } from 'types/global'
 import DataTable, { DataTableHeader } from '../common/DataTable'
 import SearchBlock from '../navigation/SearchBlock'
 

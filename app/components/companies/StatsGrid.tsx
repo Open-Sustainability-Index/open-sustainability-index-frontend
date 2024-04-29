@@ -3,7 +3,6 @@ import { Grid, Typography, Box } from '@mui/material'
 import { Emission } from 'types/global'
 
 export default function StatsGrid ({ emission }: { emission: Emission }): React.ReactElement {
-
   return (
     <Box sx={{ flexGrow: 1 }} pb={3}>
       <Grid container spacing={4}>
