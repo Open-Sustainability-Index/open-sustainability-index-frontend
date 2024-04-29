@@ -632,3 +632,15 @@ hr {
 }
 
 /* END from Petter 2024-04-28 */
+
+
+.wordpress-container > .wp-block-group {
+  padding: 5rem 1.8rem !important;
+}
+
+
+@media (min-width:782px) {
+  .wordpress-container .kpis {
+    padding: 1.8rem 0;
+  }
+}
