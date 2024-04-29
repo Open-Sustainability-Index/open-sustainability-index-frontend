@@ -644,3 +644,22 @@ hr {
     padding: 1.8rem 0;
   }
 }
+
+.dynamic-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.dynamic-columns img {
+  width: 60px;
+}
+
+@media (max-width: 781px) {
+  .dynamic-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dynamic-columns.mobile-one-column {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
