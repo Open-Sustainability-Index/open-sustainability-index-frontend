@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import {
+  Container,
   Grid,
   Select,
   MenuItem,
@@ -95,23 +96,25 @@ const FiltersBlock = (): React.ReactElement | null => {
   }
 
   return (
-    <Grid
-      container
-      spacing={2}
-      sx={{
-        justifyContent: 'center',
-        marginTop: '0.5em'
-      }}
-    >
-      {filterFields.map((field) => (
-        <FilterSection
-          key={field.value}
-          field={field}
-          value={router.query[field.value] as string}
-          onChange={handleChange}
-        />
-      ))}
-    </Grid>
+    <Container>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          justifyContent: 'center',
+          marginTop: '0.5em'
+        }}
+      >
+        {filterFields.map((field) => (
+          <FilterSection
+            key={field.value}
+            field={field}
+            value={router.query[field.value] as string}
+            onChange={handleChange}
+          />
+        ))}
+      </Grid>
+    </Container>
   )
 }
 
