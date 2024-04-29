@@ -18,7 +18,10 @@ const PageTopBanner = ({
         backgroundColor: 'var(--wp--preset--color--tertiary)',
         color: 'white',
         px: 4,
-        py: 6,
+        py: {
+          xs: 6,
+          md: 12,
+        },
         mb: 4
       }}
     >
