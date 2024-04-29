@@ -37,6 +37,9 @@ const CompanyDetails = ({ company }: { company: Company }): React.ReactElement =
           <Grid item xs={12}>
             <RevenueTable company={company} />
           </Grid>
+          <Grid item xs={12}>
+            <EmissionsOverviewTable company={company} />
+          </Grid>
         </Grid>
       </Container>
     </>
@@ -87,6 +90,20 @@ const RevenueTable = ({ company }: { company: Company }): React.ReactElement => 
         { field: 'year', label: 'Revenue' },
         { field: 'revenue', label: 'Net Revenue (M USD)' },
         { field: 'source_revenue', label: 'Revenue Source', type: 'link' }
+      ]}
+      data={company.emissions}
+    />
+  )
+}
+
+const EmissionsOverviewTable = ({ company }: { company: Company }): React.ReactElement => {
+  return (
+    <DataTableHorizontal
+      headers={[
+        { field: 'year', label: 'Emissions Overview' },
+        { field: 'total_emission_market_based', label: 'Total Emissions - MB (t CO₂e)' },
+        { field: 'emission_intensity', label: 'Emissions Intensity (t CO₂e / M USD)' },
+        { field: 'cradle_to_gate:', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)' }
       ]}
       data={company.emissions}
     />

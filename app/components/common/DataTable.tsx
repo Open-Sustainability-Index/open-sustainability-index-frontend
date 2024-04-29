@@ -120,7 +120,7 @@ export default DataTable
 const DataTableHeaderCell = ({ header }: { header: DataTableHeader }): React.ReactElement => (
   <TableCell
     align={header.align ?? 'left'}
-    sx={{ fontSize: '16px' }}
+    sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
   >
     {header.label ?? header.field}
   </TableCell>
@@ -163,13 +163,13 @@ export const DataTableHorizontal = ({
     <TableContainer component={Paper}>
       <Table aria-label='horizontal table'>
         <TableBody>
-          {headers.map((header, index) => (
-            <TableRow key={index}>
+          {headers.map((header, headerIndex) => (
+            <TableRow key={headerIndex}>
               <DataTableHeaderCell header={header} />
               {data.map((row, rowIndex) => (
                 <DataTableCell
                   index={rowIndex}
-                  key={`${index}-${rowIndex}`}
+                  key={`${headerIndex}-${rowIndex}`}
                   row={row}
                   header={header}
                 />
