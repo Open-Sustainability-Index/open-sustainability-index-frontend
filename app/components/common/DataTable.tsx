@@ -35,7 +35,7 @@ interface DataTableProps {
   data: readonly DataTableRow[]
   rowKeyField?: string
   detailPageLink?: string
-  pageNr?: number
+  page?: number
 }
 
 const DataTable = ({
@@ -43,7 +43,7 @@ const DataTable = ({
   data,
   rowKeyField,
   detailPageLink,
-  pageNr
+  page
 }: DataTableProps): React.ReactElement => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
@@ -59,7 +59,8 @@ const DataTable = ({
 
   const handlePageClick = (event: any, value: number): void => {
     if (detailPageLink !== undefined) {
-      const newPath = (detailPageLink.replace(':key', `p/${value}`)).replace(/\/p\/1$/, '')
+      const newPath = (detailPageLink.replace('%3Akey', value.toString())).replace('&page=1', '')
+      console.log('detailPageLink:', detailPageLink, value)
       void router.push(newPath)
     }
   }
@@ -100,12 +101,12 @@ const DataTable = ({
         </Table>
       </TableContainer>
 
-      {pageNr !== undefined && (
+      {page !== undefined && (
         <Stack spacing={2} mt={1}>
           <Pagination
             sx={{ display: 'flex', justifyContent: 'center' }}
-            count={Math.max(pageNr + 1, 10)}
-            page={pageNr}
+            count={Math.max(page + 1, 10)}
+            page={page}
             onChange={handlePageClick}
           />
         </Stack>

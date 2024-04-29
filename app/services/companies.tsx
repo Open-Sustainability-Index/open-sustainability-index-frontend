@@ -47,9 +47,9 @@ export const companiesPageProps = (companies: CompaniesCompany[], options?: List
   }
 }
 
-export const fetchCompanies = async ({ pageNr = 1, pageSize = 20, sortBy = 'company_name', sortDirection = 'asc', filters }: ListEndpointParams): Promise<CompaniesCompany[]> => {
+export const fetchCompanies = async ({ page = 1, pageSize = 20, sort = 'company_name', order = 'asc', filters }: ListEndpointParams): Promise<CompaniesCompany[]> => {
   const filtersQuery = (new URLSearchParams(filters)).toString()
-  const url = `companies?sort=${sortBy}&order=${sortDirection}&limit=${pageSize}&offset=${(pageNr - 1) * pageSize}&${filtersQuery}`
+  const url = `companies?sort=${sort}&order=${order}&limit=${pageSize}&offset=${(page - 1) * pageSize}&${filtersQuery}`
   const results = await makeRestRequest('GET', url)
   return results?.data
 }

@@ -1,33 +1,33 @@
 import React from 'react'
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
 import { fetchCompanies, companiesPageProps } from 'app/services/companies'
 
-import { ListPageOptions, CompaniesCompany } from 'types/global'
+import { ListEndpointParams, CompaniesCompany } from 'types/global'
 import toSlug from 'lib/toSlug'
 import CompanyList from 'app/components/companies/CompanyList'
 import PageTopBanner from 'app/components/page/PageTopBanner'
 
 export interface CompanyListPageParams extends ParsedUrlQuery {
-  pageNr: string
+  page: string
 }
 
 export interface CompanyListPageProps {
   title: string
   description: string
   companies?: CompaniesCompany[]
-  pageNr: number
+  page: number
   detailPageLink?: string
 }
 
-function CompanyListPage ({ companies, pageNr, detailPageLink }: CompanyListPageProps): React.ReactElement {
+function CompanyListPage ({ companies, page, detailPageLink }: CompanyListPageProps): React.ReactElement {
   return (
     <>
       <PageTopBanner title='Companies' description='Find any company' />
       <CompanyList
         companies={companies}
-        pageNr={pageNr}
+        page={page}
         detailPageLink={detailPageLink}
       />
     </>
@@ -57,9 +57,8 @@ const formatCompanyData = (company: CompaniesCompany): any => {
   }
 }
 
-export const getCompaniesListProps = async (context: GetStaticPropsContext<CompanyListPageParams>, options?: ListPageOptions): Promise<GetStaticPropsResult<CompanyListPageProps>> => {
-  const pageNr = parseInt(context.params?.pageNr ?? '1')
-  const pageCompanies = (await fetchCompanies({ pageNr, sortBy: options?.sortBy, sortDirection: options?.sortDirection })) ?? []
+export const getCompaniesListProps = async (params: ListEndpointParams, context: GetServerSidePropsContext<CompanyListPageParams>): Promise<GetServerSidePropsResult<CompanyListPageProps>> => {
+  const pageCompanies = (await fetchCompanies(params)) ?? []
   // const companiesWithData = pageCompanies.filter(company => !!company.total_reported_emission_scope_1_2_3)
   // const companiesWithoutData = pageCompanies.filter(company => !company.total_reported_emission_scope_1_2_3)
   // const cleanedCompanies = [...companiesWithData, ...companiesWithoutData].map(formatCompanyData)
@@ -67,19 +66,18 @@ export const getCompaniesListProps = async (context: GetStaticPropsContext<Compa
   // console.log('companiesWithData:', companiesWithData.length, companiesWithoutData.length)
   // console.log('companies:', JSON.stringify(companies.filter(company => company.emissions.length > 0), null, 2))
   // console.log('cleanedCompanies:', JSON.stringify(cleanedCompanies, null, 2))
-  const detailPage = options?.sortBy === 'emission_intensity'
-    ? '/companies/by-intensity/:key'
-    : '/companies/:key'
+  const detailPageLink = '/companies?' + (new URLSearchParams({ ...context.query, page: ':key' })).toString()
   return {
     props: {
-      ...companiesPageProps(cleanedCompanies, options),
-      pageNr,
+      ...companiesPageProps(cleanedCompanies, params),
+      page: params.page ?? 1,
       companies: cleanedCompanies,
-      detailPageLink: detailPage
+      detailPageLink
     }
   }
 }
 
-export const getStaticProps = async (context: GetStaticPropsContext<CompanyListPageParams>): Promise<GetStaticPropsResult<CompanyListPageProps>> => {
-  return await getCompaniesListProps(context)
+export const getServerSideProps = async (context: GetServerSidePropsContext<CompanyListPageParams>): Promise<GetServerSidePropsResult<CompanyListPageProps>> => {
+  const { sort, order, page, ...filters } = context.query
+  return await getCompaniesListProps({ sort: sort as string, order: order as string, page: parseInt(page as string ?? '1'), ...filters }, context)
 }

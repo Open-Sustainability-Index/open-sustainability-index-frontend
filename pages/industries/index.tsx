@@ -10,17 +10,17 @@ import IndustryList from 'app/components/industries/IndustryList'
 import PageTopBanner from 'app/components/page/PageTopBanner'
 
 export interface IndustryListPageParams extends ParsedUrlQuery {
-  pageNr: string
+  page: string
 }
 
 interface IndustryListPageProps {
   title: string
   description: string
-  pageNr: number
+  page: number
   industries?: Industry[]
 }
 
-function IndustryListPage ({ pageNr }: IndustryListPageProps): React.ReactElement {
+function IndustryListPage ({ page }: IndustryListPageProps): React.ReactElement {
   const industriesWithSlug = industries.map((industry) => ({
     ...industry,
     slug: toSlug(industry.name)
@@ -28,7 +28,7 @@ function IndustryListPage ({ pageNr }: IndustryListPageProps): React.ReactElemen
   return (
     <>
       <PageTopBanner title='Industries' description='Find any industry' />
-      <IndustryList industries={industriesWithSlug} pageNr={pageNr} />
+      <IndustryList industries={industriesWithSlug} page={page} />
     </>
   )
 }
@@ -39,7 +39,7 @@ export const getStaticProps = async (context: GetStaticPropsContext<IndustryList
   return {
     props: {
       ...industriesPageProps(industries)
-      // pageNr,
+      // page,
       // industries
     }
   }

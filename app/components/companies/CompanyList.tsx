@@ -60,11 +60,11 @@ const headers: readonly DataTableHeader[] = [
 
 interface CompanyListProps {
   companies?: CompaniesCompany[]
-  pageNr?: number
+  page?: number
   detailPageLink?: string
 }
 
-const CompanyList = ({ companies, pageNr, detailPageLink = '/companies/:key' }: CompanyListProps): React.ReactElement | string => {
+const CompanyList = ({ companies, page, detailPageLink = '/companies/:key' }: CompanyListProps): React.ReactElement | string => {
   return (
     <>
       <SearchBlock />
@@ -73,7 +73,7 @@ const CompanyList = ({ companies, pageNr, detailPageLink = '/companies/:key' }: 
         headers={headers}
         rowKeyField='slug'
         detailPageLink={detailPageLink}
-        pageNr={pageNr}
+        page={page}
       />
     </>
   )

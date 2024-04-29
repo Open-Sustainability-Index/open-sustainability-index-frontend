@@ -15,16 +15,16 @@ interface PageProps {
 }
 
 export interface ListEndpointParams {
-  pageNr?: number
+  page?: number
   pageSize?: number
-  sortBy?: string
-  sortDirection?: string
+  sort?: string
+  order?: string
   filters?: Record<string, any>
 }
 
 export interface ListPageOptions {
-  sortBy?: string
-  sortDirection?: string
+  sort?: string
+  order?: string
   sortSeoDescription?: string // to use in meta title
   detailPageLink?: string // for links in DataTable
 }

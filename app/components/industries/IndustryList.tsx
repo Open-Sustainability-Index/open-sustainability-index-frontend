@@ -12,7 +12,7 @@ const headers: readonly DataTableHeader[] = [
   }
 ]
 
-const IndustryList = ({ industries, pageNr }: { industries?: Industry[], pageNr: number }): React.ReactElement | string => {
+const IndustryList = ({ industries, page }: { industries?: Industry[], page: number }): React.ReactElement | string => {
   return (
     <>
       <SearchBlock />
