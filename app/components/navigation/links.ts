@@ -5,7 +5,7 @@ const links = [
   { name: 'Documentation', path: '/documentation', display: ['header'] },
   { name: 'About', path: '/about', display: ['header', 'footer'] },
   { name: 'News', path: '/news', display: ['footer'], buildStaticWordpressPage: false },
-  { name: 'Support', path: '/support', display: ['footer'] },
+  { name: 'Support Us', path: '/support-us', display: ['footer'] },
   { name: 'Contact', path: '/contact', display: ['footer'] },
   { name: 'API', path: '/api', display: ['footer'] },
   // { name: 'FAQ', path: '/faq', display: ['footer'] },
