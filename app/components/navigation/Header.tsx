@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   IconButton,
   Box,
@@ -17,7 +16,6 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
-import config from 'config/config'
 import links from './links'
 import theme, { COLORS } from 'app/theme/theme'
 import NextMUILink from './NextMUILink'
@@ -116,7 +114,7 @@ function Header (): React.ReactElement {
               >
                 <MenuIcon />
               </IconButton>
-            )
+              )
             : (
               <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
@@ -132,7 +130,7 @@ function Header (): React.ReactElement {
                   Report Data
                 </Button>
               </Box>
-            )}
+              )}
         </Toolbar>
         <Drawer
           anchor='right'
