@@ -80,5 +80,5 @@ export const getCompaniesListProps = async (params: ListEndpointParams, context:
 
 export const getServerSideProps = async (context: GetServerSidePropsContext<CompanyListPageParams>): Promise<GetServerSidePropsResult<CompanyListPageProps>> => {
   const { sort, order, page, ...filters } = context.query
-  return await getCompaniesListProps({ sort: sort as string, order: order as string, page: parseInt(page as string ?? '1'), ...filters }, context)
+  return await getCompaniesListProps({ sort: sort as string, order: order as string, page: parseInt(page as string ?? '1'), filters }, context)
 }
