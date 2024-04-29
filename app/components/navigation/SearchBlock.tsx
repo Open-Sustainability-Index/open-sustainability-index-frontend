@@ -53,6 +53,7 @@ const SearchField = (): React.ReactElement => {
       )}
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption ?? '')
+        window.alert('What did you expect to happen right now: Go to the company page, or update list?')
       }}
       inputValue={userInput !== '' ? userInput : selectedOption}
       renderInput={(params) => (
