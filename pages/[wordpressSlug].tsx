@@ -63,7 +63,7 @@ export async function getStaticProps (context: GetStaticPropsContext<WordpressPa
 
 export async function getStaticPaths (context: GetStaticPathsContext): Promise<GetStaticPathsResult<WordpressPageParams>> {
   // const locales = context.locales ?? ['en']
-  const wordpressSlugs = links.filter(link => link.wordpressPage !== false).map(link => link.path)
+  const wordpressSlugs = links.filter(link => link.buildStaticWordpressPage !== false).map(link => link.path)
   return {
     paths: wordpressSlugs,
     fallback: true // false → 404, true: Next.js tries to generate page
