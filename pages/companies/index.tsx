@@ -3,6 +3,7 @@ import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
 import { fetchCompanies, companiesPageProps } from 'app/services/companies'
+import { changeQueryString } from 'lib/strings'
 
 import { ListEndpointParams, CompaniesCompany } from 'types/global'
 import toSlug from 'lib/toSlug'
@@ -66,7 +67,7 @@ export const getCompaniesListProps = async (params: ListEndpointParams, context:
   // console.log('companiesWithData:', companiesWithData.length, companiesWithoutData.length)
   // console.log('companies:', JSON.stringify(companies.filter(company => company.emissions.length > 0), null, 2))
   // console.log('cleanedCompanies:', JSON.stringify(cleanedCompanies, null, 2))
-  const detailPageLink = '/companies?' + (new URLSearchParams({ ...context.query, page: ':key' })).toString()
+  const detailPageLink = '/companies?' + changeQueryString(context.query, 'page', ':key')
   return {
     props: {
       ...companiesPageProps(cleanedCompanies, params),
