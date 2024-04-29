@@ -26,7 +26,7 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
-import { CompaniesCompany, Company, PageProps } from 'types/global'
+import { CompaniesCompany, Company, ListPageOptions, PageProps } from 'types/global'
 import makeRestRequest from 'lib/makeRestRequest'
 import toSlug from 'lib/toSlug'
 import { titleCase } from 'lib/strings'
@@ -39,16 +39,16 @@ interface CompaniesReturnProps {
   companies?: Company[]
 }
 
-export const companiesPageProps = (companies: CompaniesCompany[]): PageProps => {
+export const companiesPageProps = (companies: CompaniesCompany[], options?: ListPageOptions): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   return {
-    title: 'Global company GHG emission data per industry and year',
+    title: 'Global company GHG emission data ' + (options?.sortBy === 'emission_intensity' ? 'sorted by intensity' : 'per industry and year'),
     description: `Get open-source global GHG emission data (scope 1/2/3) for companies such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
   }
 }
 
-export const fetchCompanies = async (pageNr = 1, pageSize = 20): Promise<CompaniesCompany[]> => {
-  const url = `companies?limit=${pageSize}&offset=${(pageNr - 1) * pageSize}`
+export const fetchCompanies = async (pageNr = 1, pageSize = 20, sortBy = 'company_name', sortOrder = 'asc'): Promise<CompaniesCompany[]> => {
+  const url = `companies?sort=${sortBy}&order=${sortOrder}&limit=${pageSize}&offset=${(pageNr - 1) * pageSize}`
   const results = await makeRestRequest('GET', url)
   return results?.data
 }

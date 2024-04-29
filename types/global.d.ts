@@ -14,6 +14,12 @@ interface PageProps {
   showFooter?: boolean
 }
 
+export interface ListPageOptions {
+  sortBy?: string
+  sortDirection?: string
+  detailPageLink?: string
+}
+
 export interface Industry {
   name: string
   slug?: string
