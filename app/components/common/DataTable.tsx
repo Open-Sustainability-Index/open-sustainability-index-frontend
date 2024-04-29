@@ -21,7 +21,7 @@ import { changeQueryString } from 'lib/strings'
 export interface DataTableHeader {
   field: string
   label?: string
-  type?: 'string' /* default, leave blank */ | 'number' | 'date' | 'status' | 'image'
+  type?: 'string' /* default, leave blank */ | 'number' | 'date' | 'status' | 'image' | 'link'
   align?: 'left' /* default, leave blank */ | 'right' | 'center'
   width?: string
   sortable?: boolean
@@ -133,14 +133,51 @@ const DataTableCell = ({ index, row, header }: { index: number, row: DataTableRo
     align={header.align ?? 'left'}
     sx={{ fontSize: '16px' }}
   >
-    {header.type === 'status'
-      ? ((row[header.field] !== null && row[header.field] !== undefined) && (
-        <Chip
-          label={row[header.field]}
-          color={row[header.statusField as keyof typeof row]}
-        />
-        )
-        )
-      : row[header.field]}
+    {(
+      header.type === 'status'
+        ? ((row[header.field] !== null && row[header.field] !== undefined) && (
+          <Chip
+            label={row[header.field]}
+            color={row[header.statusField as keyof typeof row]}
+          />
+          )
+          )
+        : header.type === 'link'
+          ? (
+            <a href={row[header.field]} target='_blank' rel='noreferrer noopener'>
+              (link)
+            </a>
+            )
+          : row[header.field]
+      )}
   </TableCell>
 )
+
+/* ----- Horizontal ----- */
+
+export const DataTableHorizontal = ({
+  headers,
+  data
+}: DataTableProps): React.ReactElement => {
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label='horizontal table'>
+        <TableBody>
+          {headers.map((header, index) => (
+            <TableRow key={index}>
+              <DataTableHeaderCell header={header} />
+              {data.map((row, rowIndex) => (
+                <DataTableCell
+                  index={rowIndex}
+                  key={`${index}-${rowIndex}`}
+                  row={row}
+                  header={header}
+                />
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
+}

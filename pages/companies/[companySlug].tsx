@@ -27,7 +27,6 @@ const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.R
     return (
       <CompanyDetails
         company={company}
-        title={title}
       />
     )
   }

@@ -3,6 +3,7 @@ import { Container, Grid, Typography } from '@mui/material'
 
 // import { Company } from 'graphql/__generated__/graphql'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
+import { DataTableHorizontal } from '../common/DataTable'
 import { Company } from 'types/global'
 import { titleCase } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
@@ -32,6 +33,9 @@ const CompanyDetails = ({ company }: { company: Company }): React.ReactElement =
           </Grid>
           <Grid item xs={12}>
             <CompanyIntensityChart company={company} />
+          </Grid>
+          <Grid item xs={12}>
+            <RevenueTable company={company} />
           </Grid>
         </Grid>
       </Container>
@@ -73,6 +77,19 @@ const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactE
 const Targets = ({ company }: { company: Company }): React.ReactElement => {
   return (
     <Typography variant='h2'>Targets</Typography>
+  )
+}
+
+const RevenueTable = ({ company }: { company: Company }): React.ReactElement => {
+  return (
+    <DataTableHorizontal
+      headers={[
+        { field: 'year', label: 'Revenue' },
+        { field: 'revenue', label: 'Net Revenue (M USD)' },
+        { field: 'source_revenue', label: 'Revenue Source', type: 'link' }
+      ]}
+      data={company.emissions}
+    />
   )
 }
 
