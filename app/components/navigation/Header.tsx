@@ -21,6 +21,7 @@ import config from 'config/config'
 import links from './links'
 import theme, { COLORS } from 'app/theme/theme'
 import NextMUILink from './NextMUILink'
+import Image from 'next/image'
 
 const headerTheme = createTheme({
   ...theme,
@@ -101,10 +102,10 @@ function Header (): React.ReactElement {
   return (
     <ThemeProvider theme={headerTheme}>
       <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary', maxWidth: '1248px' }}>
-        <Toolbar sx={{ minHeight: { md: '110px' } }}>
-          <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: { xs: 1 }, textTransform: 'uppercase', fontWeight: 'bold' }}>
-            <NextMUILink href='/'>{config.appName}</NextMUILink>
-          </Typography>
+        <Toolbar sx={{ minHeight: { md: '110px' }, display: 'flex', justifyContent: 'space-between' }}>
+          <NextMUILink href='/'>
+            <Image src='/images/logo.svg' alt='Open Sustainability Index Logo' width={62} height={62} />
+          </NextMUILink>
           {showHamburgerMenu
             ? (
               <IconButton
@@ -115,7 +116,7 @@ function Header (): React.ReactElement {
               >
                 <MenuIcon />
               </IconButton>
-              )
+            )
             : (
               <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
@@ -131,7 +132,7 @@ function Header (): React.ReactElement {
                   Report Data
                 </Button>
               </Box>
-              )}
+            )}
         </Toolbar>
         <Drawer
           anchor='right'
