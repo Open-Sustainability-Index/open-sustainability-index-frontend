@@ -59,7 +59,7 @@ const formatCompanyData = (company: CompaniesCompany): any => {
 
 export const getCompaniesListProps = async (context: GetStaticPropsContext<CompanyListPageParams>, options?: ListPageOptions): Promise<GetStaticPropsResult<CompanyListPageProps>> => {
   const pageNr = parseInt(context.params?.pageNr ?? '1')
-  const pageCompanies = (await fetchCompanies(pageNr, undefined, options?.sortBy, options?.sortDirection)) ?? []
+  const pageCompanies = (await fetchCompanies({ pageNr, sortBy: options?.sortBy, sortDirection: options?.sortDirection })) ?? []
   // const companiesWithData = pageCompanies.filter(company => !!company.total_reported_emission_scope_1_2_3)
   // const companiesWithoutData = pageCompanies.filter(company => !company.total_reported_emission_scope_1_2_3)
   // const cleanedCompanies = [...companiesWithData, ...companiesWithoutData].map(formatCompanyData)

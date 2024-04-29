@@ -26,7 +26,7 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
-import { CompaniesCompany, Company, ListPageOptions, PageProps } from 'types/global'
+import { CompaniesCompany, Company, ListEndpointParams, ListPageOptions, PageProps } from 'types/global'
 import makeRestRequest from 'lib/makeRestRequest'
 import toSlug from 'lib/toSlug'
 import { titleCase } from 'lib/strings'
@@ -47,8 +47,9 @@ export const companiesPageProps = (companies: CompaniesCompany[], options?: List
   }
 }
 
-export const fetchCompanies = async (pageNr = 1, pageSize = 20, sortBy = 'company_name', sortOrder = 'asc'): Promise<CompaniesCompany[]> => {
-  const url = `companies?sort=${sortBy}&order=${sortOrder}&limit=${pageSize}&offset=${(pageNr - 1) * pageSize}`
+export const fetchCompanies = async ({ pageNr = 1, pageSize = 20, sortBy = 'company_name', sortDirection = 'asc', filters }: ListEndpointParams): Promise<CompaniesCompany[]> => {
+  const filtersQuery = (new URLSearchParams(filters)).toString()
+  const url = `companies?sort=${sortBy}&order=${sortDirection}&limit=${pageSize}&offset=${(pageNr - 1) * pageSize}&${filtersQuery}`
   const results = await makeRestRequest('GET', url)
   return results?.data
 }

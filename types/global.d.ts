@@ -14,6 +14,14 @@ interface PageProps {
   showFooter?: boolean
 }
 
+export interface ListEndpointParams {
+  pageNr?: number
+  pageSize?: number
+  sortBy?: string
+  sortDirection?: string
+  filters?: Record<string, any>
+}
+
 export interface ListPageOptions {
   sortBy?: string
   sortDirection?: string
