@@ -358,6 +358,7 @@
 
 .wp-block-image img {
   height: auto;
+  width: 100%;
 }
 
 /* from Petter 2024-04-28 */
