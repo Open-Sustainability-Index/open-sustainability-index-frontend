@@ -44,15 +44,11 @@ const formatCompanyData = (company: CompaniesCompany): any => {
     slug: toSlug(company.company_name),
     // Only include emissions data if company has emissions data:
     ...(hasEmissions && {
-      industry: company.industry,
+      ...company,
       nearTerm: company.target?.toLowerCase() === 'near-term' ? 'Target set' : null,
       nearTermStatus: 'success',
       netZero: company.target?.toLowerCase() === 'net-zero' ? 'Target set' : null,
-      netZeroStatus: 'success',
-      total_reported_emission_scope_1_2_3: company.total_reported_emission_scope_1_2_3,
-      revenue: company.revenue,
-      intensity: company.emission_intensity,
-      year: company.year
+      netZeroStatus: 'success'
     })
   }
 }
