@@ -41,7 +41,7 @@ const completeConfig: AllConfigurations = {
     serverPort,
     appSlug,
     appVersion: packageJson.version,
-    appUrl: process.env.APP_URL ?? 'https://climate-wiki-frontend.vercel.app/',
+    appUrl: process.env.APP_URL ?? 'https://www.opensustainabilityindex.org/',
     appName: manifest.name,
     appTagline: manifest.description,
     appDescription: manifest.description,
@@ -50,7 +50,7 @@ const completeConfig: AllConfigurations = {
     fonts: [
       ['Open Sans', 'wght@300;400;500;700']
     ],
-    googleAnalyticsId: 'UA-XXXXXXX-X',
+    googleAnalyticsId: 'G-ZFQELW8YR1',
     databaseUrl: process.env.POSTGRES_URL,
     graphqlPath: '/api/graphql',
     apiBaseUrl: 'https://climate-wiki-api.vercel.app/'
