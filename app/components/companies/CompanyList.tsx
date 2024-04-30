@@ -9,53 +9,62 @@ const headers: readonly DataTableHeader[] = [
   {
     field: 'company_name',
     label: 'Company',
-    displayOnMobile: true
+    displayOnMobile: true,
+    isSortable: true
   },
   {
     field: 'jurisdiction',
-    label: 'Jurisdiction'
+    label: 'Jurisdiction',
+    isSortable: true
   },
   {
     field: 'industry',
-    label: 'Industry'
+    label: 'Industry',
+    isSortable: true
   },
   {
     field: 'nearTerm',
     label: 'Near-term',
     type: 'status',
-    statusField: 'nearTermStatus'
+    statusField: 'nearTermStatus',
+    isSortable: true
   },
   {
     field: 'netZero',
     label: 'Net Zero',
     type: 'status',
     statusField: 'netZeroStatus',
-    displayOnMobile: true
+    displayOnMobile: true,
+    isSortable: true
   },
   {
     field: 'emissions',
     label: 'Emissions (t CO2e)',
     type: 'number',
-    align: 'right'
+    align: 'right',
+    isSortable: true
   },
   {
     field: 'revenue',
     label: 'Revenue (M USD)',
     type: 'number',
-    align: 'right'
+    align: 'right',
+    isSortable: true
   },
   {
     field: 'intensity',
     label: 'Intensity (t CO₂e / M USD)',
     type: 'number',
     align: 'right',
-    displayOnMobile: true
+    displayOnMobile: true,
+    isSortable: true
   },
   {
     field: 'year',
     label: 'Year',
     type: 'number',
-    align: 'center'
+    align: 'center',
+    isSortable: true
   }
 ]
 

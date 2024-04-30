@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
   Paper,
   Chip,
   Stack,
@@ -27,6 +28,7 @@ export interface DataTableHeader {
   sortable?: boolean
   statusField?: string // Value in row.statusField can be: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
   displayOnMobile?: boolean
+  isSortable?: boolean
   isHorizontalHeader?: boolean
 }
 
@@ -52,6 +54,7 @@ const DataTable = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
   const headersToDisplay = headers.filter((header) => header.displayOnMobile === true || (!isMobile))
+  const { sort, order } = router.query
 
   const handleRowClick = (row: DataTableRow): void => {
     if (row[rowKeyField as keyof typeof row] !== undefined && detailPageLink !== undefined) {
@@ -67,6 +70,14 @@ const DataTable = ({
     }
   }
 
+  const handleSortClick = (event: any, sort: string, order: 'asc' | 'desc' | false): void => {
+    console.log('handleSortClick:', event)
+    if (detailPageLink !== undefined) {
+      const newPath = detailPageLink + '?' + changeQueryString(router.query, 'sort', sort)
+      void router.push(newPath)
+    }
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -77,6 +88,9 @@ const DataTable = ({
                 <DataTableHeaderCell
                   key={index}
                   header={header}
+                  sort={sort}
+                  order={order}
+                  onSort={handleSortClick}
                 />
               ))}
             </TableRow>
@@ -119,14 +133,43 @@ const DataTable = ({
 
 export default DataTable
 
-const DataTableHeaderCell = ({ header, title }: { header: DataTableHeader, title?: string }): React.ReactElement => (
-  <TableCell
-    align={header.align ?? 'left'}
-    sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
-  >
-    {title ?? header.label ?? header.field}
-  </TableCell>
-)
+interface DataTableHeaderCellProps {
+  header: DataTableHeader
+  title?: string
+  sort?: string
+  order?: 'asc' | 'desc' | false
+  onSort: (event: any, sort: string, order: 'asc' | 'desc' | false) => void
+}
+
+const DataTableHeaderCell = ({
+  header,
+  title,
+  sort,
+  order,
+  onSort
+}: DataTableHeaderCellProps): React.ReactElement => {
+  const headerTitle = title ?? header.label ?? header.field
+  return (
+    <TableCell
+      align={header.align ?? 'left'}
+      sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
+    >
+      {header.isSortable === true
+        ? (
+          <TableSortLabel
+            active={sort === header.field}
+            direction={order}
+            onClick={(event) => onSort(event, header.field, sort === header.field ? (order === 'asc' ? 'desc' : 'asc') : 'asc')}
+          >
+            {headerTitle}
+          </TableSortLabel>
+          )
+        : (
+            headerTitle
+          )}
+    </TableCell>
+  )
+}
 
 const DataTableCell = ({ index, row, header }: { index: number, row: DataTableRow, header: DataTableHeader }): React.ReactElement => (
   <TableCell
