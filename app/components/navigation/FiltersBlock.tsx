@@ -32,8 +32,8 @@ const filterFields = [
     label: 'Jurisdiction',
     value: 'jurisdiction',
     options: [
-      { label: 'All Jurisdictions', value: '' }
-      // Add other options here...
+      { label: 'All Jurisdictions', value: '' },
+      { value: 'World-wide' }
     ]
   },
   {
