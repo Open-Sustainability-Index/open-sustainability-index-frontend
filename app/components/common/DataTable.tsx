@@ -17,7 +17,7 @@ import {
 import { useRouter } from 'next/router'
 
 import { COLORS } from 'app/theme/theme'
-import { changeQueryString } from 'lib/strings'
+import { changeQuery, changeQueryString } from 'lib/strings'
 
 export interface DataTableHeader {
   field: string
@@ -63,17 +63,16 @@ const DataTable = ({
     }
   }
 
-  const handlePageClick = (event: any, value: number): void => {
+  const handleChangePage = (event: any, value: number): void => {
     if (detailPageLink !== undefined) {
       const newPath = detailPageLink + '?' + changeQueryString(router.query, 'page', value)
       void router.push(newPath)
     }
   }
 
-  const handleSortClick = (event: any, sort: string, order: 'asc' | 'desc' | false): void => {
-    console.log('handleSortClick:', event)
+  const handleSortColumn = (event: any, sort: string, order: 'asc' | 'desc' | false): void => {
     if (detailPageLink !== undefined) {
-      const newPath = detailPageLink + '?' + changeQueryString(router.query, 'sort', sort)
+      const newPath = detailPageLink + '?' + changeQueryString(changeQuery(router.query, 'sort', sort), 'order', order)
       void router.push(newPath)
     }
   }
@@ -88,9 +87,9 @@ const DataTable = ({
                 <DataTableHeaderCell
                   key={index}
                   header={header}
-                  sort={sort}
-                  order={order}
-                  onSort={handleSortClick}
+                  sort={sort as string}
+                  order={order as string}
+                  onSort={handleSortColumn}
                 />
               ))}
             </TableRow>
@@ -123,7 +122,7 @@ const DataTable = ({
             sx={{ display: 'flex', justifyContent: 'center' }}
             count={Math.max(page + 1, 10)}
             page={page}
-            onChange={handlePageClick}
+            onChange={handleChangePage}
           />
         </Stack>
       )}
@@ -137,8 +136,8 @@ interface DataTableHeaderCellProps {
   header: DataTableHeader
   title?: string
   sort?: string
-  order?: 'asc' | 'desc' | false
-  onSort: (event: any, sort: string, order: 'asc' | 'desc' | false) => void
+  order?: string
+  onSort?: (event: any, sort: string, order: 'asc' | 'desc' | false) => void
 }
 
 const DataTableHeaderCell = ({
@@ -158,8 +157,8 @@ const DataTableHeaderCell = ({
         ? (
           <TableSortLabel
             active={sort === header.field}
-            direction={order}
-            onClick={(event) => onSort(event, header.field, sort === header.field ? (order === 'asc' ? 'desc' : 'asc') : 'asc')}
+            direction={order === undefined ? undefined : (order === 'asc' ? 'asc' : 'desc')}
+            onClick={(event) => onSort?.(event, header.field, sort === header.field && order === 'asc' ? 'desc' : 'asc')}
           >
             {headerTitle}
           </TableSortLabel>
