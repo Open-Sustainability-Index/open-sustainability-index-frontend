@@ -45,9 +45,9 @@ const formatCompanyData = (company: CompaniesCompany): any => {
     // Only include emissions data if company has emissions data:
     ...(hasEmissions && {
       ...company,
-      nearTerm: company.target?.toLowerCase() === 'near-term' ? 'Target set' : null,
+      nearTerm: company.commitment_type === 'Standard' ? 'Target set' : null,
       nearTermStatus: 'success',
-      netZero: company.target?.toLowerCase() === 'net-zero' ? 'Target set' : null,
+      netZero: company.commitment_type === 'Net-zero' ? 'Target set' : null,
       netZeroStatus: 'success'
     })
   }
