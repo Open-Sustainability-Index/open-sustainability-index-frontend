@@ -26,16 +26,14 @@ const headers: readonly DataTableHeader[] = [
     field: 'nearTerm',
     label: 'Near-term',
     type: 'status',
-    statusField: 'nearTermStatus',
-    defaultSortOrder: 'asc'
+    statusField: 'nearTermStatus'
   },
   {
     field: 'netZero',
     label: 'Net Zero',
     type: 'status',
     statusField: 'netZeroStatus',
-    displayOnMobile: true,
-    defaultSortOrder: 'asc'
+    displayOnMobile: true
   },
   {
     field: 'total_reported_emission_scope_1_2_3',
