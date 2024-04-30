@@ -38,7 +38,7 @@ const headers: readonly DataTableHeader[] = [
     defaultSortOrder: 'asc'
   },
   {
-    field: 'emissions',
+    field: 'total_reported_emission_scope_1_2_3',
     label: 'Emissions (t CO2e)',
     type: 'number',
     align: 'right',

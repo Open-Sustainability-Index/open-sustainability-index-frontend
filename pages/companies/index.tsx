@@ -49,7 +49,7 @@ const formatCompanyData = (company: CompaniesCompany): any => {
       nearTermStatus: 'success',
       netZero: company.target?.toLowerCase() === 'net-zero' ? 'Target set' : null,
       netZeroStatus: 'success',
-      emissions: company.total_reported_emission_scope_1_2_3,
+      total_reported_emission_scope_1_2_3: company.total_reported_emission_scope_1_2_3,
       revenue: company.revenue,
       intensity: company.emission_intensity,
       year: company.year
