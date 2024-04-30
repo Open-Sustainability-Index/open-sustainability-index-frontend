@@ -38,7 +38,7 @@ const filterFields = [
   },
   {
     label: 'Org. type',
-    value: 'orgType',
+    value: 'organization_type',
     options: [
       { label: 'All Org. Types', value: '' },
       { value: 'SME' },
@@ -48,18 +48,22 @@ const filterFields = [
   },
   {
     label: 'Net zero',
-    value: 'netZero',
+    value: 'net-zero',
     options: [
-      { label: 'All Targets', value: '' }
-      // Add other options here...
+      { label: 'All Targets', value: '' },
+      { value: 'Active', label: 'Committed' },
+      { value: 'Target set', label: 'Target Set' },
+      { value: 'Removed' }
     ]
   },
   {
     label: 'Near-term',
-    value: 'nearTerm',
+    value: 'near-term',
     options: [
-      { label: 'All Targets', value: '' }
-      // Add other options here...
+      { label: 'All Targets', value: '' },
+      { value: 'Active', label: 'Committed' },
+      { value: 'Target set', label: 'Target Set' },
+      { value: 'Removed' }
     ]
   },
   {
