@@ -58,7 +58,8 @@ const DataTable = ({
 
   const handleRowClick = (row: DataTableRow): void => {
     if (row[rowKeyField as keyof typeof row] !== undefined && detailPageLink !== undefined) {
-      const newPath = detailPageLink + '/' + (row[rowKeyField as keyof typeof row] as string)
+      const newPath = (detailPageLink + '/' + (row[rowKeyField as keyof typeof row] as string))
+        .replace('=/', '=') // for e.g. /companies?industry=Media
       void router.push(newPath)
     }
   }

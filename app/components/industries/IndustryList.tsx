@@ -20,7 +20,7 @@ const IndustryList = ({ industries, page }: { industries?: Industry[], page: num
         data={industries ?? []}
         headers={headers}
         rowKeyField='name'
-        detailPageLink='/companies?industry=:key'
+        detailPageLink='/companies?industry='
       />
     </>
   )
