@@ -10,24 +10,24 @@ const headers: readonly DataTableHeader[] = [
     field: 'company_name',
     label: 'Company',
     displayOnMobile: true,
-    isSortable: true
+    defaultSortOrder: 'asc'
   },
   {
     field: 'jurisdiction',
     label: 'Jurisdiction',
-    isSortable: true
+    defaultSortOrder: 'asc'
   },
   {
     field: 'industry',
     label: 'Industry',
-    isSortable: true
+    defaultSortOrder: 'asc'
   },
   {
     field: 'nearTerm',
     label: 'Near-term',
     type: 'status',
     statusField: 'nearTermStatus',
-    isSortable: true
+    defaultSortOrder: 'asc'
   },
   {
     field: 'netZero',
@@ -35,36 +35,36 @@ const headers: readonly DataTableHeader[] = [
     type: 'status',
     statusField: 'netZeroStatus',
     displayOnMobile: true,
-    isSortable: true
+    defaultSortOrder: 'asc'
   },
   {
     field: 'emissions',
     label: 'Emissions (t CO2e)',
     type: 'number',
     align: 'right',
-    isSortable: true
+    defaultSortOrder: 'desc'
   },
   {
     field: 'revenue',
     label: 'Revenue (M USD)',
     type: 'number',
     align: 'right',
-    isSortable: true
+    defaultSortOrder: 'desc'
   },
   {
-    field: 'intensity',
+    field: 'emission_intensity',
     label: 'Intensity (t CO₂e / M USD)',
     type: 'number',
     align: 'right',
     displayOnMobile: true,
-    isSortable: true
+    defaultSortOrder: 'desc'
   },
   {
     field: 'year',
     label: 'Year',
     type: 'number',
     align: 'center',
-    isSortable: true
+    defaultSortOrder: 'asc'
   }
 ]
 

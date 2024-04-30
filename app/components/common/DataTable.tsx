@@ -28,7 +28,7 @@ export interface DataTableHeader {
   sortable?: boolean
   statusField?: string // Value in row.statusField can be: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
   displayOnMobile?: boolean
-  isSortable?: boolean
+  defaultSortOrder?: 'asc' | 'desc'
   isHorizontalHeader?: boolean
 }
 
@@ -70,7 +70,7 @@ const DataTable = ({
     }
   }
 
-  const handleSortColumn = (event: any, sort: string, order: 'asc' | 'desc' | false): void => {
+  const handleSortColumn = (event: any, sort: string, order: 'asc' | 'desc'): void => {
     if (detailPageLink !== undefined) {
       const newPath = detailPageLink + '?' + changeQueryString(changeQuery(router.query, 'sort', sort), 'order', order)
       void router.push(newPath)
@@ -137,7 +137,7 @@ interface DataTableHeaderCellProps {
   title?: string
   sort?: string
   order?: string
-  onSort?: (event: any, sort: string, order: 'asc' | 'desc' | false) => void
+  onSort?: (event: any, sort: string, order: 'asc' | 'desc') => void
 }
 
 const DataTableHeaderCell = ({
@@ -153,12 +153,12 @@ const DataTableHeaderCell = ({
       align={header.align ?? 'left'}
       sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
     >
-      {header.isSortable === true
+      {header.defaultSortOrder !== undefined
         ? (
           <TableSortLabel
             active={sort === header.field}
             direction={order === undefined ? undefined : (order === 'asc' ? 'asc' : 'desc')}
-            onClick={(event) => onSort?.(event, header.field, sort === header.field && order === 'asc' ? 'desc' : 'asc')}
+            onClick={(event) => onSort?.(event, header.field, sort === header.field ? (order === 'asc' ? 'desc' : 'asc') : (header.defaultSortOrder ?? 'asc'))}
           >
             {headerTitle}
           </TableSortLabel>
