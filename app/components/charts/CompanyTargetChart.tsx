@@ -42,42 +42,47 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   // const targetYear = company.targets.reduce((results: number, target): number => ((target?.target_year ?? 0) > results ? (target?.target_year ?? 0) : results), 0)
   const target = company.targets.find((target) => target.target === 'Near-term')
   const targetYear = target?.target_year ?? 0
-  const emFirstYear = company.emissions[0]?.year ?? 0
-  const emLastYear = company.emissions[company.emissions.length - 1]?.year ?? 0
-  console.log('CompanyTargetChart:', { emFirstYear, targetYear, target })
+  const firstYear = company.emissions[0]?.year ?? 0
+  const lastYear = company.emissions[company.emissions.length - 1]?.year ?? 0
+  console.log('CompanyTargetChart:', { firstYear, targetYear, target })
 
   if (company === undefined) {
     return null
   }
-  if (company.emissions.length === 0 || emFirstYear === 0) {
+  if (company.emissions.length === 0 || firstYear === 0) {
     return <Typography variant='body2'>(No emissions data available to show graph)</Typography>
   }
   if (targetYear === 0) {
     return <Typography variant='body2'>(No target data available to show graph)</Typography>
   }
 
-  const dataLabels = fillArray(targetYear - emFirstYear + 1, (index) => emFirstYear + index)
-  const emissions = company.emissions.map((company) => company.total_reported_emission_scope_1_2_3)
-  const lastEmission = emissions[emissions.length - 1] ?? 0
+  const lastEmission = company.emissions[company.emissions.length - 1]?.total_reported_emission_scope_1_2_3 ?? 0
   const targetEmission = parseTargetValue(target?.target_value, lastEmission ?? 0)
-  const emissionReductionPerYear = Math.round((lastEmission - targetEmission) / (targetYear - emLastYear + 1))
-  const emissionsProjected = fillArray(targetYear - emFirstYear + 1, (index) => {
-    if (index <= emLastYear - emFirstYear) {
+  const emissionReductionPerYear = Math.round((lastEmission - targetEmission) / (targetYear - lastYear + 1))
+
+  // Construct data series
+  const dataLabels = fillArray(targetYear - firstYear + 1, (index) => firstYear + index)
+  const emissionsHistory = dataLabels.map((year) => {
+    const emission = company.emissions.find((emission) => emission.year === year)?.total_reported_emission_scope_1_2_3
+    return emission ?? null
+  })
+  const emissionsProjected = fillArray(targetYear - firstYear + 1, (index) => {
+    if (index <= lastYear - firstYear) {
       return null
     }
     return lastEmission - ((index - 1) * emissionReductionPerYear)
   })
-  const targetLine = fillArray(targetYear - emFirstYear + 1, (index) => {
-    if (index === emLastYear - emFirstYear) {
+  const targetLine = fillArray(targetYear - firstYear + 1, (index) => {
+    if (index === lastYear - firstYear) {
       return lastEmission
     }
-    if (index === targetYear - emFirstYear) {
+    if (index === targetYear - firstYear) {
       return targetEmission
     }
     return null
   })
 
-  console.log('CompanyTargetChart:', { emLastYear, lastEmission, targetYear, targetEmission, emissionReductionPerYear })
+  console.log('CompanyTargetChart:', { lastYear, lastEmission, targetYear, targetEmission, emissionReductionPerYear })
 
   // Gather data values and labels
   const dataSeries: AllSeriesType[] = [
@@ -85,7 +90,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       label: 'Emissions',
       type: 'bar',
       color: COLORS.TURQUOISE_MEDIUM,
-      data: emissions
+      data: emissionsHistory
     },
     {
       label: 'Projected',
