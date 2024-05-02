@@ -48,8 +48,8 @@ const filterFields = [
     ]
   },
   {
-    label: 'Net zero',
-    value: 'net-zero',
+    label: 'Near-term',
+    value: 'near-term',
     options: [
       { label: 'All Targets', value: '' },
       { value: 'Active', label: 'Committed' },
@@ -58,8 +58,8 @@ const filterFields = [
     ]
   },
   {
-    label: 'Near-term',
-    value: 'near-term',
+    label: 'Net zero',
+    value: 'net-zero',
     options: [
       { label: 'All Targets', value: '' },
       { value: 'Active', label: 'Committed' },
