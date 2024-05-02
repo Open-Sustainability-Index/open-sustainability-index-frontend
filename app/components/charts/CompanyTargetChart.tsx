@@ -49,8 +49,11 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   if (company === undefined) {
     return null
   }
-  if (company.emissions.length === 0 || emFirstYear === 0 || targetYear === 0) {
-    return <Typography variant='body2'>(No emissions data available)</Typography>
+  if (company.emissions.length === 0 || emFirstYear === 0) {
+    return <Typography variant='body2'>(No emissions data available to show graph)</Typography>
+  }
+  if (targetYear === 0) {
+    return <Typography variant='body2'>(No target data available to show graph)</Typography>
   }
 
   const dataLabels = fillArray(targetYear - emFirstYear + 1, (index) => emFirstYear + index)
