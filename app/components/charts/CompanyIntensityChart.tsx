@@ -8,6 +8,7 @@ import {
   ChartsXAxis,
   ChartsYAxis,
   ChartsGrid,
+  ChartsTooltip,
   BarPlot,
   LinePlot,
   MarkPlot,
@@ -108,6 +109,7 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
             }
           })}
         />
+        <ChartsTooltip />
       </ResponsiveChartContainer>
     </PaperCard>
   )
