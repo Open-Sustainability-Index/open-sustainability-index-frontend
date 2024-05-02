@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 
 import { changeQueryString } from 'lib/strings'
+import industries from 'app/services/industries.json'
 
 interface FilterField {
   value: string
@@ -25,7 +26,7 @@ const filterFields = [
     value: 'industry',
     options: [
       { label: 'All Industries', value: '' },
-      { value: 'Construction' }
+      ...industries.map((industry) => ({ value: industry.name }))
     ]
   },
   {
