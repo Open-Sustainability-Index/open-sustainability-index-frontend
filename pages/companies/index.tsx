@@ -37,6 +37,7 @@ function CompanyListPage ({ companies, page, detailPageLink }: CompanyListPagePr
 export default CompanyListPage
 
 const formatCompanyData = (company: CompaniesCompany): any => {
+
   // Find company.emissions with highest year
   const hasEmissions = company.total_reported_emission_scope_1_2_3 !== undefined
   return {
@@ -45,13 +46,71 @@ const formatCompanyData = (company: CompaniesCompany): any => {
     // Only include emissions data if company has emissions data:
     ...(hasEmissions && {
       ...company,
-      nearTerm: company.commitment_type === 'Standard' ? 'Target set' : null,
-      nearTermStatus: 'success',
-      netZero: company.commitment_type === 'Net-zero' ? 'Target set' : null,
-      netZeroStatus: 'success'
+      ...getNearTerm(company),
+      ...getNetZero(company),
     })
   }
 }
+
+function getNearTerm (company: CompaniesCompany): Record<string, string> | null {
+  if (company.targets.find(target => target.target === 'Near-term'))
+    return {
+      nearTerm: 'Target set',
+      nearTermStatus: 'success',
+    }
+  if (company.status === 'Target set')
+    return {
+      nearTerm: 'Target set',
+      nearTermStatus: 'success',
+    }
+  if (company.status === 'Removed')
+    return {
+      nearTerm: 'Removed',
+      nearTermStatus: 'error',
+    }
+  if (company.status === 'Active')
+    return {
+      nearTerm: 'Commited',
+      nearTermStatus: 'warning',
+    }
+  if (company.status === 'Extended')
+    return {
+      nearTerm: 'Commited',
+      nearTermStatus: 'warning',
+    }
+  return null
+}
+
+
+function getNetZero (company: CompaniesCompany): Record<string, string> | null {
+  if (company.targets.find(target => target.target === 'Net-zero'))
+    return {
+      netZero: 'Target set',
+      netZeroStatus: 'success',
+    }
+  if (company.status === 'Target set')
+    return {
+      netZero: 'Target set',
+      netZeroStatus: 'success',
+    }
+  if (company.status === 'Removed' && company.commitment_type === 'Net-zero')
+    return {
+      netZero: 'Removed',
+      netZeroStatus: 'error',
+    }
+  if (company.status === 'Active' && company.commitment_type === 'Net-zero')
+    return {
+      netZero: 'Commited',
+      netZeroStatus: 'warning',
+    }
+  if (company.status === 'Extended' && company.commitment_type === 'Net-zero')
+    return {
+      netZero: 'Commited',
+      netZeroStatus: 'warning',
+    }
+  return null
+}
+
 
 export const getCompaniesListProps = async (params: ListEndpointParams, context: GetServerSidePropsContext<CompanyListPageParams>): Promise<GetServerSidePropsResult<CompanyListPageProps>> => {
   const pageCompanies = (await fetchCompanies(params)) ?? []

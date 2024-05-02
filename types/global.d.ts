@@ -49,7 +49,14 @@ export interface CompaniesCompany {
   target_type: 'Absolute' | 'Net-zero' | 'Intensity' | null
   target_scope: null | string
   target_year: number | null
-  target: 'Near-term' | 'Net-zero' | null
+  targets: CompaniesCompanyTarget[];
+}
+
+export interface CompaniesCompanyTarget {
+  target_type: string
+  target_scope: string
+  target_year: number
+  target: string
 }
 
 export interface Company {
