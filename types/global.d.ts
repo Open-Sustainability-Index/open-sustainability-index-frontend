@@ -49,7 +49,7 @@ export interface CompaniesCompany {
   target_type: 'Absolute' | 'Net-zero' | 'Intensity' | null
   target_scope: null | string
   target_year: number | null
-  targets: CompaniesCompanyTarget[];
+  targets: CompaniesCompanyTarget[]
 }
 
 export interface CompaniesCompanyTarget {

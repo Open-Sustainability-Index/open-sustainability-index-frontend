@@ -10,16 +10,14 @@ import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
 
 const DEFAULT_COMPANY: Partial<Company> = {
-  company_name: 'Company Name',
+  company_name: '(company not found)',
   emissions: [],
   targets: []
 }
 
-const CompanyDetails = ({ company = DEFAULT_COMPANY as Company }: { company?: Company }): React.ReactElement => {
-  const companyName = titleCase(company.company_name)
+const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false }: { company?: Company, loading: boolean }): React.ReactElement => {
+  const companyName = loading ? '(loading...)' : company.company_name
   const lastEmission = company.emissions[company.emissions.length - 1]
-
-  console.log('company:', company)
 
   return (
     <>

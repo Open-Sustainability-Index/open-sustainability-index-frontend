@@ -19,7 +19,8 @@ interface CompanyPageProps {
 const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
   return (
     <CompanyDetails
-      company={company}
+      company={company ?? undefined}
+      loading={company === undefined}
     />
   )
 }
