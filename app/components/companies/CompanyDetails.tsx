@@ -9,7 +9,13 @@ import { titleCase } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
 
-const CompanyDetails = ({ company }: { company: Company }): React.ReactElement => {
+const DEFAULT_COMPANY: Partial<Company> = {
+  company_name: 'Company Name',
+  emissions: [],
+  targets: []
+}
+
+const CompanyDetails = ({ company = DEFAULT_COMPANY as Company }: { company?: Company }): React.ReactElement => {
   const companyName = titleCase(company.company_name)
   const lastEmission = company.emissions[company.emissions.length - 1]
 

@@ -17,19 +17,11 @@ interface CompanyPageProps {
 }
 
 const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
-  console.log('{ title, company, companySlug }:', { title, company, companySlug })
-  if (
-    (company === null) ||
-    (company === undefined)
-  ) {
-    return <div>Company not found</div>
-  } else {
-    return (
-      <CompanyDetails
-        company={company}
-      />
-    )
-  }
+  return (
+    <CompanyDetails
+      company={company}
+    />
+  )
 }
 
 export default CompanyPage
