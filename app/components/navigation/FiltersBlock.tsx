@@ -25,7 +25,7 @@ const filterFields = [
     label: 'Industry',
     value: 'industry',
     options: [
-      { label: 'All Industries', value: '' },
+      { label: '(all)', value: '' },
       ...industries.map((industry) => ({ value: industry.name }))
     ]
   },
@@ -33,7 +33,7 @@ const filterFields = [
     label: 'Jurisdiction',
     value: 'jurisdiction',
     options: [
-      { label: 'All Jurisdictions', value: '' },
+      { label: '(all)', value: '' },
       { value: 'World-wide' }
     ]
   },
@@ -41,7 +41,7 @@ const filterFields = [
     label: 'Org. type',
     value: 'organization_type',
     options: [
-      { label: 'All Org. Types', value: '' },
+      { label: '(all)', value: '' },
       { value: 'SME' },
       { value: 'Company' },
       { value: 'Financial Institution' }
@@ -51,7 +51,7 @@ const filterFields = [
     label: 'Near-term',
     value: 'near-term',
     options: [
-      { label: 'All Targets', value: '' },
+      { label: '(all)', value: '' },
       { value: 'Active', label: 'Committed' },
       { value: 'Target set', label: 'Target Set' },
       { value: 'Removed' }
@@ -61,7 +61,7 @@ const filterFields = [
     label: 'Net zero',
     value: 'net-zero',
     options: [
-      { label: 'All Targets', value: '' },
+      { label: '(all)', value: '' },
       { value: 'Active', label: 'Committed' },
       { value: 'Target set', label: 'Target Set' },
       { value: 'Removed' }
@@ -71,6 +71,7 @@ const filterFields = [
     label: 'Year',
     value: 'year',
     options: [
+      { label: '(all)', value: '' },
       { value: '2023' },
       { value: '2022' }
     ]
@@ -79,6 +80,7 @@ const filterFields = [
     label: 'Currency',
     value: 'currency',
     options: [
+      { label: '(all)', value: '' },
       { value: 'EUR' },
       { value: 'USD' },
       { value: 'SEK' }
