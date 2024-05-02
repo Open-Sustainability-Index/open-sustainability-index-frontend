@@ -10,7 +10,7 @@ export default function StatsGrid ({ emission }: { emission: Emission }): React.
         <StatsBlock value={emission?.year} description='Quick facts' />
         <StatsBlock value={emission?.total_reported_emission_scope_1_2_3} description='Emissions (ton CO₂e)' />
         <StatsBlock value={emission?.revenue} description='Revenue (M USD)' />
-        <StatsBlock value={emission.emission_intensity} description='Intensity (t CO₂e / M USD)' />
+        <StatsBlock value={emission?.emission_intensity} description='Intensity (t CO₂e / M USD)' />
       </Grid>
     </Box>
   )
