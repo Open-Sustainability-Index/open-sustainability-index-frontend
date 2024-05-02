@@ -12,3 +12,27 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* ----- Charts ----- */
+
+.MuiBarElement-root {
+  width: 12px !important;
+  /* border-radius: 6px; */
+}
+
+.MuiLineElement-root {
+  stroke-width: 6;
+}
+
+.MuiChartsLegend-mark {
+  border-radius: 5px !important;
+  overflow: hidden;
+}
+
+.MuiChartsAxis-tickLabel {
+  fill: #c4c4c4 !important;
+}
+
+.MuiChartsTooltip-root * {
+  font-size: 12px !important;
+}
