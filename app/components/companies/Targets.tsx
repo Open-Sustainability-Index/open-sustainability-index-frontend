@@ -27,13 +27,13 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
             sx={{ color: COLORS.WHITE }}
           >
             {targets.map((target, index) =>
-              <MenuItem value={index} key={index}>{target.target}</MenuItem>
+              <MenuItem value={index} key={index}>{target.target} for {target.target_year} (scope {target.scope})</MenuItem>
             )}
           </Select>
         </FormControl>
 
         <Box sx={{ display: 'flex' }} p={2}>
-          {targets[visibleTarget] &&
+          {targets[visibleTarget] !== undefined &&
             <Box mr={4}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px !important' }}>
                 <Typography>Base year: </Typography>
@@ -53,7 +53,7 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
               </Box>
             </Box>}
           <Box sx={{ flex: 1 }}>
-            {targets[visibleTarget] &&
+            {targets[visibleTarget] !== undefined &&
               <Typography>{targets[visibleTarget].target_wording}</Typography>}
           </Box>
         </Box>
