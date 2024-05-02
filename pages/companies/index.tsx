@@ -72,13 +72,13 @@ function getNearTerm (company: CompaniesCompany): Record<string, string> | null 
   }
   if (company.status === 'Active') {
     return {
-      nearTerm: 'Commited',
+      nearTerm: 'Committed',
       nearTermStatus: 'warning'
     }
   }
   if (company.status === 'Extended') {
     return {
-      nearTerm: 'Commited',
+      nearTerm: 'Committed',
       nearTermStatus: 'warning'
     }
   }
@@ -106,13 +106,13 @@ function getNetZero (company: CompaniesCompany): Record<string, string> | null {
   }
   if (company.status === 'Active' && company.commitment_type === 'Net-zero') {
     return {
-      netZero: 'Commited',
+      netZero: 'Committed',
       netZeroStatus: 'warning'
     }
   }
   if (company.status === 'Extended' && company.commitment_type === 'Net-zero') {
     return {
-      netZero: 'Commited',
+      netZero: 'Committed',
       netZeroStatus: 'warning'
     }
   }
