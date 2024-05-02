@@ -5,7 +5,8 @@ import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 
 import useDebounce from 'app/hooks/useDebounce'
-import { fetchCompanies } from 'app/services/companies'
+import { fetchSearch } from 'app/services/search'
+import toSlug from 'lib/toSlug'
 
 interface SearchBlockProps {
   children?: React.ReactNode
@@ -41,9 +42,9 @@ const SearchField = (): React.ReactElement => {
 
   useEffect(() => {
     async function fetchNewCompanies (): Promise<void> {
-      const companies = await fetchCompanies({ filters: { company_name: debouncedUserInput } })
-      const companyNames = companies.map(company => company.company_name)
-      setListOptions(companyNames)
+      const searchResults = await fetchSearch({ query: debouncedUserInput as string })
+      const resultNames = searchResults.map(result => result.name)
+      setListOptions(resultNames)
     }
     void fetchNewCompanies()
   }, [debouncedUserInput])
@@ -59,7 +60,8 @@ const SearchField = (): React.ReactElement => {
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption ?? '')
         if (newSelectedOption !== null) {
-          void router.push(`/companies?company_name=${newSelectedOption}`)
+          // void router.push(`/companies?company_name=${newSelectedOption}`)
+          void router.push(`/companies/${toSlug(newSelectedOption)}`)
         } else {
           void router.push('/companies')
         }
