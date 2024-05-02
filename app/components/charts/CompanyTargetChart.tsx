@@ -44,7 +44,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   const targetYear = target?.target_year ?? 0
   const firstYear = company.emissions[0]?.year ?? 0
   const lastYear = company.emissions[company.emissions.length - 1]?.year ?? 0
-  console.log('CompanyTargetChart:', { firstYear, targetYear, target })
+  console.log('CompanyTargetChart (1):', { firstYear, targetYear, targets: company.targets })
 
   if (company === undefined) {
     return null
@@ -82,7 +82,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     return null
   })
 
-  console.log('CompanyTargetChart:', { lastYear, lastEmission, targetYear, targetEmission, emissionReductionPerYear })
+  console.log('CompanyTargetChart (2):', { lastYear, lastEmission, targetYear, targetEmission, emissionReductionPerYear })
 
   // Gather data values and labels
   const dataSeries: AllSeriesType[] = [
