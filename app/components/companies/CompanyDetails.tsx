@@ -9,6 +9,7 @@ import { Company } from 'types/global'
 import { titleCase } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
+import { Targets } from './Targets'
 
 const DEFAULT_COMPANY: Partial<Company> = {
   company_name: '(company not found)',
@@ -87,12 +88,6 @@ const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactE
       <Typography variant='h2'>Ambition & Development</Typography>
       <Typography variant='body2'>{ambitionAndDevelopment}</Typography>
     </>
-  )
-}
-
-const Targets = ({ company }: { company: Company }): React.ReactElement => {
-  return (
-    <Typography variant='h2'>Targets</Typography>
   )
 }
 
