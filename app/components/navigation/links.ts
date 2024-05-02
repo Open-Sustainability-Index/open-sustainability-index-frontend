@@ -1,6 +1,6 @@
 const links = [
   { name: 'Companies', path: '/companies', display: ['header'], buildStaticWordpressPage: false },
-  { name: 'Industries', path: '/industries', display: ['footer'], buildStaticWordpressPage: false },
+  { name: 'Industries', path: '/industries', display: ['header', 'footer'], buildStaticWordpressPage: false },
   // { name: 'Countries', path: '/countries', display: ['header'], buildStaticWordpressPage: false },
   { name: 'Documentation', path: '/documentation', display: ['header'] },
   { name: 'About', path: '/about', display: ['header', 'footer'] },
