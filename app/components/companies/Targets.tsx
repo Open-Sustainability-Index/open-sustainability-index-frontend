@@ -22,7 +22,7 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
           <Select
             labelId='demo-simple-select-label'
             id='demo-simple-select'
-            value={visibleTarget}
+            value={visibleTarget as unknown as string}
             onChange={handleChange}
             sx={{ color: COLORS.WHITE }}
           >
