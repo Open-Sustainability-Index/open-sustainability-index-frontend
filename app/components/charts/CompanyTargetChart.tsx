@@ -62,7 +62,16 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     if (index <= emLastYear - emFirstYear) {
       return null
     }
-    return lastEmission - (index * emissionReductionPerYear)
+    return lastEmission - ((index - 1) * emissionReductionPerYear)
+  })
+  const targetLine = fillArray(targetYear - emFirstYear + 1, (index) => {
+    if (index === emLastYear - emFirstYear) {
+      return lastEmission
+    }
+    if (index === targetYear - emFirstYear) {
+      return targetEmission
+    }
+    return null
   })
 
   console.log('CompanyTargetChart:', { emLastYear, lastEmission, targetYear, targetEmission, emissionReductionPerYear })
@@ -80,15 +89,14 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       type: 'bar',
       color: COLORS.TURQUOISE_LIGHT,
       data: emissionsProjected
+    },
+    {
+      label: 'Tracking target',
+      type: 'line',
+      color: COLORS.PURPLE_DARK,
+      data: targetLine,
+      connectNulls: true
     }
-    // {
-    //   label: 'Intensity',
-    //   type: 'line',
-    //   color: COLORS.PURPLE_DARK,
-    //   data: intensity,
-    //   yAxisKey: 'intensityAxis',
-    //   connectNulls: true
-    // }
   ]
 
   // const Container = isSmallScreen ? ResponsiveChartContainer : ChartContainer
