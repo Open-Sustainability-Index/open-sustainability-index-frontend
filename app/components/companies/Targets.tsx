@@ -10,7 +10,7 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
   const [visibleTarget, setVisibleTarget] = useState(0)
 
   const handleChange = (event: SelectChangeEvent): void => {
-    setVisibleTarget(event.target.value as number)
+    setVisibleTarget(event.target.value as unknown as number)
   }
 
   return (
