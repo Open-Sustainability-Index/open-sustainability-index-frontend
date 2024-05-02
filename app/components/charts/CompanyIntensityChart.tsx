@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme, useMediaQuery, Theme } from '@mui/material'
+import { useTheme, useMediaQuery, Theme, Typography } from '@mui/material'
 import {
   // ChartContainer
   ResponsiveChartContainer,
@@ -11,8 +11,8 @@ import {
   ChartsTooltip,
   BarPlot,
   LinePlot,
-  MarkPlot,
-  legendClasses
+  MarkPlot
+  // legendClasses
   // barElementClasses,
   // lineElementClasses
 } from '@mui/x-charts'
@@ -69,6 +69,7 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
 
   return (
     <PaperCard>
+      <Typography variant='body2'>Emissions, Revenue & Intensity</Typography>
       <ResponsiveChartContainer
         series={dataSeries}
         xAxis={[
