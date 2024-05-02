@@ -15,8 +15,10 @@ export const COLORS = {
   TURQUOISE_MEDIUM: '#22ebc7',
 
   PINK_LIGHT: '#f9b6ff',
+
   PURPLE_LIGHT: '#cd9aff',
-  PURPLE_DARK: '#ba08e6'
+  PURPLE_DARK: '#ba08e6',
+  PURPLE_DARKER: '#7110bc'
 }
 
 // Define custom MUI theme

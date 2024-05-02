@@ -16,7 +16,7 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
   return (
     <>
       <Typography variant='h2' mb={2}>Targets</Typography>
-      <Box sx={{ backgroundColor: COLORS.PURPLE_DARK, color: COLORS.WHITE, borderRadius: '.5em', fontSize: '16px' }} p={4}>
+      <Box sx={{ backgroundColor: COLORS.PURPLE_DARKER, color: COLORS.WHITE, borderRadius: '.5em', fontSize: '16px' }} p={4}>
 
         <FormControl fullWidth>
           <Select
