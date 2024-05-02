@@ -11,6 +11,9 @@ export const COLORS = {
   BLUE_MEDIUM: '#3f37c9',
   BLUE_HOVER: '#5d55df',
 
+  TURQUOISE_LIGHT: '#e0fcf7',
+  TURQUOISE_MEDIUM: '#22ebc7',
+
   PINK_LIGHT: '#f9b6ff',
   PURPLE_LIGHT: '#cd9aff',
   PURPLE_DARK: '#ba08e6'

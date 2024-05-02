@@ -3,6 +3,7 @@ import { Container, Grid, Typography } from '@mui/material'
 
 // import { Company } from 'graphql/__generated__/graphql'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
+import CompanyTargetChart from '../charts/CompanyTargetChart'
 import { DataTableHorizontal } from '../common/DataTable'
 import { Company } from 'types/global'
 import { titleCase } from 'lib/strings'
@@ -32,9 +33,14 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
           <Grid item md={6} xs={12}>
             <Targets company={company} />
           </Grid>
-          <Grid item xs={12}>
+
+          <Grid item md={6} xs={12}>
             <CompanyIntensityChart company={company} />
           </Grid>
+          <Grid item md={6} xs={12}>
+            <CompanyTargetChart company={company} />
+          </Grid>
+
           <Grid item xs={12}>
             <RevenueTable company={company} />
           </Grid>
