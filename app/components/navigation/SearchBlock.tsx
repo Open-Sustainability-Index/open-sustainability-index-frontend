@@ -42,7 +42,7 @@ const SearchField = (): React.ReactElement => {
 
   useEffect(() => {
     async function fetchNewCompanies (): Promise<void> {
-      const searchResults = await fetchSearch({ query: debouncedUserInput as string })
+      const searchResults = await fetchSearch({ query: encodeURIComponent(debouncedUserInput as string) })
       const resultNames = searchResults.map(result => result.name)
       setListOptions(resultNames)
     }
