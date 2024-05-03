@@ -19,7 +19,7 @@ const WordpressListPage = ({ title, description, wordpressPosts }: WordpressList
       <PageTopBanner title='News' description={title} />
       <Container>
         {wordpressPosts?.map((post, index) => (
-          <Grid container spacing={2} key={index}>
+          <Grid container spacing={2} key={index} p={4}>
             <Grid item xs={12}>
               <NextMUILink href={`/news/${post.slug}`} variant='h6'>
                 <Typography variant='body2'>{post.dateFormatted}</Typography>
