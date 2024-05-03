@@ -7,7 +7,7 @@ const links = [
   { name: 'News', path: '/news', display: ['footer'], buildStaticWordpressPage: false },
   { name: 'Support Us', path: '/support-us', display: ['footer'] },
   { name: 'Contact', path: '/contact', display: ['footer'] },
-  { name: 'API', path: '/api', display: ['footer'] },
+  { name: 'API', path: '/api', display: ['header', 'footer'] },
   // { name: 'FAQ', path: '/faq', display: ['footer'] },
   { name: 'Roadmap', path: '/roadmap', display: ['footer'] }
   // { name: 'Partners', path: '/partners', display: ['footer'] },
