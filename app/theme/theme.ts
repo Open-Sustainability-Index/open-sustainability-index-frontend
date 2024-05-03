@@ -8,6 +8,7 @@ export const COLORS = {
   WHITE: '#fff',
 
   BLUE_LIGHT: '#edf2fb',
+  BLUE_LIGHT_ALT: '#d7e3fc',
   BLUE_MEDIUM: '#3f37c9',
   BLUE_HOVER: '#5d55df',
 
