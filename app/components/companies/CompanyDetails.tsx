@@ -78,7 +78,7 @@ const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactE
           ].join(' and ')
               ].join(' '))
           : '',
-    `In ${lastEmission?.year as number}, ${companyName} reported a total of ${lastEmission?.total_reported_emission_scope_1_2_3.toLocaleString('en') as number} ton CO₂e, and a net revenue of ${lastEmission?.revenue.toLocaleString('en') as number} M USD, resulting in a emissions intensity of ${intensity.toLocaleString('en') as number} t CO₂e / M USD.`
+    `In ${lastEmission?.year as number}, ${companyName} reported a total of ${lastEmission?.total_reported_emission_scope_1_2_3?.toLocaleString('en')} ton CO₂e, and a net revenue of ${lastEmission?.revenue?.toLocaleString('en')} M USD, resulting in a emissions intensity of ${intensity?.toLocaleString('en')} t CO₂e / M USD.`
     // `Based on currently available data, ${companyName} is trending above its near term target, reducing its emissions on average with 4% / year.`,
       ].join(' ')
     : '(No emission data available)'
