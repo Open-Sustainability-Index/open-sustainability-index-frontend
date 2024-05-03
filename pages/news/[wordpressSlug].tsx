@@ -27,7 +27,7 @@ const WordpressPage = ({ title, description, wordpressPost }: WordpressPageProps
         <PageTopBanner title='News' description={title} />
         {wordpressPost?.content !== undefined && (
           <Container>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} p={4}>
               <Grid item md={4} xs={12}>
                 <Typography variant='body2'>{wordpressPost.dateFormatted}</Typography>
               </Grid>
