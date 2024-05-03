@@ -388,19 +388,8 @@
 .wp-block-column-is-layout-flow
 .css-3narwu {
   text-size: 1rem;
-  border-left: 1px solid #D7E3FC;
 }
 
-.wp-block-column-is-layout-flow
-.css-3narwu:hover {
-  border-left: 1px solid #4361EE;
-
-  /* animations */
-  -webkit-transition: border .35s linear;
-  -o-transition: border .35s linear;
-  transition: border .35s linear;
-
-}
 
 
 
@@ -447,9 +436,6 @@ figure {
 */
 
 /* header, general for all pages */
-{
-  border-left: 3px solid #D7E3FC;
-}
 
 
 /* table - remove border radius */
@@ -512,7 +498,6 @@ Header
 
 .header .quickfacts {
   text-color: #343A40;
-  border-left: 4px solid #C1D3FE;
 
 }
 
@@ -575,9 +560,6 @@ Graph
 
 }
 
-.css-3narwu h2 {
-  border-left: 4px solid #C1D3FE;
-}
 
 /* -- DOCUMENTATION  -- */
 
@@ -612,7 +594,6 @@ hr {
 }
 
 .wp-block-post-content .two-column-border div:nth-child(2) {
-  border-left: 1px solid #b6ccfe;
   padding-left: 3rem;
 }
 
