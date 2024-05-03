@@ -457,21 +457,13 @@ figure {
   border-radius: 0px;
 }
 
-
-table or
-.MuiTable-root {
-  text-color: #6C757D;
-  font-size: 0.8rem;	/* or 14px, on thead + company names at least */
+.MuiTable-root tr {
+  border-left: 4px solid #EDF2FB;
 }
 
-thead {
-}
-
-.MuiTable-root:hover {
+.MuiTable-root tr:hover {
   background: rgb(242, 247, 255, 0.5);
-  border-left: 4px solid #3F37C9;
-
-  /* animations */
+  border-left: 4px solid #3F37C9;		/* animations */
   -webkit-transition: background .35s linear;
   -o-transition: background .35s linear;
   transition: background .35s linear;
@@ -481,13 +473,6 @@ thead {
   transition: border .35s linear;
 
 }
-
-tr {
-  border-bottom: 1px solid #F2F7FF;
-}
-
-
-
 
 /* Color Tags
 - other background colors
