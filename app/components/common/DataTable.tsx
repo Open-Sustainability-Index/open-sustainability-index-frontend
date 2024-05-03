@@ -151,7 +151,7 @@ const DataTableHeaderCell = ({
   const headerTitle = title ?? header.label ?? header.field
   return (
     <TableCell
-      align={header.align ?? 'left'}
+      align={header.align ?? 'right'}
       sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
     >
       {header.defaultSortOrder !== undefined
@@ -175,7 +175,7 @@ const DataTableCell = ({ index, row, header }: { index: number, row: DataTableRo
   <TableCell
     component={index === 0 ? 'th' : undefined}
     scope={index === 0 ? 'row' : undefined}
-    align={header.align ?? 'left'}
+    align={'right'}
     sx={{ fontSize: '16px' }}
   >
     {(
@@ -214,6 +214,7 @@ export const DataTableHorizontal = ({
             <DataTableHeaderCell title={title} header={headers[0]} />
             {data.map((row, rowIndex) => (
               <DataTableHeaderCell
+              align="right"
                 key={`header-${rowIndex}`}
                 header={{ field: String(rowIndex), label: `Header ${rowIndex + 1}` }}
                 title={row[headers[0]?.field]}
@@ -226,6 +227,7 @@ export const DataTableHorizontal = ({
               <DataTableHeaderCell header={header} />
               {data.map((row, rowIndex) => (
                 <DataTableCell
+              align="right"
                   index={rowIndex}
                   key={`${index}-${rowIndex}`}
                   row={row}
