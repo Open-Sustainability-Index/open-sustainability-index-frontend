@@ -41,8 +41,8 @@ const theme = createTheme({
     fontSize: 18,
 
     h1: {
-      fontWeight: 'bold',
-      fontSize: '2em',
+      fontWeight: '100',
+      fontSize: '3em',
       color: 'black',
       '@media (maxWidth:600px)': {
         fontSize: '1.2em'
