@@ -33,7 +33,7 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
             </Select>
           </FormControl>
 
-          <Box sx={{ display: 'flex' }} p={2}>
+          <Box sx={{ display: { lg: 'flex' } }} p={2}>
             {targets[visibleTarget] !== undefined &&
               <Box mr={4}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px !important' }}>
@@ -50,10 +50,10 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography>Classification: </Typography>
-                  <Typography>{targets[visibleTarget].target_classification}</Typography>
+                  <Typography>&nbsp;{targets[visibleTarget].target_classification}</Typography>
                 </Box>
               </Box>}
-            <Box sx={{ flex: 1 }}>
+            <Box sx={{ flex: 1, marginTop: { xs: '10px', lg: 0 } }}>
               {targets[visibleTarget] !== undefined &&
                 <Typography>{targets[visibleTarget].target_wording}</Typography>}
             </Box>
