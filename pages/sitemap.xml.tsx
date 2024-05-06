@@ -26,7 +26,7 @@ interface SitemapProps {
 const Sitemap = ({ pagePaths }: SitemapProps): string => {
   return (
     `<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
-      ${pagePaths.map((path, index) => <SiteUrl key={index} path={path} />).join('\n')}
+      ${pagePaths?.map((path, index) => SiteUrl({ path })).join('\n')}
     </urlset>`
   )
 }
@@ -42,11 +42,7 @@ export async function getServerSideProps ({ res }: GetServerSidePropsContext<Sit
   if (res !== undefined) {
     const pagePaths = await getPagePaths()
     res.setHeader('Content-Type', 'text/xml')
-    res.write(
-      <Sitemap
-        pagePaths={pagePaths}
-      />
-    )
+    res.write(Sitemap({ pagePaths }))
     res.end()
   }
   return { props: {} }
