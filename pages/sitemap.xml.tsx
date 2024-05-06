@@ -4,6 +4,7 @@ import { ParsedUrlQuery } from 'querystring'
 
 import { config } from 'config/config'
 import { formatDate } from 'lib/formatDate'
+import links from 'app/components/navigation/links'
 
 interface SiteUrlProps {
   path: string
@@ -32,7 +33,10 @@ const Sitemap = ({ pagePaths }: SitemapProps): string => {
 }
 
 const getPagePaths = async (): Promise<string[]> => {
-  return ['/']
+  return [
+    '/',
+    ...links.map(link => link.path)
+  ]
 }
 
 interface SitemapPageParams extends ParsedUrlQuery {
