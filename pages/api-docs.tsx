@@ -1,13 +1,25 @@
 import { Typography } from '@mui/material';
-import { getPostDetails, postPageProps } from 'app/services/wordpress';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { WordpressPost, getPostDetails, postPageProps } from 'app/services/wordpress';
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import dynamic from 'next/dynamic';
+import { ParsedUrlQuery } from 'querystring';
 import { useEffect, useState } from 'react';
 import 'swagger-ui-react/swagger-ui.css';
 
+interface APIPageParams extends ParsedUrlQuery {
+  wordpressSlug: string
+}
+
+interface APIPageProps {
+  wordpressPost?: WordpressPost
+  wordpressSlug?: string | null
+  title: string
+  description: string
+}
+
 const SwaggerUI = dynamic(import('swagger-ui-react'), { ssr: false }) as any;
 
-function ApiDoc ({ title, description, wordpressPost }: HomePageProps): React.ReactElement {
+function ApiDoc ({ wordpressPost }: APIPageProps): React.ReactElement {
 
   const [spec, setSpec] = useState()
   useEffect(() => {
@@ -33,7 +45,7 @@ function ApiDoc ({ title, description, wordpressPost }: HomePageProps): React.Re
   )
 }
 
-export async function getStaticProps (context: GetStaticPropsContext<HomePageParams>): Promise<GetStaticPropsResult<HomePageProps>> {
+export async function getStaticProps (context: GetStaticPropsContext<APIPageParams>): Promise<GetStaticPropsResult<APIPageProps>> {
   const wordpressSlug = 'api'
   const wordpressPost = await getPostDetails(wordpressSlug as string)
   return {
