@@ -136,6 +136,7 @@ export default DataTable
 interface DataTableHeaderCellProps {
   header: DataTableHeader
   title?: string
+  align?: 'left' | 'right' | 'center'
   sort?: string
   order?: string
   onSort?: (event: any, sort: string, order: 'asc' | 'desc') => void
@@ -144,6 +145,7 @@ interface DataTableHeaderCellProps {
 const DataTableHeaderCell = ({
   header,
   title,
+  align,
   sort,
   order,
   onSort
@@ -151,7 +153,7 @@ const DataTableHeaderCell = ({
   const headerTitle = title ?? header.label ?? header.field
   return (
     <TableCell
-      align={header.align ?? 'left'}
+      align={align ?? header.align ?? 'left'}
       sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
     >
       {header.defaultSortOrder !== undefined
@@ -171,11 +173,18 @@ const DataTableHeaderCell = ({
   )
 }
 
-const DataTableCell = ({ index, row, header }: { index: number, row: DataTableRow, header: DataTableHeader }): React.ReactElement => (
+interface DataTableCellProps {
+  index: number
+  row: DataTableRow
+  header: DataTableHeader
+  align?: 'left' | 'right' | 'center'
+}
+
+const DataTableCell = ({ index, row, header, align }: DataTableCellProps): React.ReactElement => (
   <TableCell
     component={index === 0 ? 'th' : undefined}
     scope={index === 0 ? 'row' : undefined}
-    align={header.align ?? 'left'}
+    align={align ?? header.align ?? 'left'}
     sx={{ fontSize: '16px' }}
   >
     {(
@@ -211,19 +220,20 @@ export const DataTableHorizontal = ({
         <TableBody>
           {/* A special first row for headers */}
           <TableRow sx={{ backgroundColor: COLORS.BLUE_LIGHT }}>
-            <DataTableHeaderCell title={title} header={headers[0]} />
+            <DataTableHeaderCell title={title} header={headers[0]} align='left' />
             {data.map((row, rowIndex) => (
               <DataTableHeaderCell
                 key={`header-${rowIndex}`}
                 header={{ field: String(rowIndex), label: `Header ${rowIndex + 1}` }}
                 title={row[headers[0]?.field]}
+                align={headers[rowIndex]?.align}
               />
             ))}
           </TableRow>
           {/* Rest of rows */}
           {headers.slice(1).map((header, index) => (
             <TableRow key={index} sx={header.isHorizontalHeader === true ? { backgroundColor: COLORS.GRAY_LIGHT } : null}>
-              <DataTableHeaderCell header={header} />
+              <DataTableHeaderCell header={header} align='left' />
               {data.map((row, rowIndex) => (
                 <DataTableCell
                   index={rowIndex}

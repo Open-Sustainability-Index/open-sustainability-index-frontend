@@ -96,9 +96,9 @@ const RevenueTable = ({ company }: { company: Company }): React.ReactElement => 
     <DataTableHorizontal
       title='Revenue'
       headers={[
-        { field: 'year', label: 'Year' },
-        { field: 'revenue', label: 'Net Revenue (M USD)' },
-        { field: 'source_revenue', label: 'Revenue Source', type: 'link' }
+        { field: 'year', label: 'Year', align: 'right' },
+        { field: 'revenue', label: 'Net Revenue (M USD)', align: 'right' },
+        { field: 'source_revenue', label: 'Revenue Source', type: 'link', align: 'right' }
       ]}
       data={company.emissions}
     />
@@ -110,10 +110,10 @@ const EmissionsOverviewTable = ({ company }: { company: Company }): React.ReactE
     <DataTableHorizontal
       title='Emissions Overview'
       headers={[
-        { field: 'year', label: 'Year' },
-        { field: 'total_emission_market_based', label: 'Total Emissions - MB (t CO₂e)' },
-        { field: 'emission_intensity', label: 'Emissions Intensity (t CO₂e / M USD)' },
-        { field: 'cradle_to_gate:', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)' }
+        { field: 'year', label: 'Year', align: 'right' },
+        { field: 'total_emission_market_based', label: 'Total Emissions - MB (t CO₂e)', align: 'right' },
+        { field: 'emission_intensity', label: 'Emissions Intensity (t CO₂e / M USD)', align: 'right' },
+        { field: 'cradle_to_gate:', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)', align: 'right' }
       ]}
       data={company.emissions}
     />
@@ -125,38 +125,38 @@ const EmissionsDetailsTable = ({ company }: { company: Company }): React.ReactEl
     <DataTableHorizontal
       title='Emissions Details'
       headers={[
-        { field: 'year', label: 'Year' },
-        { field: 'scope_1', label: 'Scope 1' },
+        { field: 'year', label: 'Year', align: 'right' },
+        { field: 'scope_1', label: 'Scope 1', align: 'right' },
 
-        { field: 'just_header', label: 'Scope 2', isHorizontalHeader: true },
-        { field: 'scope_2_location_based', label: 'Scope 2 - Location Based' },
-        { field: 'scope_2_market_based', label: 'Scope 2 - Market Based' },
-        { field: 'scope_2_unknown', label: 'Scope 2 - Not specified' },
+        { field: 'just_header', label: 'Scope 2', isHorizontalHeader: true, align: 'right' },
+        { field: 'scope_2_location_based', label: 'Scope 2 - Location Based', align: 'right' },
+        { field: 'scope_2_market_based', label: 'Scope 2 - Market Based', align: 'right' },
+        { field: 'scope_2_unknown', label: 'Scope 2 - Not specified', align: 'right' },
 
-        { field: 'total_scope_3', label: 'Scope 3', isHorizontalHeader: true },
+        { field: 'total_scope_3', label: 'Scope 3', isHorizontalHeader: true, align: 'right' },
 
-        { field: 'just_header', label: 'Upstream Emissions', isHorizontalHeader: true },
-        { field: 'cat_1', label: '1. Purchased goods and services' },
-        { field: 'cat_2', label: '2. Capital goods' },
-        { field: 'cat_3', label: '3. Fuel- and energy-related activities' },
-        { field: 'cat_4', label: '4. Upstream transportation and distribution' },
-        { field: 'cat_5', label: '5. Waste generated in operations' },
-        { field: 'cat_6', label: '6. Business travel' },
-        { field: 'cat_7', label: '7. Employee commuting' },
-        { field: 'cat_8', label: '8. Upstream leased assets' },
+        { field: 'just_header', label: 'Upstream Emissions', isHorizontalHeader: true, align: 'right' },
+        { field: 'cat_1', label: '1. Purchased goods and services', align: 'right' },
+        { field: 'cat_2', label: '2. Capital goods', align: 'right' },
+        { field: 'cat_3', label: '3. Fuel- and energy-related activities', align: 'right' },
+        { field: 'cat_4', label: '4. Upstream transportation and distribution', align: 'right' },
+        { field: 'cat_5', label: '5. Waste generated in operations', align: 'right' },
+        { field: 'cat_6', label: '6. Business travel', align: 'right' },
+        { field: 'cat_7', label: '7. Employee commuting', align: 'right' },
+        { field: 'cat_8', label: '8. Upstream leased assets', align: 'right' },
 
-        { field: 'just_header', label: 'Downstream Emissions', isHorizontalHeader: true },
-        { field: 'cat_9', label: '9. Downstream transportation and distribution' },
-        { field: 'cat_10', label: '10. Processing of sold products' },
-        { field: 'cat_11', label: '11. Use of sold products' },
-        { field: 'cat_12', label: '12. End-of-life treatment of sold products' },
-        { field: 'cat_13', label: '13. Downstream leased assets' },
-        { field: 'cat_14', label: '14. Franchises' },
-        { field: 'cat_15', label: '15. Investments' },
+        { field: 'just_header', label: 'Downstream Emissions', isHorizontalHeader: true, align: 'right' },
+        { field: 'cat_9', label: '9. Downstream transportation and distribution', align: 'right' },
+        { field: 'cat_10', label: '10. Processing of sold products', align: 'right' },
+        { field: 'cat_11', label: '11. Use of sold products', align: 'right' },
+        { field: 'cat_12', label: '12. End-of-life treatment of sold products', align: 'right' },
+        { field: 'cat_13', label: '13. Downstream leased assets', align: 'right' },
+        { field: 'cat_14', label: '14. Franchises', align: 'right' },
+        { field: 'cat_15', label: '15. Investments', align: 'right' },
 
-        { field: 'total_reported_emission_scope_1_2_3', label: 'Scope 3 - Total Emissions', isHorizontalHeader: true },
+        { field: 'total_reported_emission_scope_1_2_3', label: 'Scope 3 - Total Emissions', isHorizontalHeader: true, align: 'right' },
 
-        { field: 'source_emission_link', label: 'Emission Source', type: 'link' }
+        { field: 'source_emission_link', label: 'Emission Source', type: 'link', align: 'right' }
       ]}
       data={company.emissions}
     />
