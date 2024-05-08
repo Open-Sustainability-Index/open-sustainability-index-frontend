@@ -1,15 +1,16 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import SwaggerUI from 'swagger-ui-react';
-import 'swagger-ui-react/swagger-ui.css';
+import SwaggerUI from 'swagger-ui-react'
+import 'swagger-ui-react/swagger-ui.css'
 
-type Props = {
-  spec: Record<string, any>,
-};
-
-function ReactSwagger ({ spec }: Props) {
-  return <SwaggerUI spec={spec} />;
+interface Props {
+  spec: Record<string, any>
 }
 
-export default ReactSwagger;
+function ReactSwagger ({ spec }: Props): React.ReactElement {
+  return (
+    <SwaggerUI spec={spec} />
+  )
+}
+
+export default ReactSwagger

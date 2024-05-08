@@ -1,4 +1,3 @@
-import React from 'react'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 

@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material';
-import { WordpressPost, getPostDetails, postPageProps } from 'app/services/wordpress';
-import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
-import dynamic from 'next/dynamic';
-import { ParsedUrlQuery } from 'querystring';
-import { useEffect, useState } from 'react';
-import 'swagger-ui-react/swagger-ui.css';
+import { Typography } from '@mui/material'
+import { WordpressPost, getPostDetails, postPageProps } from 'app/services/wordpress'
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import dynamic from 'next/dynamic'
+import { ParsedUrlQuery } from 'querystring'
+import { useEffect, useState } from 'react'
+import 'swagger-ui-react/swagger-ui.css'
 
 interface APIPageParams extends ParsedUrlQuery {
   wordpressSlug: string
@@ -17,19 +17,18 @@ interface APIPageProps {
   description: string
 }
 
-const SwaggerUI = dynamic(import('swagger-ui-react'), { ssr: false }) as any;
+const SwaggerUI = dynamic(import('swagger-ui-react'), { ssr: false }) as any
 
 function ApiDoc ({ wordpressPost }: APIPageProps): React.ReactElement {
-
   const [spec, setSpec] = useState()
   useEffect(() => {
-    async function get () {
+    async function get (): Promise<void> {
       const data = await (
         await fetch('https://api.opensustainabilityindex.org/openapi.json')
       ).json()
       setSpec(data)
     }
-    get()
+    void get()
   }, [])
   return (
     <>
@@ -58,4 +57,4 @@ export async function getStaticProps (context: GetStaticPropsContext<APIPagePara
   }
 }
 
-export default ApiDoc;
+export default ApiDoc
