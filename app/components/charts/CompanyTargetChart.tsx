@@ -99,7 +99,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       data: emissionsProjected
     },
     {
-      label: 'Tracking near-term target',
+      label: 'Near-term target',
       type: 'line',
       color: COLORS.PURPLE_DARK,
       data: targetLine,
