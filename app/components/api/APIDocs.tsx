@@ -10,7 +10,7 @@ const APIDocs = (): React.ReactElement => {
   useEffect(() => {
     async function get (): Promise<void> {
       const data = await (
-        await fetch('https://api.opensustainabilityindex.org/openapi.json')
+        await fetch(process.env.NEXT_PUBLIC_OPEN_API_SPEC_URL as string)
       ).json()
       setSpec(data)
     }
