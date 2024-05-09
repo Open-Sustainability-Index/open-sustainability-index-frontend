@@ -50,7 +50,7 @@ export const companiesPageProps = (companies: CompaniesCompany[], options?: List
 export const fetchCompanies = async ({ page = 1, pageSize = 20, sort = 'company_name', order = 'asc', filters }: ListEndpointParams): Promise<CompaniesCompany[]> => {
   const filtersQuery = (new URLSearchParams(filters)).toString()
   const url = `companies?sort=${sort}&order=${order}&limit=${pageSize}&offset=${(page - 1) * pageSize}&${filtersQuery}`
-  const results = await makeRestRequest('GET', url)
+  const results = await makeRestRequest('GET', url, undefined, process.env.BACKEND_API_KEY)
   return results?.data
 }
 
@@ -90,12 +90,12 @@ export const companyPageProps = (company: Company): PageProps => ({
 })
 
 export const fetchCompany = async (companySlug: string): Promise<Company> => {
-  const results = await makeRestRequest('GET', `companies/${companySlug}/`)
+  const results = await makeRestRequest('GET', `companies/${companySlug}/`, undefined, process.env.BACKEND_API_KEY)
   return results?.data
 }
 
 export const fetchCompanyHistory = async (companySlug: string): Promise<Company> => {
-  const results = await makeRestRequest('GET', `companies/${companySlug}/all-years`)
+  const results = await makeRestRequest('GET', `companies/${companySlug}/all-years`, undefined, process.env.BACKEND_API_KEY)
   return results?.data
 }
 

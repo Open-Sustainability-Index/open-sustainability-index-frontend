@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField'
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchSearch } from 'app/services/search'
 import toSlug from 'lib/toSlug'
+import makeRestRequest from 'lib/makeRestRequest'
 
 interface SearchBlockProps {
   children?: React.ReactNode
@@ -42,7 +43,9 @@ const SearchField = (): React.ReactElement => {
 
   useEffect(() => {
     async function fetchNewCompanies (): Promise<void> {
-      const searchResults = await fetchSearch({ query: encodeURIComponent(debouncedUserInput as string) })
+      const searchResults = await (
+        await fetch(`/api/search?query=${encodeURIComponent(debouncedUserInput as string)}`)
+      ).json()
       const resultNames = searchResults.map(result => result.name)
       setListOptions(resultNames)
     }

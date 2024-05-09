@@ -53,7 +53,7 @@ const completeConfig: AllConfigurations = {
     googleAnalyticsId: 'G-ZFQELW8YR1',
     databaseUrl: process.env.POSTGRES_URL,
     graphqlPath: '/api/graphql',
-    apiBaseUrl: 'https://climate-wiki-api.vercel.app/'
+    apiBaseUrl: process.env.BACKEND_BASE_URL || 'https://climate-wiki-api.vercel.app/'
   },
 
   development: {
