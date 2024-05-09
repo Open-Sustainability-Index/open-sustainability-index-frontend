@@ -43,7 +43,7 @@ const SearchField = (): React.ReactElement => {
 
   useEffect(() => {
     async function fetchNewCompanies (): Promise<void> {
-      const searchResults = await (
+      const searchResults: Awaited<ReturnType<typeof fetchSearch>> = await (
         await fetch(`/api/search?query=${encodeURIComponent(debouncedUserInput as string)}`)
       ).json()
       const resultNames = searchResults.map(result => result.name)

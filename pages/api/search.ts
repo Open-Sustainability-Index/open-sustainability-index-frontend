@@ -1,15 +1,10 @@
-import { fetchSearch } from 'app/services/search'
+import { SearchResult, fetchSearch } from 'app/services/search'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-type ResponseData = {
-  message: string
-}
 
 export default async function handler (
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<SearchResult[]>
 ) {
-  const result = await fetchSearch({ query: req.query.query })
-  console.log('res', result, req.query)
+  const result = await fetchSearch({ query: req.query.query as string })
   return res.status(200).json(result)
 }

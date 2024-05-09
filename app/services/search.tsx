@@ -6,7 +6,7 @@ interface SearchParams {
   order?: string
 }
 
-interface SearchResult {
+export interface SearchResult {
   name: string
   slug: string
   type: string
