@@ -58,7 +58,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
 
   const lastEmission = company.emissions[company.emissions.length - 1]?.total_reported_emission_scope_1_2_3 ?? 0
   const targetEmission = parseTargetValue(target?.target_value, lastEmission ?? 0)
-  const emissionReductionPerYear = Math.round((lastEmission - targetEmission) / (targetYear - lastYear + 1))
+  // const emissionReductionPerYear = Math.round((lastEmission - targetEmission) / (targetYear - lastYear + 1))
 
   // Construct data series
   const dataLabels = fillArray(targetYear - firstYear + 1, (index) => firstYear + index)
@@ -66,12 +66,12 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     const emission = company.emissions.find((emission) => emission.year === year)?.total_reported_emission_scope_1_2_3
     return emission ?? null
   })
-  const emissionsProjected = fillArray(targetYear - firstYear + 1, (index) => {
-    if (index <= lastYear - firstYear) {
-      return null
-    }
-    return lastEmission - ((index - 1) * emissionReductionPerYear)
-  })
+  // const emissionsProjected = fillArray(targetYear - firstYear + 1, (index) => {
+  //   if (index <= lastYear - firstYear) {
+  //     return null
+  //   }
+  //   return lastEmission - ((index - 1) * emissionReductionPerYear)
+  // })
   const targetLine = fillArray(targetYear - firstYear + 1, (index) => {
     if (index === lastYear - firstYear) {
       return lastEmission
@@ -82,8 +82,6 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     return null
   })
 
-  console.log('CompanyTargetChart (2):', { lastYear, lastEmission, targetYear, targetEmission, emissionReductionPerYear })
-
   // Gather data values and labels
   const dataSeries: AllSeriesType[] = [
     {
@@ -92,12 +90,12 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       color: COLORS.TURQUOISE_MEDIUM,
       data: emissionsHistory
     },
-    {
-      label: 'Projected',
-      type: 'bar',
-      color: COLORS.TURQUOISE_LIGHT,
-      data: emissionsProjected
-    },
+    // {
+    //   label: 'Projected',
+    //   type: 'bar',
+    //   color: COLORS.TURQUOISE_LIGHT,
+    //   data: emissionsProjected
+    // },
     {
       label: 'Near-term target',
       type: 'line',
