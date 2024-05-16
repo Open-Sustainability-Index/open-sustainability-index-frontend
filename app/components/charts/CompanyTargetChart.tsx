@@ -26,13 +26,13 @@ const fillArray = (length: number, expression: (index: number) => any): any[] =>
   (empty, index) => expression(index)
 )
 
-const parseTargetValue = (targetValue: string | undefined, lastEmission: number): number => {
-  const rawValue = parseFloat((targetValue ?? '0').replace(/[^0-9.]/g, ''))
-  const value = targetValue?.includes('%') === true
-    ? rawValue * 0.01 * lastEmission
-    : rawValue * lastEmission
-  return Math.round(value)
-}
+// const parseTargetValue = (targetValue: string | undefined, lastEmission: number): number => {
+//   const rawValue = parseFloat((targetValue ?? '0').replace(/[^0-9.]/g, ''))
+//   const value = targetValue ?.includes('%') === true
+//     ? rawValue * 0.01 * lastEmission
+//     : rawValue * lastEmission
+//   return Math.round(value)
+// }
 
 const CompanyTargetChart = ({ company }: { company: Company }): React.ReactElement | null | string => {
   const theme = useTheme()
@@ -41,9 +41,9 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   // Find largest target year
   // const targetYear = company.targets.reduce((results: number, target): number => ((target?.target_year ?? 0) > results ? (target?.target_year ?? 0) : results), 0)
   const target = company.targets.find((target) => target.target === 'Near-term')
-  const targetYear = target?.target_year ?? 0
-  const firstYear = company.emissions[0]?.year ?? 0
-  const lastYear = company.emissions[company.emissions.length - 1]?.year ?? 0
+  const targetYear = target ?.target_year ?? 0
+  const firstYear = company.emissions[0] ?.year ?? 0
+  // const lastYear = company.emissions[company.emissions.length - 1] ?.year ?? 0
   console.log('CompanyTargetChart (1):', { firstYear, targetYear, targets: company.targets })
 
   if (company === undefined) {
@@ -56,31 +56,33 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     return <Typography variant='body2'>(No target data available to show graph)</Typography>
   }
 
-  const lastEmission = company.emissions[company.emissions.length - 1]?.total_reported_emission_scope_1_2_3 ?? 0
-  const targetEmission = parseTargetValue(target?.target_value, lastEmission ?? 0)
+  // const lastEmission = company.emissions[company.emissions.length - 1] ?.total_reported_emission_scope_1_2_3 ?? 0
+  // const targetEmission = parseTargetValue(target ?.target_value, lastEmission ?? 0)
   // const emissionReductionPerYear = Math.round((lastEmission - targetEmission) / (targetYear - lastYear + 1))
 
   // Construct data series
   const dataLabels = fillArray(targetYear - firstYear + 1, (index) => firstYear + index)
   const emissionsHistory = dataLabels.map((year) => {
-    const emission = company.emissions.find((emission) => emission.year === year)?.total_reported_emission_scope_1_2_3
+    const emission = company.emissions.find((emission) => emission.year === year) ?.total_reported_emission_scope_1_2_3
     return emission ?? null
   })
+
   // const emissionsProjected = fillArray(targetYear - firstYear + 1, (index) => {
   //   if (index <= lastYear - firstYear) {
   //     return null
   //   }
   //   return lastEmission - ((index - 1) * emissionReductionPerYear)
   // })
-  const targetLine = fillArray(targetYear - firstYear + 1, (index) => {
-    if (index === lastYear - firstYear) {
-      return lastEmission
-    }
-    if (index === targetYear - firstYear) {
-      return targetEmission
-    }
-    return null
-  })
+
+  // const targetLine = fillArray(targetYear - firstYear + 1, (index) => {
+  //   if (index === lastYear - firstYear) {
+  //     return lastEmission
+  //   }
+  //   if (index === targetYear - firstYear) {
+  //     return targetEmission
+  //   }
+  //   return null
+  // })
 
   // Gather data values and labels
   const dataSeries: AllSeriesType[] = [
@@ -96,13 +98,13 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     //   color: COLORS.TURQUOISE_LIGHT,
     //   data: emissionsProjected
     // },
-    {
-      label: 'Near-term target',
-      type: 'line',
-      color: COLORS.PURPLE_DARK,
-      data: targetLine,
-      connectNulls: true
-    }
+    // {
+    //   label: 'Near-term target',
+    //   type: 'line',
+    //   color: COLORS.PURPLE_DARK,
+    //   data: targetLine,
+    //   connectNulls: true
+    // }
   ]
 
   // const Container = isSmallScreen ? ResponsiveChartContainer : ChartContainer
