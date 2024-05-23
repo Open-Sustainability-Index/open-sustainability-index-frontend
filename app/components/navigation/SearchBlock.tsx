@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField'
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchSearch } from 'app/services/search'
 import toSlug from 'lib/toSlug'
-import makeRestRequest from 'lib/makeRestRequest'
 
 interface SearchBlockProps {
   children?: React.ReactNode
