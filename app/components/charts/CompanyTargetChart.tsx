@@ -41,8 +41,8 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   // Find largest target year
   // const targetYear = company.targets.reduce((results: number, target): number => ((target?.target_year ?? 0) > results ? (target?.target_year ?? 0) : results), 0)
   const target = company.targets.find((target) => target.target === 'Near-term')
-  const targetYear = target ?.target_year ?? 0
-  const firstYear = company.emissions[0] ?.year ?? 0
+  const targetYear = target?.target_year ?? 0
+  const firstYear = company.emissions[0]?.year ?? 0
   // const lastYear = company.emissions[company.emissions.length - 1] ?.year ?? 0
   console.log('CompanyTargetChart (1):', { firstYear, targetYear, targets: company.targets })
 
@@ -63,7 +63,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   // Construct data series
   const dataLabels = fillArray(targetYear - firstYear + 1, (index) => firstYear + index)
   const emissionsHistory = dataLabels.map((year) => {
-    const emission = company.emissions.find((emission) => emission.year === year) ?.total_reported_emission_scope_1_2_3
+    const emission = company.emissions.find((emission) => emission.year === year)?.total_reported_emission_scope_1_2_3
     return emission ?? null
   })
 
@@ -91,7 +91,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       type: 'bar',
       color: COLORS.TURQUOISE_MEDIUM,
       data: emissionsHistory
-    },
+    }
     // {
     //   label: 'Projected',
     //   type: 'bar',

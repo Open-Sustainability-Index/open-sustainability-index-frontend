@@ -82,7 +82,7 @@ interface CompanyReturnProps {
   company?: Company
 }
 
-export const companyPath = (company: Company): string => `/companies/${toSlug(company.company_name)}`
+export const companyPath = (company: Company | CompaniesCompany): string => `/companies/${toSlug(company.company_name)}`
 
 export const companyPageProps = (company: Company): PageProps => ({
   title: `${company?.company_name} - Company emissions and industry benchmarking`,

@@ -3,7 +3,8 @@ import { ParsedUrlQuery } from 'querystring'
 
 import { config } from 'config/config'
 import { formatDate } from 'lib/formatDate'
-import links from 'app/components/navigation/links'
+import { fetchCompanies, companyPath } from 'app/services/companies'
+import navigationLinks from 'app/components/navigation/links'
 
 interface SiteUrlProps {
   path: string
@@ -32,9 +33,11 @@ const Sitemap = ({ pagePaths }: SitemapProps): string => {
 }
 
 const getPagePaths = async (): Promise<string[]> => {
+  const companies = (await fetchCompanies({ page: 1, pageSize: 200, sort: 'emission_intensity', order: 'desc' /*, filters: { 'net-zero': 'Active' } */ })) ?? []
   return [
     '/',
-    ...links.map(link => link.path)
+    ...navigationLinks.map(link => link.path),
+    ...companies.map(companyPath)
   ]
 }
 
