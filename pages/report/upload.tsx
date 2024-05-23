@@ -6,7 +6,7 @@ import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
 
 const headers: readonly DataTableHeader[] = [
   // { field: 'company_name' },
-  { field: 'year' },
+  { field: 'year', displayOnMobile: true },
   { field: 'fiscal_year' },
   { field: 'industry' },
   { field: 'isic_rev_4' },
@@ -16,7 +16,7 @@ const headers: readonly DataTableHeader[] = [
   { field: 'scope_2_market_based' },
   { field: 'scope_2_location_based' },
   { field: 'scope_2_unknown' },
-  { field: 'total_scope_3' },
+  { field: 'total_scope_3', displayOnMobile: true },
   { field: 'total_emission_market_based' },
   { field: 'total_emission_location_based' },
   { field: 'total_reported_emission_scope_1_2' },
@@ -64,6 +64,8 @@ const headers: readonly DataTableHeader[] = [
 const UploadReportPage = ({ title }: { title: string }) => {
   const [selectedFile, setSelectedFile] = useState(null)
   const [analysisResults, setAnalysisResults] = useState()
+  console.log('analysisResults:', analysisResults);
+  console.log('analysisResults ?.analysis ?.yearlyReports:', analysisResults ?.analysis ?.yearlyReports);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files ?.[0] !== null) {
@@ -83,8 +85,9 @@ const UploadReportPage = ({ title }: { title: string }) => {
         body: formData
       })
 
-      const data = await res.json()
-      setAnalysisResults(data)
+      const analysisData = await res.json()
+      console.log('analysisData:', analysisData);
+      setAnalysisResults(analysisData)
     }
   }
 
@@ -112,12 +115,13 @@ const UploadReportPage = ({ title }: { title: string }) => {
       {(analysisResults === null) && (
         <CircularProgress />
       )}
-      {(analysisResults !== undefined && analysisResults !== null) && (
-        <DataTable
-          data={analysisResults ?.yearlyReports ?? []}
-          headers={headers}
-        />
+      {(analysisResults !== null) && (
+        null
       )}
+      <DataTable
+        data={analysisResults ?.analysis ?.yearlyReports ?? []}
+        headers={headers}
+      />
     </Container>
   )
 }

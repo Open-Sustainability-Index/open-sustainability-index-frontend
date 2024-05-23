@@ -30,12 +30,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       try {
         const fileStream = fs.createReadStream(file.filepath)
-        const openaiFile = await openai.files.create({
-          purpose: 'assistants',
-          file: fileStream
-        })
+        const openaiFile = { id: 'file-HzZtRG0zuft4SyeoRzqLD0EK' } // file1
+        // const openaiFile = { id: 'file-kJfWw8U7ITF3h2l6zeUHiEjj' } // file2
+        // const openaiFile = await openai.files.create({
+        //   purpose: 'assistants',
+        //   file: fileStream
+        // })
 
-        console.log('openaiFile:', openaiFile)
+        const openaiFile2 = await openai.files.retrieve(openaiFile.id);
+
+        console.log('openaiFile2:', openaiFile2)
+
+        // Add to Vector Store for folder analysis:
+        // https://platform.openai.com/storage/vector_stores/vs_kyaPD1PqJWEZdX2lX8PZrArv
+        // await openai.beta.vectorStores.files.create(
+        //   'vs_kyaPD1PqJWEZdX2lX8PZrArv',
+        //   { file_id: openaiFile.id }
+        // );
 
         const analysis = await analyzeFile(openaiFile)
         console.log('analysis:', analysis)
@@ -51,6 +62,45 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default handler
+
+export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<void> {
+  const analysisFunction = createFunction(
+    'analyze_emissions_report',
+    'Analyze a CO₂ emissions report based on the file provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e).',
+    {
+      yearlyReports: {
+        description: 'Retrieve emissions data for all years included in this file',
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: YEARLY_REPORT_FIELDS
+        }
+      }
+    },
+    [
+      'yearlyReports'
+    ]
+  )
+  const completion = await getChatCompletion(
+    [
+      {
+        role: 'system',
+        content: 'You are a helpful CO₂ emissions report coach designed to output JSON.'
+      },
+      {
+        role: 'user',
+        content: `Help me analyze this CO₂ emissions report: ${file.id}.`,
+        attachments: [{ file_id: file.id, tools: [{ type: "file_search" }] }],
+      }
+    ],
+    [analysisFunction],
+    true
+  )
+  const results = completion.tool_calls ?.[0].function.arguments !== undefined
+    ? JSON.parse(completion.tool_calls ?.[0].function.arguments) as Record<string, string>
+    : undefined
+  return results
+}
 
 const YEARLY_REPORT_FIELDS: Record<string, OpenAIFunctionParameterItems> = {
   company_name: { type: 'string', description: 'Name of the company reporting emissions' },
@@ -107,42 +157,4 @@ const YEARLY_REPORT_FIELDS: Record<string, OpenAIFunctionParameterItems> = {
   publication_date: { type: 'string', description: 'Date of publication of the data, format YYYY-MM-DD' },
   comment: { type: 'string', description: 'Additional comments or notes' },
   status: { type: 'string', description: 'Status of the data or report', enum: ['Not Started', 'Ongoing', 'Done'] }
-}
-
-export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<void> {
-  const analysisFunction = createFunction(
-    'analyze_emissions_report',
-    'Analyze a CO₂ emissions report based on the file provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e).',
-    {
-      yearlyReports: {
-        description: 'Retrieve emissions data for all years included in this file',
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: YEARLY_REPORT_FIELDS
-        }
-      }
-    },
-    [
-      // 'yearlyReports'
-    ]
-  )
-  const completion = await getChatCompletion(
-    [
-      {
-        role: 'system',
-        content: 'You are a helpful CO₂ emissions report coach designed to output JSON.'
-      },
-      {
-        role: 'user',
-        content: `Help me analyze this CO₂ emissions report: ${file.id}.`
-      }
-    ],
-    [analysisFunction],
-    true
-  )
-  const results = completion.tool_calls?.[0].function.arguments !== undefined
-    ? JSON.parse(completion.tool_calls?.[0].function.arguments) as Record<string, string>
-    : undefined
-  return results
 }
