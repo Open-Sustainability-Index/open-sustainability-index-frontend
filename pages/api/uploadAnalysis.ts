@@ -1,16 +1,18 @@
-// pages/api/upload.ts
 import type { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
 import fs from 'fs'
-import { OpenAI } from 'openai'
 
+import { supabase } from 'lib/supabase'
 import { getChatCompletion, createFunction, OpenAIFunctionParameterItems } from 'lib/openai'
+import toSlug from 'lib/toSlug'
 
 export const config = {
   api: {
     bodyParser: false
   }
 }
+
+const SUPABASE_BUCKET_NAME = 'ai-image-uploads'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -24,31 +26,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const file = files.file[0] // Adjust if multiple files
 
-      const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
-      })
-
       try {
-        const fileStream = fs.createReadStream(file.filepath)
-        const openaiFile = { id: 'file-HzZtRG0zuft4SyeoRzqLD0EK' } // file1
-        // const openaiFile = { id: 'file-kJfWw8U7ITF3h2l6zeUHiEjj' } // file2
-        // const openaiFile = await openai.files.create({
-        //   purpose: 'assistants',
-        //   file: fileStream
-        // })
+        // Read the file content
+        const fileContent = fs.readFileSync(file.filepath);
+        const fileName = `${Date.now()}-${toSlug(file.originalFilename ?? 'file')}`;
 
-        const openaiFile2 = await openai.files.retrieve(openaiFile.id);
+        // Upload to Supabase Storage
+        const uploadResults = await supabase.storage
+          .from(SUPABASE_BUCKET_NAME)
+          .upload(fileName, fileContent);
 
-        console.log('openaiFile2:', openaiFile2)
+        if (uploadResults.error) {
+          throw uploadResults.error;
+        }
 
-        // Add to Vector Store for folder analysis:
-        // https://platform.openai.com/storage/vector_stores/vs_kyaPD1PqJWEZdX2lX8PZrArv
-        // await openai.beta.vectorStores.files.create(
-        //   'vs_kyaPD1PqJWEZdX2lX8PZrArv',
-        //   { file_id: openaiFile.id }
-        // );
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from(SUPABASE_BUCKET_NAME)
+          .getPublicUrl(fileName);
 
-        const analysis = await analyzeFile(openaiFile)
+        const analysis = await analyzeFile(publicUrl)
         console.log('analysis:', analysis)
 
         res.status(200).json({ message: 'File uploaded successfully', analysis })
@@ -63,10 +60,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default handler
 
-export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<any> {
+export async function analyzeFile (imageUrl: string): Promise<any> {
   const analysisFunction = createFunction(
     'analyze_emissions_report',
-    'Analyze a CO₂ emissions report based on the image provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e).',
+    'Analyze a CO₂ emissions report based on the image provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e). Convert from million tonnes (mt) to tonnes (t) if needed.',
     {
       yearlyReports: {
         description: 'Retrieve emissions data for all years included in this image',
@@ -98,7 +95,7 @@ export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<any> 
           { type: 'text', text: 'Help me analyze the company emissions report in this image.' },
           {
             type: 'image_url',
-            image_url: { url: 'https://xtvsbqwnsdqzjdqirdha.supabase.co/storage/v1/object/public/ai-image-uploads/AI-analysis-1.png' },
+            image_url: { url: imageUrl },
           },
         ],
       }
