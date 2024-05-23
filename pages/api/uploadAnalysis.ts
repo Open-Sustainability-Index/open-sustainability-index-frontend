@@ -63,17 +63,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default handler
 
-export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<void> {
+export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<any> {
   const analysisFunction = createFunction(
     'analyze_emissions_report',
-    'Analyze a CO₂ emissions report based on the file provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e).',
+    'Analyze a CO₂ emissions report based on the image provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e).',
     {
       yearlyReports: {
-        description: 'Retrieve emissions data for all years included in this file',
+        description: 'Retrieve emissions data for all years included in this image',
         type: 'array',
         items: {
           type: 'object',
-          properties: YEARLY_REPORT_FIELDS
+          properties: YEARLY_REPORT_FIELDS,
+          required: [
+            'all_cats',
+            'scope_1',
+            'cat_1'
+          ]
         }
       }
     },
@@ -89,8 +94,13 @@ export async function analyzeFile (file: OpenAI.Files.FileObject): Promise<void>
       },
       {
         role: 'user',
-        content: `Help me analyze this CO₂ emissions report: ${file.id}.`,
-        attachments: [{ file_id: file.id, tools: [{ type: "file_search" }] }],
+        content: [
+          { type: 'text', text: 'Help me analyze the company emissions report in this image.' },
+          {
+            type: 'image_url',
+            image_url: { url: 'https://xtvsbqwnsdqzjdqirdha.supabase.co/storage/v1/object/public/ai-image-uploads/AI-analysis-1.png' },
+          },
+        ],
       }
     ],
     [analysisFunction],

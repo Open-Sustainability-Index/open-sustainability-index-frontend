@@ -58,6 +58,7 @@ export interface OpenAIFunctionParameterItems {
   items?: OpenAIFunctionParameterItems
   properties?: Record<string, OpenAIFunctionParameterItems>
   enum?: Array<string | number | boolean>
+  required?: string[]
 }
 
 type OpenAIFunctionParameters = Record<string, OpenAIFunctionParameterItems>

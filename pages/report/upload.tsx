@@ -64,8 +64,6 @@ const headers: readonly DataTableHeader[] = [
 const UploadReportPage = ({ title }: { title: string }) => {
   const [selectedFile, setSelectedFile] = useState(null)
   const [analysisResults, setAnalysisResults] = useState()
-  console.log('analysisResults:', analysisResults);
-  console.log('analysisResults ?.analysis ?.yearlyReports:', analysisResults ?.analysis ?.yearlyReports);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files ?.[0] !== null) {
@@ -86,7 +84,6 @@ const UploadReportPage = ({ title }: { title: string }) => {
       })
 
       const analysisData = await res.json()
-      console.log('analysisData:', analysisData);
       setAnalysisResults(analysisData)
     }
   }
@@ -130,7 +127,7 @@ export default UploadReportPage
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
-      title: 'Upload file for analysis'
+      title: 'Upload image for analysis'
     }
   }
 }
