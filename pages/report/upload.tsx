@@ -1,21 +1,82 @@
 // pages/upload.js
 import React, { useState } from 'react'
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
-import { Container, Typography, Button, Box, TextField } from '@mui/material'
+import type { GetStaticPropsResult } from 'next'
+import { Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
+import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
 
-const UploadPage = () => {
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [response, setResponse] = useState(null)
+const headers: readonly DataTableHeader[] = [
+  // { field: 'company_name' },
+  { field: 'year' },
+  { field: 'fiscal_year' },
+  { field: 'industry' },
+  { field: 'isic_rev_4' },
+  { field: 'hq_country_move' },
 
-  const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0])
+  { field: 'scope_1' },
+  { field: 'scope_2_market_based' },
+  { field: 'scope_2_location_based' },
+  { field: 'scope_2_unknown' },
+  { field: 'total_scope_3' },
+  { field: 'total_emission_market_based' },
+  { field: 'total_emission_location_based' },
+  { field: 'total_reported_emission_scope_1_2' },
+  { field: 'total_reported_emission_scope_1_2_3' },
+  { field: 'cat_1' },
+  { field: 'cat_2' },
+  { field: 'cat_3' },
+  { field: 'cat_4' },
+  { field: 'cat_5' },
+  { field: 'cat_6' },
+  { field: 'cat_7' },
+  { field: 'cat_8' },
+  { field: 'cat_9' },
+  { field: 'cat_10' },
+  { field: 'cat_11' },
+  { field: 'cat_12' },
+  { field: 'cat_13' },
+  { field: 'cat_14' },
+  { field: 'cat_15' },
+  { field: 'all_cats' },
+  { field: 'upstream_scope_3' },
+  { field: 'share_upstream_of_scope_3' },
+  { field: 'scope_1_share_of_total_upstream_emissions' },
+  { field: 'total_upstream_emissions' },
+  { field: 'revenue' },
+  { field: 'currency' },
+  { field: 'revenue_million' },
+  { field: 'cradle_to_gate' },
+  { field: 'ghg_standard' },
+  { field: 'emission_intensity' },
+
+  { field: 'source' },
+  { field: 'source_emissions_page_move' },
+  { field: 'source_emission_report' },
+  { field: 'emission_page' },
+  { field: 'source_emission_link' },
+  { field: 'source_revenue' },
+  { field: 'page_revenue' },
+  { field: 'source_revenue_link' },
+  { field: 'publication_date' },
+  { field: 'comment' },
+  { field: 'status' }
+]
+
+const UploadReportPage = ({ title }: { title: string }) => {
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [analysisResults, setAnalysisResults] = useState()
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files ?.[0] !== null) {
+      setSelectedFile(event.target.files ?.[0])
+    }
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (selectedImage) {
+    if (selectedFile) {
+      setAnalysisResults(null)
       const formData = new FormData()
-      formData.append('file', selectedImage)
+      formData.append('file', selectedFile)
 
       const res = await fetch('/api/uploadAnalysis', {
         method: 'POST',
@@ -23,26 +84,24 @@ const UploadPage = () => {
       })
 
       const data = await res.json()
-      setResponse(data)
+      setAnalysisResults(data)
     }
   }
 
   return (
     <Container>
-      <Typography variant='h4' gutterBottom>
-        Upload Image
-      </Typography>
+      <Typography variant='h1' gutterBottom>{title}</Typography>
       <Box component='form' onSubmit={handleSubmit} sx={{ mt: 2 }}>
         <TextField
           type='file'
           inputProps={{ accept: 'image/*' }}
-          onChange={handleImageChange}
+          onChange={handleFileChange}
           fullWidth
         />
-        {selectedImage && (
+        {selectedFile && (
           <Box sx={{ mt: 2 }}>
             <Typography variant='body1'>
-              Selected file: {selectedImage.name}
+              Selected file: {selectedFile ?.name}
             </Typography>
           </Box>
         )}
@@ -50,22 +109,24 @@ const UploadPage = () => {
           Upload
         </Button>
       </Box>
-      {response && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant='body1'>
-            Response: {JSON.stringify(response, null, 2)}
-          </Typography>
-        </Box>
+      {(analysisResults === null) && (
+        <CircularProgress />
+      )}
+      {(analysisResults !== undefined && analysisResults !== null) && (
+        <DataTable
+          data={analysisResults ?.yearlyReports ?? []}
+          headers={headers}
+        />
       )}
     </Container>
   )
 }
-export default UploadPage
+export default UploadReportPage
 
-export const getStaticProps = async (context: GetStaticPropsContext): Promise<GetStaticPropsResult<{}>> => {
+export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
-      title: 'Upload Image',
+      title: 'Upload file for analysis'
     }
   }
 }
