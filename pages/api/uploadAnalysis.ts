@@ -4,7 +4,7 @@ import fs from 'fs'
 
 import { supabase } from 'lib/supabase'
 import { getChatCompletion, createFunction, OpenAIFunctionParameterItems } from 'lib/openai'
-import toSlug from 'lib/toSlug'
+import { toSlugWithPeriods } from 'lib/toSlug'
 import { formatDateNoDash } from 'lib/formatDate'
 
 export const config = {
@@ -42,7 +42,7 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
   try {
     // Read the file content
     const fileContent = fs.readFileSync(file.filepath)
-    const fileName = `${formatDateNoDash(new Date())}-${toSlug(file.originalFilename ?? 'file')}`
+    const fileName = `${formatDateNoDash(new Date())}-${toSlugWithPeriods(file.originalFilename ?? 'file')}`
 
     // Upload to Supabase Storage
     const uploadResults = await supabase.storage
