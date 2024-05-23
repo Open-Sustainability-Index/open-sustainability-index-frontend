@@ -61,19 +61,26 @@ const headers: readonly DataTableHeader[] = [
   { field: 'status' }
 ]
 
-const UploadReportPage = ({ title }: { title: string }) => {
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [analysisResults, setAnalysisResults] = useState()
+interface AnalysisResults {
+  message: string
+  analysis: {
+    yearlyReports: Array<Record<string, string>>
+  }
+}
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
+  const [selectedFile, setSelectedFile] = useState<File | undefined>()
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>()
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files ?.[0] !== null) {
       setSelectedFile(event.target.files ?.[0])
     }
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
-    if (selectedFile) {
+    if (selectedFile !== undefined) {
       setAnalysisResults(null)
       const formData = new FormData()
       formData.append('file', selectedFile)
@@ -91,14 +98,14 @@ const UploadReportPage = ({ title }: { title: string }) => {
   return (
     <Container>
       <Typography variant='h1' gutterBottom>{title}</Typography>
-      <Box component='form' onSubmit={handleSubmit} sx={{ mt: 2 }}>
+      <Box component='form' onSubmit={(e) => { void handleSubmit(e) }} sx={{ mt: 2 }}>
         <TextField
           type='file'
           inputProps={{ accept: 'image/*' }}
           onChange={handleFileChange}
           fullWidth
         />
-        {selectedFile && (
+        {selectedFile !== null && (
           <Box sx={{ mt: 2 }}>
             <Typography variant='body1'>
               Selected file: {selectedFile ?.name}

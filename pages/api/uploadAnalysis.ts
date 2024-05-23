@@ -5,6 +5,7 @@ import fs from 'fs'
 import { supabase } from 'lib/supabase'
 import { getChatCompletion, createFunction, OpenAIFunctionParameterItems } from 'lib/openai'
 import toSlug from 'lib/toSlug'
+import { formatDateNoDash } from 'lib/formatDate'
 
 export const config = {
   api: {
@@ -14,44 +15,21 @@ export const config = {
 
 const SUPABASE_BUCKET_NAME = 'ai-image-uploads'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'POST') {
     const form = formidable()
 
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
+    form.parse(req, (err, fields, files) => {
+      if (err !== null) {
         res.status(500).json({ message: 'Error parsing the files' })
         return
       }
-
-      const file = files.file[0] // Adjust if multiple files
-
-      try {
-        // Read the file content
-        const fileContent = fs.readFileSync(file.filepath);
-        const fileName = `${Date.now()}-${toSlug(file.originalFilename ?? 'file')}`;
-
-        // Upload to Supabase Storage
-        const uploadResults = await supabase.storage
-          .from(SUPABASE_BUCKET_NAME)
-          .upload(fileName, fileContent);
-
-        if (uploadResults.error) {
-          throw uploadResults.error;
-        }
-
-        // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from(SUPABASE_BUCKET_NAME)
-          .getPublicUrl(fileName);
-
-        const analysis = await analyzeFile(publicUrl)
-        console.log('analysis:', analysis)
-
-        res.status(200).json({ message: 'File uploaded successfully', analysis })
-      } catch (error) {
-        res.status(500).json({ message: 'Error uploading the file', error })
+      const file = files.file?.[0] // Adjust if multiple files
+      if (file === undefined) {
+        res.status(400).json({ message: 'No file uploaded' })
+        return
       }
+      void handleFileUpload(file, res)
     })
   } else {
     res.status(405).json({ message: 'Method not allowed' })
@@ -59,6 +37,35 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default handler
+
+const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Promise<void> => {
+  try {
+    // Read the file content
+    const fileContent = fs.readFileSync(file.filepath)
+    const fileName = `${formatDateNoDash(new Date())}-${toSlug(file.originalFilename ?? 'file')}`
+
+    // Upload to Supabase Storage
+    const uploadResults = await supabase.storage
+      .from(SUPABASE_BUCKET_NAME)
+      .upload(fileName, fileContent)
+
+    if (uploadResults.error != null) {
+      throw uploadResults.error
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from(SUPABASE_BUCKET_NAME)
+      .getPublicUrl(fileName)
+
+    const analysis = await analyzeFile(publicUrl)
+    console.log('analysis:', analysis)
+
+    res.status(200).json({ message: 'File uploaded successfully', analysis })
+  } catch (error) {
+    res.status(500).json({ message: 'Error uploading the file', error })
+  }
+}
 
 export async function analyzeFile (imageUrl: string): Promise<any> {
   const analysisFunction = createFunction(
@@ -95,16 +102,16 @@ export async function analyzeFile (imageUrl: string): Promise<any> {
           { type: 'text', text: 'Help me analyze the company emissions report in this image.' },
           {
             type: 'image_url',
-            image_url: { url: imageUrl },
-          },
-        ],
+            image_url: { url: imageUrl }
+          }
+        ]
       }
     ],
     [analysisFunction],
     true
   )
-  const results = completion.tool_calls ?.[0].function.arguments !== undefined
-    ? JSON.parse(completion.tool_calls ?.[0].function.arguments) as Record<string, string>
+  const results = completion.tool_calls?.[0].function.arguments !== undefined
+    ? JSON.parse(completion.tool_calls?.[0].function.arguments) as Record<string, string>
     : undefined
   return results
 }

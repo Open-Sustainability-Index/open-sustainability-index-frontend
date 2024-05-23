@@ -17,12 +17,12 @@ export const getChatCompletion = async (
     ...(asJSON ? { response_format: { type: 'json_object' } } : {}),
     ...(functions !== undefined
       ? {
-        tools: functions.map(func => ({
-          type: 'function',
-          function: func
-        })),
-        tool_choice: { type: 'function', function: { name: functions[0].name } }
-      }
+          tools: functions.map(func => ({
+            type: 'function',
+            function: func
+          })),
+          tool_choice: { type: 'function', function: { name: functions[0].name } }
+        }
       : {})
   })
   /* completion =
