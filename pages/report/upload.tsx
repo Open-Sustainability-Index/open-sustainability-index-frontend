@@ -113,7 +113,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           </Box>
         )}
         <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }}>
-          Upload
+          Start the AI analysis
         </Button>
       </Box>
       {(analysisResults === null) && (
