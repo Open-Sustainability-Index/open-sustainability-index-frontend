@@ -47,7 +47,7 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
     // Upload to Supabase Storage
     const uploadResults = await supabase.storage
       .from(SUPABASE_BUCKET_NAME)
-      .upload(fileName, fileContent)
+      .upload(fileName, fileContent, { contentType: file.mimetype ?? 'image/png' })
 
     if (uploadResults.error != null) {
       throw uploadResults.error
