@@ -139,7 +139,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
 }
 export default UploadReportPage
 
-function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: string }): React.ReactElement {
+function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: string, label: string }): React.ReactElement {
   const handleCopyClick = (): void => {
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
