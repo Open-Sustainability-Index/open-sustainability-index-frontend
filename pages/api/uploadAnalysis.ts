@@ -24,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
         res.status(500).json({ message: 'Error parsing the files' })
         return
       }
-      const file = files.file?.[0] // Adjust if multiple files
+      const file = files.file ?.[0] // Adjust if multiple files
       if (file === undefined) {
         res.status(400).json({ message: 'No file uploaded' })
         return
@@ -70,7 +70,7 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
 export async function analyzeFile (imageUrl: string): Promise<any> {
   const analysisFunction = createFunction(
     'analyze_emissions_report',
-    'Analyze a CO₂ emissions report based on the image provided. Don’t guess; leave blank if information is not available. All emission values should be converted to tonnes of CO₂ equivalents (t CO₂e). Convert from million tonnes (mt) to tonnes (t) if needed.',
+    'Analyze a CO₂ emissions report based on the image provided. Don’t guess; leave blank if information is not available. All emission values should be converted to whole tonnes of CO₂ equivalents (t CO₂e). Convert from thousand tonnes and million tonnes (Mt or mt) to whole tonnes (t) if needed.',
     {
       yearlyReports: {
         description: 'Retrieve emissions data for all years included in this image',
@@ -110,8 +110,8 @@ export async function analyzeFile (imageUrl: string): Promise<any> {
     [analysisFunction],
     true
   )
-  const results = completion.tool_calls?.[0].function.arguments !== undefined
-    ? JSON.parse(completion.tool_calls?.[0].function.arguments) as Record<string, string>
+  const results = completion.tool_calls ?.[0].function.arguments !== undefined
+    ? JSON.parse(completion.tool_calls ?.[0].function.arguments) as Record<string, string>
     : undefined
   return results
 }
