@@ -2,7 +2,10 @@
 import React, { useState } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
+
+import jsonToTSV from 'app/utils/jsonToTSV'
 import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
+// import testImageAnalysis from 'test/imageAnalysis.json'
 
 const headers: readonly DataTableHeader[] = [
   // { field: 'company_name' },
@@ -70,11 +73,11 @@ interface AnalysisResults {
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>()
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files ?.[0] !== null) {
-      setSelectedFile(event.target.files ?.[0])
+    if (event.target.files?.[0] !== null) {
+      setSelectedFile(event.target.files?.[0])
     }
   }
 
@@ -105,31 +108,54 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           onChange={handleFileChange}
           fullWidth
         />
-        {selectedFile !== null && (
+        {(selectedFile !== undefined) && (
           <Box sx={{ mt: 2 }}>
             <Typography variant='body1'>
-              Selected file: {selectedFile ?.name}
+              Selected file: {selectedFile?.name}
             </Typography>
+            <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }}>
+              Start the AI analysis
+            </Button>
           </Box>
         )}
-        <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }}>
-          Start the AI analysis
-        </Button>
       </Box>
       {(analysisResults === null) && (
         <CircularProgress />
       )}
-      {(analysisResults !== null) && (
-        null
+      {(analysisResults !== null && analysisResults !== undefined) && (
+        <>
+          <CopyToClipboardButton
+            textToCopy={jsonToTSV(analysisResults?.analysis?.yearlyReports)}
+            label='Copy sheet data'
+          />
+          <DataTable
+            data={analysisResults?.analysis?.yearlyReports ?? []}
+            headers={headers}
+          />
+        </>
       )}
-      <DataTable
-        data={analysisResults ?.analysis ?.yearlyReports ?? []}
-        headers={headers}
-      />
     </Container>
   )
 }
 export default UploadReportPage
+
+function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: string }): React.ReactElement {
+  const handleCopyClick = (): void => {
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        alert('Text copied to clipboard!')
+      })
+      .catch((err) => {
+        console.error('Failed to copy text: ', err)
+      })
+  }
+
+  return (
+    <Button variant='outlined' color='primary' type='submit' sx={{ mt: 2 }} onClick={handleCopyClick}>
+      {label}
+    </Button>
+  )
+}
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
