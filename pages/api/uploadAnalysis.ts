@@ -49,7 +49,7 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
       .from(SUPABASE_BUCKET_NAME)
       .upload(fileName, fileContent, { contentType: file.mimetype ?? 'image/png' })
 
-    if (uploadResults.error != null) {
+    if (uploadResults.error !== null && uploadResults.error.message !== 'The resource already exists') {
       throw uploadResults.error
     }
 
@@ -61,9 +61,9 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
     const analysis = await analyzeFile(publicUrl)
     console.log('analysis:', analysis)
 
-    res.status(200).json({ message: 'File uploaded successfully', analysis })
+    res.status(200).json({ message: 'File analysis successfully', analysis })
   } catch (error) {
-    res.status(500).json({ message: 'Error uploading the file', error })
+    res.status(500).json({ message: 'Error analyzing the file', error })
   }
 }
 
