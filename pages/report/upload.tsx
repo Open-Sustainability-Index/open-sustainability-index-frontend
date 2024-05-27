@@ -5,12 +5,16 @@ import { Container, Typography, Button, Box, TextField, CircularProgress } from 
 
 import jsonToTSV from 'app/utils/jsonToTSV'
 import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
+
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
 const headers: readonly DataTableHeader[] = [
-  // { field: 'company_name' },
+  { field: 'source' },
+  { field: 'Bonn_company' },
+
   { field: 'year', displayOnMobile: true },
   { field: 'fiscal_year' },
+  { field: 'company_name' },
   { field: 'industry' },
   { field: 'isic_rev_4' },
   { field: 'hq_country_move' },
@@ -40,6 +44,10 @@ const headers: readonly DataTableHeader[] = [
   { field: 'cat_14' },
   { field: 'cat_15' },
   { field: 'all_cats' },
+
+  { field: 'Observation_comment' },
+  { field: 'All Cats_comment_from report' },
+
   { field: 'upstream_scope_3' },
   { field: 'share_upstream_of_scope_3' },
   { field: 'scope_1_share_of_total_upstream_emissions' },
@@ -49,10 +57,9 @@ const headers: readonly DataTableHeader[] = [
   { field: 'revenue_million' },
   { field: 'cradle_to_gate' },
   { field: 'ghg_standard' },
-  { field: 'emission_intensity' },
 
-  { field: 'source' },
   { field: 'source_emissions_page_move' },
+  { field: 'emission_intensity' },
   { field: 'source_emission_report' },
   { field: 'emission_page' },
   { field: 'source_emission_link' },
@@ -65,7 +72,7 @@ const headers: readonly DataTableHeader[] = [
 ]
 
 interface AnalysisResults {
-  message: string
+  message?: string
   analysis: {
     yearlyReports: Array<Record<string, string>>
   }
@@ -76,8 +83,8 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files?.[0] !== null) {
-      setSelectedFile(event.target.files?.[0])
+    if (event.target.files ?.[0] !== null) {
+      setSelectedFile(event.target.files ?.[0])
     }
   }
 
@@ -111,7 +118,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
         {(selectedFile !== undefined) && (
           <Box sx={{ mt: 2 }}>
             <Typography variant='body1'>
-              Selected file: {selectedFile?.name}
+              Selected file: {selectedFile ?.name}
             </Typography>
             <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }}>
               Start the AI analysis
@@ -125,11 +132,11 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       {(analysisResults !== null && analysisResults !== undefined) && (
         <>
           <CopyToClipboardButton
-            textToCopy={jsonToTSV(analysisResults?.analysis?.yearlyReports)}
+            textToCopy={jsonToTSV(analysisResults ?.analysis ?.yearlyReports, headers)}
             label='Copy sheet data'
           />
           <DataTable
-            data={analysisResults?.analysis?.yearlyReports ?? []}
+            data={analysisResults ?.analysis ?.yearlyReports ?? []}
             headers={headers}
           />
         </>
