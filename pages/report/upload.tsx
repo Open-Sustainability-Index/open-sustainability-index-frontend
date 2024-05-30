@@ -1,5 +1,5 @@
 // pages/upload.js
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
@@ -80,7 +80,9 @@ interface AnalysisResults {
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
+  const [specialInstructions, setSpecialInstructions] = useState<string>('')
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
+  const inProgress = useMemo(() => analysisResults === null, [analysisResults])
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files ?.[0] !== null) {
@@ -94,6 +96,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       setAnalysisResults(null)
       const formData = new FormData()
       formData.append('file', selectedFile)
+      formData.append('specialInstructions', specialInstructions)
 
       const res = await fetch('/api/uploadAnalysis', {
         method: 'POST',
@@ -115,18 +118,32 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           onChange={handleFileChange}
           fullWidth
         />
+        <TextField
+          label='Special instructions to the AI (optional)'
+          placeholder='e.g. “Note that all emissions are reported as millions of tonnes and need to be converted”'
+          fullWidth
+          value={specialInstructions}
+          onChange={(event) => setSpecialInstructions(event.target.value)}
+          sx={{ mb: 2 }}
+        />
         {(selectedFile !== undefined) && (
           <Box sx={{ mt: 2 }}>
             <Typography variant='body1'>
               Selected file: {selectedFile ?.name}
             </Typography>
-            <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }}>
+            <Button
+              variant='contained'
+              color='primary'
+              type='submit'
+              sx={{ mt: 2, mb: 2 }}
+              disabled={inProgress}
+            >
               Start the AI analysis
             </Button>
           </Box>
         )}
       </Box>
-      {(analysisResults === null) && (
+      {(inProgress) && (
         <CircularProgress />
       )}
       {(analysisResults !== null && analysisResults !== undefined) && (

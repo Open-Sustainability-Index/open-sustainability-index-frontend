@@ -29,7 +29,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
         res.status(400).json({ message: 'No file uploaded' })
         return
       }
-      void handleFileUpload(file, res)
+      const specialInstructions = fields.specialInstructions as unknown as string
+      void handleFileUpload(file, specialInstructions, res)
     })
   } else {
     res.status(405).json({ message: 'Method not allowed' })
@@ -38,7 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
 
 export default handler
 
-const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Promise<void> => {
+const handleFileUpload = async (file: formidable.File, specialInstructions: string, res: NextApiResponse): Promise<void> => {
   try {
     // Read the file content
     const fileContent = fs.readFileSync(file.filepath)
@@ -58,7 +59,7 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
       .from(SUPABASE_BUCKET_NAME)
       .getPublicUrl(fileName)
 
-    const analysis = await analyzeFile(publicUrl)
+    const analysis = await analyzeFile(publicUrl, specialInstructions)
     console.log('analysis:', analysis)
 
     res.status(200).json({ message: 'File analysis successfully', analysis })
@@ -67,7 +68,7 @@ const handleFileUpload = async (file: formidable.File, res: NextApiResponse): Pr
   }
 }
 
-export async function analyzeFile (imageUrl: string): Promise<any> {
+export async function analyzeFile (imageUrl: string, specialInstructions: string): Promise<any> {
   const analysisFunction = createFunction(
     'analyze_emissions_report',
     'Analyze a CO₂ emissions report based on the image provided. Don’t guess; leave blank if information is not available. All emission values should be converted to whole tonnes of CO₂ equivalents (t CO₂e). Convert from thousand tonnes and million tonnes (Mt or mt) to whole tonnes (t) if needed.',
@@ -99,11 +100,8 @@ export async function analyzeFile (imageUrl: string): Promise<any> {
       {
         role: 'user',
         content: [
-          { type: 'text', text: 'Help me analyze the company emissions report in this image.' },
-          {
-            type: 'image_url',
-            image_url: { url: imageUrl }
-          }
+          { type: 'text', text: `Help me analyze the company emissions report in this image. ${specialInstructions}` },
+          { type: 'image_url', image_url: { url: imageUrl } }
         ]
       }
     ],
