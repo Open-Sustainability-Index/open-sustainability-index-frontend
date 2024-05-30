@@ -40,14 +40,16 @@ const headers: readonly DataTableHeader[] = [
     label: 'Emissions (t CO2e)',
     type: 'number',
     align: 'right',
-    defaultSortOrder: 'desc'
+    defaultSortOrder: 'desc',
+    format: (value: number): string => value.toLocaleString('sv')
   },
   {
     field: 'revenue',
     label: 'Revenue (M USD)',
     type: 'number',
     align: 'right',
-    defaultSortOrder: 'desc'
+    defaultSortOrder: 'desc',
+    format: (value: number): string => value.toLocaleString('sv')
   },
   {
     field: 'emission_intensity',
@@ -55,7 +57,8 @@ const headers: readonly DataTableHeader[] = [
     type: 'number',
     align: 'right',
     displayOnMobile: true,
-    defaultSortOrder: 'desc'
+    defaultSortOrder: 'desc',
+    format: (value: number): string => value.toLocaleString('sv')
   },
   {
     field: 'year',

@@ -30,6 +30,7 @@ export interface DataTableHeader {
   displayOnMobile?: boolean
   defaultSortOrder?: 'asc' | 'desc'
   isHorizontalHeader?: boolean
+  format?: (value: any) => string
 }
 
 type DataTableRow = Record<string, any>
@@ -202,8 +203,10 @@ const DataTableCell = ({ index, row, header, align }: DataTableCellProps): React
               (link)
             </a>
             )
-          : row[header.field]
-      )}
+          : header.format !== undefined
+            ? header.format(row[header.field])
+            : row[header.field]
+    )}
   </TableCell>
 )
 
