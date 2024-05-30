@@ -85,8 +85,8 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const inProgress = useMemo(() => analysisResults === null, [analysisResults])
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files ?.[0] !== null) {
-      setSelectedFile(event.target.files ?.[0])
+    if (event.target.files?.[0] !== null) {
+      setSelectedFile(event.target.files?.[0])
     }
   }
 
@@ -129,7 +129,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
         {(selectedFile !== undefined) && (
           <Box sx={{ mt: 2 }}>
             <Typography variant='body1'>
-              Selected file: {selectedFile ?.name}
+              Selected file: {selectedFile?.name}
             </Typography>
             <Button
               variant='contained'
@@ -149,11 +149,11 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       {(analysisResults !== null && analysisResults !== undefined) && (
         <>
           <CopyToClipboardButton
-            textToCopy={jsonToTSV(analysisResults ?.analysis ?.yearlyReports, headers)}
+            textToCopy={jsonToTSV(analysisResults?.analysis?.yearlyReports, headers)}
             label='Copy sheet data'
           />
           <DataTable
-            data={analysisResults ?.analysis ?.yearlyReports ?? []}
+            data={analysisResults?.analysis?.yearlyReports ?? []}
             headers={headers}
           />
         </>

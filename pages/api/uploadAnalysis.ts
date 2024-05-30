@@ -24,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
         res.status(500).json({ message: 'Error parsing the files' })
         return
       }
-      const file = files.file ?.[0] // Adjust if multiple files
+      const file = files.file?.[0] // Adjust if multiple files
       if (file === undefined) {
         res.status(400).json({ message: 'No file uploaded' })
         return
@@ -108,8 +108,8 @@ export async function analyzeFile (imageUrl: string, specialInstructions: string
     [analysisFunction],
     true
   )
-  const results = completion.tool_calls ?.[0].function.arguments !== undefined
-    ? JSON.parse(completion.tool_calls ?.[0].function.arguments) as Record<string, string>
+  const results = completion.tool_calls?.[0].function.arguments !== undefined
+    ? JSON.parse(completion.tool_calls?.[0].function.arguments) as Record<string, string>
     : undefined
   return results
 }
