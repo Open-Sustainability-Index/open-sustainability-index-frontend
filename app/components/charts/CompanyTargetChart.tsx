@@ -19,7 +19,7 @@ import {
 
 import { COLORS } from 'app/theme/theme'
 import { Company } from 'types/global'
-// import { parseFloatSpaces } from 'lib/strings'
+import { formatAmount } from 'lib/strings'
 import PaperCard from '../common/PaperCard'
 
 const fillArray = (length: number, expression: (index: number) => any): any[] => [...Array(length)].map(
@@ -90,20 +90,23 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       label: 'Emissions',
       type: 'bar',
       color: COLORS.TURQUOISE_MEDIUM,
-      data: emissionsHistory
+      data: emissionsHistory,
+      valueFormatter: (v: any) => formatAmount(v)
     }
     // {
     //   label: 'Projected',
     //   type: 'bar',
     //   color: COLORS.TURQUOISE_LIGHT,
-    //   data: emissionsProjected
+    //   data: emissionsProjected,
+    //   valueFormatter: (v: any) => formatAmount(v)
     // },
     // {
     //   label: 'Near-term target',
     //   type: 'line',
     //   color: COLORS.PURPLE_DARK,
     //   data: targetLine,
-    //   connectNulls: true
+    //   connectNulls: true,
+    //   valueFormatter: (v: any) => formatAmount(v)
     // }
   ]
 
@@ -121,7 +124,8 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
           {
             data: dataLabels,
             scaleType: 'band',
-            id: 'x-axis-id'
+            id: 'x-axis-id',
+            valueFormatter: (v: any) => v.toString()
           }
         ]}
         yAxis={[

@@ -19,7 +19,7 @@ import {
 
 import { COLORS } from 'app/theme/theme'
 import { Company } from 'types/global'
-// import { parseFloatSpaces } from 'lib/strings'
+import { formatAmount } from 'lib/strings'
 import PaperCard from '../common/PaperCard'
 
 const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactElement | null => {
@@ -43,14 +43,16 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
       label: 'Emissions',
       type: 'bar',
       color: COLORS.PINK_LIGHT,
-      data: emissions
+      data: emissions,
+      valueFormatter: (v: any) => formatAmount(v)
     },
     {
       label: 'Revenue',
       type: 'bar',
       color: COLORS.PURPLE_LIGHT,
       data: revenue,
-      yAxisKey: 'revenueAxis'
+      yAxisKey: 'revenueAxis',
+      valueFormatter: (v: any) => formatAmount(v)
     },
     {
       label: 'Intensity',
@@ -58,7 +60,8 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
       color: COLORS.PURPLE_DARK,
       data: intensity,
       yAxisKey: 'intensityAxis',
-      connectNulls: true
+      connectNulls: true,
+      valueFormatter: (v: any) => formatAmount(v)
     }
   ]
 
@@ -76,13 +79,24 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
           {
             data: dataLabels,
             scaleType: 'band',
-            id: 'x-axis-id'
+            id: 'x-axis-id',
+            valueFormatter: (v: any) => v.toString()
           }
         ]}
         yAxis={[
-          { id: 'emissionsAxis', scaleType: 'linear' },
-          { id: 'revenueAxis', scaleType: 'linear' },
-          { id: 'intensityAxis', scaleType: 'linear', min: 0 }
+          {
+            id: 'emissionsAxis',
+            scaleType: 'linear'
+          },
+          {
+            id: 'revenueAxis',
+            scaleType: 'linear'
+          },
+          {
+            id: 'intensityAxis',
+            scaleType: 'linear',
+            min: 0
+          }
         ]}
         {...sizingProps}
       >
