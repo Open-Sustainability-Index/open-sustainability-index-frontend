@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { CompaniesCompany } from 'types/global'
+import { formatAmount } from 'lib/strings'
+
 import DataTable, { DataTableHeader } from '../common/DataTable'
 import SearchBlock from '../navigation/SearchBlock'
 import FiltersBlock from '../navigation/FiltersBlock'
@@ -41,7 +43,7 @@ const headers: readonly DataTableHeader[] = [
     type: 'number',
     align: 'right',
     defaultSortOrder: 'desc',
-    format: (value: number): string => value.toLocaleString('sv')
+    format: (value: number): string => formatAmount(value)
   },
   {
     field: 'revenue',
@@ -49,7 +51,7 @@ const headers: readonly DataTableHeader[] = [
     type: 'number',
     align: 'right',
     defaultSortOrder: 'desc',
-    format: (value: number): string => value.toLocaleString('sv')
+    format: (value: number): string => formatAmount(value)
   },
   {
     field: 'emission_intensity',
@@ -58,7 +60,7 @@ const headers: readonly DataTableHeader[] = [
     align: 'right',
     displayOnMobile: true,
     defaultSortOrder: 'desc',
-    format: (value: number): string => value.toLocaleString('sv')
+    format: (value: number): string => formatAmount(value)
   },
   {
     field: 'year',

@@ -13,3 +13,5 @@ export const changeQueryString = (query: Record<string, any>, key: string, newVa
   const newQuery = changeQuery(query, key, newValue)
   return (new URLSearchParams(newQuery)).toString()
 }
+
+export const formatAmount = (value: string | number | null): string => (typeof value === 'string' ? parseFloat(value) : value)?.toLocaleString('sv')
