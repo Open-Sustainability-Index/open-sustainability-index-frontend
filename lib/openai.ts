@@ -25,29 +25,7 @@ export const getChatCompletion = async (
         }
       : {})
   })
-  /* completion =
-      {
-        "id": "chatcmpl-7tZRAFDoVEGLmgAMEhFrso7aElOSH",
-        "object": "chat.completion",
-        "created": 1693478616,
-        "model": "gpt-4-0613",
-        "choices": [
-          {
-            "index": 0,
-            "message": {
-              "role": "assistant",
-              "content": "Jag är en AI och kan inte se vad du har i din garderob eller vad vädret är där du är just nu. Däremot kan jag föreslå att du klär dig utifrån dagens väder och de aktiviteter du planerar att göra. Om det till exempel är kallt ute, ta på dig värmande kläder. Om du ska på ett formellt möte, välj mer professionella kläder."
-            },
-            "finish_reason": "stop"
-          }
-        ],
-        "usage": {
-          "prompt_tokens": 15,
-          "completion_tokens": 106,
-          "total_tokens": 121
-        }
-      }
-  */
+  console.log(`\nUsage tokens: ${completion.usage ?.prompt_tokens}/${completion.usage ?.completion_tokens}, est. cost $${((completion.usage ?.prompt_tokens ?? 0) * 0.005 / 1000 + (completion.usage ?.completion_tokens ?? 0) * 0.015 / 1000).toFixed(4)}`);
   const response = completion.choices[0].message
   return response
 }
