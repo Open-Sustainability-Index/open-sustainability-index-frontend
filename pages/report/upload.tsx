@@ -15,6 +15,7 @@ const headers: readonly DataTableHeader[] = [
   { field: 'year', displayOnMobile: true },
   { field: 'fiscal_year' },
   { field: 'company_name' },
+  { field: 'company_lookup' },
   { field: 'sbti_lookup' },
   { field: 'sbti_group_level' },
   { field: 'sbti_comment' },
