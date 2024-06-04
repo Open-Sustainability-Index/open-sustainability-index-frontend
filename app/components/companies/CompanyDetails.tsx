@@ -111,7 +111,7 @@ const EmissionsOverviewTable = ({ company }: { company: Company }): React.ReactE
       title='Emissions Overview'
       headers={[
         { field: 'year', label: 'Year', align: 'right' },
-        { field: 'total_emission_market_based', label: 'Total Emissions - MB (t CO₂e)', align: 'right', format: (value: number): string => formatAmount(value) },
+        { field: 'total_emission_market_based', label: 'Total Emissions - Market Based (t CO₂e)', align: 'right', format: (value: number): string => formatAmount(value) },
         { field: 'emission_intensity', label: 'Emissions Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) },
         { field: 'cradle_to_gate:', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) }
       ]}
@@ -154,7 +154,7 @@ const EmissionsDetailsTable = ({ company }: { company: Company }): React.ReactEl
         { field: 'cat_14', label: '14. Franchises', align: 'right', format: (value: number): string => formatAmount(value) },
         { field: 'cat_15', label: '15. Investments', align: 'right', format: (value: number): string => formatAmount(value) },
 
-        { field: 'total_reported_emission_scope_1_2_3', label: 'Scope 3 - Total Emissions', isHorizontalHeader: true, align: 'right', format: (value: number): string => formatAmount(value) },
+        { field: 'total_reported_emission_scope_1_2_3', label: 'Total Emissions', isHorizontalHeader: true, align: 'right', format: (value: number): string => formatAmount(value) },
 
         { field: 'source_emission_link', label: 'Emission Source', type: 'link', align: 'right' }
       ]}
