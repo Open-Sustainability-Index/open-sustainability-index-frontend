@@ -155,7 +155,7 @@ const DataTableHeaderCell = ({
   return (
     <TableCell
       align={align ?? header.align ?? 'left'}
-      sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM }}
+      sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM, '&:not(:first-child)': { width: 150, textAlign: 'right' }, '&:first-child': { width: '50%' } }}
     >
       {header.defaultSortOrder !== undefined
         ? (
