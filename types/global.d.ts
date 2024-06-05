@@ -36,6 +36,7 @@ export interface Industry {
 
 export interface CompaniesCompany {
   company_name: string
+  slug: string
   commitment_type: null | string
   status: 'Active' | 'Target set' | 'Removed' | 'Extended' | null
   commitment_deadline: null | string
@@ -61,6 +62,7 @@ export interface CompaniesCompanyTarget {
 
 export interface Company {
   company_name: string
+  slug: string
   industry: null
   isic: null
   lei: null
@@ -183,4 +185,10 @@ export interface Target {
   target_classification: string
   company_temperature_alignment: string
   reason_for_commitment_extension_or_removal: string
+}
+
+export interface SearchResult {
+  name: string
+  slug: string
+  type: string
 }
