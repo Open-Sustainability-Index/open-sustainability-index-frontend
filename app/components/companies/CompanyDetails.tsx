@@ -59,7 +59,7 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
 export default CompanyDetails
 
 const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactElement => {
-  const companyName = titleCase(company.company_name)
+  const companyName = titleCase(company?.company_name)
   const lastEmission = company.emissions[company.emissions.length - 1]
   const targetNearTerm = company.targets.find(target => target.target === 'near-term')
   const targetNetZero = company.targets.find(target => target.target === 'net-zero')
