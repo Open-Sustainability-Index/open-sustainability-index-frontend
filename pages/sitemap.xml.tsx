@@ -33,7 +33,7 @@ const Sitemap = ({ pagePaths }: SitemapProps): string => {
 }
 
 const getPagePaths = async (): Promise<string[]> => {
-  const companies = (await fetchCompanies({ page: 1, pageSize: 200, sort: 'emission_intensity', order: 'desc' /*, filters: { 'net-zero': 'Active' } */ })) ?? []
+  const companies = (await fetchCompanies({ page: 1, pageSize: 300, sort: 'emission_intensity', order: 'asc' /*, filters: { 'net-zero': 'Active' } */ })) ?? []
   return [
     '/',
     ...navigationLinks.map(link => link.path),
