@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
@@ -17,6 +18,13 @@ interface CompanyPageProps {
 }
 
 const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
+  const router = useRouter()
+  useEffect(() => {
+    if (company?.slug_new !== undefined) {
+      router.push(`/company/${company?.slug_new}`)
+    }  
+  }, [company?.slug_new])
+
   return (
     <CompanyDetails
       company={company ?? undefined}

@@ -63,6 +63,8 @@ export interface CompaniesCompanyTarget {
 export interface Company {
   company_name: string
   slug: string
+  slug_old?: string
+  slug_new?: string
   industry: null
   isic: null
   lei: null
