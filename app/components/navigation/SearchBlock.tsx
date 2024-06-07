@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField'
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchSearch } from 'app/services/search'
 import toSlug from 'lib/toSlug'
+import { SearchResult } from 'types/global'
 
 interface SearchBlockProps {
   children?: React.ReactNode
@@ -37,15 +38,15 @@ const SearchField = (): React.ReactElement => {
   const debouncedUserInput = useDebounce(userInput, 500)
 
   const router = useRouter()
-  const [listOptions, setListOptions] = useState<string[]>([])
-  const [selectedOption, setSelectedOption] = useState<string>('')
+  const [listOptions, setListOptions] = useState<SearchResult[]>([])
+  const [selectedOption, setSelectedOption] = useState<SearchResult>()
 
   useEffect(() => {
     async function fetchNewCompanies (): Promise<void> {
       const searchResults: Awaited<ReturnType<typeof fetchSearch>> = await (
         await fetch(`/api/search?query=${encodeURIComponent(debouncedUserInput as string)}`)
       ).json()
-      const resultNames = searchResults.map(result => result.name)
+      const resultNames = searchResults
       setListOptions(resultNames)
     }
     void fetchNewCompanies()
@@ -53,22 +54,20 @@ const SearchField = (): React.ReactElement => {
 
   return (
     <Autocomplete
-      freeSolo
       options={listOptions}
       value={selectedOption}
       renderOption={(props, option) => (
-        <li {...props} key={option}>{option}</li>
+        <li {...props} key={option.slug}>{option.name}</li>
       )}
       onChange={(event, newSelectedOption) => {
-        setSelectedOption(newSelectedOption ?? '')
+        setSelectedOption(newSelectedOption as SearchResult)
         if (newSelectedOption !== null) {
-          // void router.push(`/companies?company_name=${newSelectedOption}`)
-          void router.push(`/companies/${toSlug(newSelectedOption)}`)
+          void router.push(`/company/${newSelectedOption?.slug}`)
         } else {
           void router.push('/companies')
         }
       }}
-      inputValue={userInput !== '' ? userInput : selectedOption}
+      inputValue={userInput !== '' ? userInput : selectedOption?.name}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -80,9 +79,9 @@ const SearchField = (): React.ReactElement => {
       onInputChange={(event, newInputValue) => {
         setUserInput(newInputValue)
       }}
+      getOptionLabel={(option) => option.name ?? '(none)'}
       /*
       isOptionEqualToValue={(option, value) => option === value}
-      getOptionLabel={(option) => option ?? '(none)'}
       */
       sx={{
         width: { xs: '90%', md: '30em' }
