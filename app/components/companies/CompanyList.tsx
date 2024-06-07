@@ -77,7 +77,7 @@ interface CompanyListProps {
   detailPageLink?: string
 }
 
-const CompanyList = ({ companies, page, detailPageLink = '/companies/:key' }: CompanyListProps): React.ReactElement | string => {
+const CompanyList = ({ companies, page, detailPageLink = '/company/:key' }: CompanyListProps): React.ReactElement | string => {
   return (
     <>
       <SearchBlock>

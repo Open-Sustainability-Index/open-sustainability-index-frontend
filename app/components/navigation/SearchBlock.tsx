@@ -62,7 +62,7 @@ const SearchField = (): React.ReactElement => {
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption as SearchResult)
         if (newSelectedOption !== null) {
-          void router.push(`/companies/${newSelectedOption?.slug}`)
+          void router.push(`/company/${newSelectedOption?.slug}`)
         } else {
           void router.push('/companies')
         }

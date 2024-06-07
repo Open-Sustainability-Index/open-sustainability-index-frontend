@@ -8,7 +8,7 @@
 
 - Companies:
 	- List: http://localhost:5174/companies?sort=company_name&order=asc
-	- Company: http://localhost:5174/companies/ap-moller-maersk
+	- Company: http://localhost:5174/company/ap-moller-maersk
 - Industries: http://localhost:5174/industries
 
 ## API
