@@ -1,16 +1,257 @@
 [
-  { "name": "Accommodation and food service activities" },
-  { "name": "Administrative and support service activities" },
-  { "name": "Construction" },
-  { "name": "Electricity,gas,steam and air conditioning supply" },
-  { "name": "Financial and insurance activities" },
-  { "name": "Human health and social work activities" },
-  { "name": "Information and communication" },
-  { "name": "Manufacturing" },
-  { "name": "Mining and quarrying" },
-  { "name": "Professional,scientific and technical activities" },
-  { "name": "Real estate activities" },
-  { "name": "Transportation and storage" },
-  { "name": "Water supply; sewerage,waste management and remediation activities" },
-  { "name": "Wholesale and retail trade; repair of motor vehicles and motorcycles" }
+  {
+    "name":"Aerospace and Defense",
+    "slug":"aerospace-and-defense",
+    "company_count":27
+  },
+  {
+    "name":"Air Freight Transportation and Logistics",
+    "slug":"air-freight-transportation-and-logistics",
+    "company_count":79
+  },
+  {
+    "name":"Air Transportation - Airlines",
+    "slug":"air-transportation---airlines",
+    "company_count":29
+  },
+  {
+    "name":"Air Transportation - Airport Services",
+    "slug":"air-transportation---airport-services",
+    "company_count":14
+  },
+  {
+    "name":"Automobiles and Components",
+    "slug":"automobiles-and-components",
+    "company_count":293
+  },
+  {
+    "name":"Banks, Diverse Financials, Insurance",
+    "slug":"banks-diverse-financials-insurance",
+    "company_count":273
+  },
+  {
+    "name":"Building Products",
+    "slug":"building-products",
+    "company_count":169
+  },
+  {
+    "name":"Chemicals",
+    "slug":"chemicals",
+    "company_count":234
+  },
+  {
+    "name":"Construction Materials",
+    "slug":"construction-materials",
+    "company_count":107
+  },
+  {
+    "name":"Construction and Engineering",
+    "slug":"construction-and-engineering",
+    "company_count":429
+  },
+  {
+    "name":"Construction and materials",
+    "slug":"construction-and-materials",
+    "company_count":2
+  },
+  {
+    "name":"Consumer Durables, Household and Personal Products",
+    "slug":"consumer-durables-household-and-personal-products",
+    "company_count":312
+  },
+  {
+    "name":"Containers and Packaging",
+    "slug":"containers-and-packaging",
+    "company_count":237
+  },
+  {
+    "name":"Education Services",
+    "slug":"education-services",
+    "company_count":14
+  },
+  {
+    "name":"Electric Utilities and Independent Power Producers and Energy Traders (including fossil, alternative and nuclear energy)",
+    "slug":"electric-utilities-and-independent-power-producers-and-energy-traders-including-fossil-alternative-and-nuclear-energy",
+    "company_count":151
+  },
+  {
+    "name":"Electrical Equipment and Machinery",
+    "slug":"electrical-equipment-and-machinery",
+    "company_count":574
+  },
+  {
+    "name":"Food Production - Agricultural Production",
+    "slug":"food-production---agricultural-production",
+    "company_count":105
+  },
+  {
+    "name":"Food Production - Animal Source Food Production",
+    "slug":"food-production---animal-source-food-production",
+    "company_count":54
+  },
+  {
+    "name":"Food and Beverage Processing",
+    "slug":"food-and-beverage-processing",
+    "company_count":509
+  },
+  {
+    "name":"Food and Staples Retailing",
+    "slug":"food-and-staples-retailing",
+    "company_count":96
+  },
+  {
+    "name":"Forest and Paper Products - Forestry, Timber, Pulp and Paper, Rubber",
+    "slug":"forest-and-paper-products---forestry-timber-pulp-and-paper-rubber",
+    "company_count":126
+  },
+  {
+    "name":"Ground Transportation - Highways and Railtracks",
+    "slug":"ground-transportation---highways-and-railtracks",
+    "company_count":28
+  },
+  {
+    "name":"Ground Transportation - Railroads Transportation",
+    "slug":"ground-transportation---railroads-transportation",
+    "company_count":53
+  },
+  {
+    "name":"Ground Transportation - Trucking Transportation",
+    "slug":"ground-transportation---trucking-transportation",
+    "company_count":129
+  },
+  {
+    "name":"Healthcare Equipment and Supplies",
+    "slug":"healthcare-equipment-and-supplies",
+    "company_count":73
+  },
+  {
+    "name":"Healthcare Providers and Services, and Healthcare Technology",
+    "slug":"healthcare-providers-and-services-and-healthcare-technology",
+    "company_count":64
+  },
+  {
+    "name":"Homebuilding",
+    "slug":"homebuilding",
+    "company_count":39
+  },
+  {
+    "name":"Hotels, Restaurants and Leisure, and Tourism Services",
+    "slug":"hotels-restaurants-and-leisure-and-tourism-services",
+    "company_count":146
+  },
+  {
+    "name":"Media",
+    "slug":"media",
+    "company_count":112
+  },
+  {
+    "name":"Mining - Iron, Aluminum, Other Metals",
+    "slug":"mining---iron-aluminum-other-metals",
+    "company_count":103
+  },
+  {
+    "name":"Mining - Other (Rare Minerals, Precious Metals and Gems)",
+    "slug":"mining---other-rare-minerals-precious-metals-and-gems",
+    "company_count":15
+  },
+  {
+    "name":"Mining-iron, aluminium, other metals",
+    "slug":"mining-iron-aluminium-other-metals",
+    "company_count":2
+  },
+  {
+    "name":"Pharmaceuticals, Biotechnology and Life Sciences",
+    "slug":"pharmaceuticals-biotechnology-and-life-sciences",
+    "company_count":240
+  },
+  {
+    "name":"Professional Services",
+    "slug":"professional-services",
+    "company_count":847
+  },
+  {
+    "name":"Real Estate",
+    "slug":"real-estate",
+    "company_count":319
+  },
+  {
+    "name":"Retailing",
+    "slug":"retailing",
+    "company_count":250
+  },
+  {
+    "name":"Semiconductors and Semiconductors Equipment",
+    "slug":"semiconductors-and-semiconductors-equipment",
+    "company_count":71
+  },
+  {
+    "name":"Software and Services",
+    "slug":"software-and-services",
+    "company_count":557
+  },
+  {
+    "name":"Solid Waste Management Utilities",
+    "slug":"solid-waste-management-utilities",
+    "company_count":71
+  },
+  {
+    "name":"Specialized Consumer Services",
+    "slug":"specialized-consumer-services",
+    "company_count":57
+  },
+  {
+    "name":"Specialized Financial Services, Consumer Finance, Insurance Brokerage Firms",
+    "slug":"specialized-financial-services-consumer-finance-insurance-brokerage-firms",
+    "company_count":41
+  },
+  {
+    "name":"Technology Hardware and Equipment",
+    "slug":"technology-hardware-and-equipment",
+    "company_count":264
+  },
+  {
+    "name":"Telecommunication Services",
+    "slug":"telecommunication-services",
+    "company_count":172
+  },
+  {
+    "name":"Textile Manufacturing, Spinning, Weaving & Apparel",
+    "slug":"textile-manufacturing-spinning-weaving--apparel",
+    "company_count":2
+  },
+  {
+    "name":"Textiles, Apparel, Footwear and Luxury Goods",
+    "slug":"textiles-apparel-footwear-and-luxury-goods",
+    "company_count":505
+  },
+  {
+    "name":"Tires",
+    "slug":"tires",
+    "company_count":15
+  },
+  {
+    "name":"Tobacco",
+    "slug":"tobacco",
+    "company_count":10
+  },
+  {
+    "name":"Trading Companies and Distributors, and Commercial Services and Supplies",
+    "slug":"trading-companies-and-distributors-and-commercial-services-and-supplies",
+    "company_count":342
+  },
+  {
+    "name":"Water Transportation - Ports and Services",
+    "slug":"water-transportation---ports-and-services",
+    "company_count":11
+  },
+  {
+    "name":"Water Transportation - Water Transportation",
+    "slug":"water-transportation---water-transportation",
+    "company_count":18
+  },
+  {
+    "name":"Water Utilities",
+    "slug":"water-utilities",
+    "company_count":24
+  }
 ]
