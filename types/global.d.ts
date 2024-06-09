@@ -20,12 +20,12 @@ export interface ListEndpointParams {
   sort?: string
   order?: string
   filters?: Record<string, any>
+  sortSeoDescription?: string // to use in meta title
 }
 
 export interface ListPageOptions {
   sort?: string
   order?: string
-  sortSeoDescription?: string // to use in meta title
   detailPageLink?: string // for links in DataTable
 }
 
