@@ -42,9 +42,10 @@ interface CompaniesReturnProps {
 export const companiesPageProps = (companies: CompaniesCompany[], options?: ListEndpointParams): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   const filterTags = options?.filters?.tags !== undefined ? `${options?.filters?.tags?.toUpperCase()} ` : ''
+  const forCompanies = `for ${filterTags}companies`
   return {
-    title: 'Company GHG emission data ' + (options?.sortSeoDescription ?? 'per industry and year'),
-    description: `Get open-source global GHG emission data (scope 1/2/3) for ${filterTags}companies such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
+    title: 'Company GHG emission data ' + (options?.sortSeoDescription ?? (filterTags !== '' ? forCompanies : undefined) ?? 'per industry and year'),
+    description: `Get open-source global GHG emission data (scope 1/2/3) ${forCompanies} such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
   }
 }
 
