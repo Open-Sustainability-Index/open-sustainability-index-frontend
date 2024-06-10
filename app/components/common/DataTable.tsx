@@ -119,7 +119,7 @@ const DataTable = ({
       </TableContainer>
 
       {page !== undefined && (
-        <Stack spacing={2} mt={1}>
+        <Stack spacing={2} mt={1} mb={5}>
           <Pagination
             sx={{ display: 'flex', justifyContent: 'center' }}
             count={Math.max(page + 1, 10)}
