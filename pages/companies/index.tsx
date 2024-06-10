@@ -19,12 +19,13 @@ export interface CompanyListPageProps {
   companies?: CompaniesCompany[]
   page: number
   detailPageLink?: string
+  filters: ListEndpointParams['filters']
 }
 
-function CompanyListPage ({ companies, page, detailPageLink }: CompanyListPageProps): React.ReactElement {
+function CompanyListPage ({ companies, page, detailPageLink, filters }: CompanyListPageProps): React.ReactElement {
   return (
     <>
-      <PageTopBanner title='Companies' description='Find any company' />
+      <PageTopBanner title='Companies' description={filters.tags || 'Find any company'} />
       <CompanyList
         companies={companies}
         page={page}
@@ -130,6 +131,7 @@ export const getCompaniesListProps = async (params: ListEndpointParams, context:
   // console.log('cleanedCompanies:', JSON.stringify(cleanedCompanies, null, 2))
   return {
     props: {
+      filters: params.filters,
       ...companiesPageProps(cleanedCompanies, params),
       page: params.page ?? 1,
       companies: cleanedCompanies,
