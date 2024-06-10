@@ -19,12 +19,13 @@ export interface CompanyListPageProps {
   companies?: CompaniesCompany[]
   page: number
   detailPageLink?: string
+  filters: ListEndpointParams['filters']
 }
 
-function CompanyListPage ({ companies, page, detailPageLink }: CompanyListPageProps): React.ReactElement {
+function CompanyListPage ({ companies, page, detailPageLink, filters }: CompanyListPageProps): React.ReactElement {
   return (
     <>
-      <PageTopBanner subtitle='Companies' title='Find any company' />
+      <PageTopBanner subtitle='Companies' title={filters?.tags || 'Find any company'} />
       <CompanyList
         companies={companies}
         page={page}
@@ -130,6 +131,7 @@ export const getCompaniesListProps = async (params: ListEndpointParams, context:
   // console.log('cleanedCompanies:', JSON.stringify(cleanedCompanies, null, 2))
   return {
     props: {
+      filters: params.filters,
       ...companiesPageProps(cleanedCompanies, params),
       page: params.page ?? 1,
       companies: cleanedCompanies,
@@ -140,5 +142,11 @@ export const getCompaniesListProps = async (params: ListEndpointParams, context:
 
 export const getServerSideProps = async (context: GetServerSidePropsContext<CompanyListPageParams>): Promise<GetServerSidePropsResult<CompanyListPageProps>> => {
   const { sort, order, page, ...filters } = context.query
-  return await getCompaniesListProps({ sort: sort as string, order: order as string, page: parseInt(page as string ?? '1'), filters }, context)
+  return await getCompaniesListProps({
+    sort: sort as string,
+    order: order as string,
+    page: parseInt(page as string ?? '1'),
+    filters,
+    pageSize: filters.tags ? 200 : 20,
+  }, context)
 }
