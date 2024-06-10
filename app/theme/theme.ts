@@ -17,9 +17,11 @@ export const COLORS = {
 
   PINK_LIGHT: '#f9b6ff',
 
+  PURPLE_GRADIENT: 'radial-gradient(394.12% 110.28% at 84.11% 15.37%, #7400B8 0%, #6930C3 100%)',
   PURPLE_LIGHT: '#cd9aff',
   PURPLE_DARK: '#ba08e6',
   PURPLE_DARKER: '#7110bc'
+
 }
 
 // Define custom MUI theme

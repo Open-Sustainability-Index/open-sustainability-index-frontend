@@ -19,7 +19,7 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
       <Typography variant='h2' mb={2}>Targets</Typography>
       {(targets.length > 0)
         ? (
-          <Box sx={{ backgroundColor: COLORS.PURPLE_DARKER, color: COLORS.WHITE, borderRadius: '.5em', fontSize: '16px' }} p={4}>
+          <Box sx={{ background: COLORS.PURPLE_GRADIENT, color: COLORS.WHITE, borderRadius: '.5em', fontSize: '16px' }} p={4}>
 
             <FormControl fullWidth>
               <Select
@@ -38,26 +38,26 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
             <Box sx={{ display: { lg: 'flex' } }} p={2}>
               {targets[visibleTarget] !== undefined &&
                 <Box mr={4}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px !important' }}>
-                    <Typography>Base year: </Typography>
-                    <Typography>{targets[visibleTarget].base_year}</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <Typography fontSize="1em">Base year: </Typography>
+                    <Typography fontSize="1.1em" fontWeight={600}>{targets[visibleTarget].base_year}</Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography>Target year: </Typography>
-                    <Typography>{targets[visibleTarget].target_year}</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <Typography fontSize="1em">Target year: </Typography>
+                    <Typography fontSize="1.1em" fontWeight={600}>{targets[visibleTarget].target_year}</Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography>Reduction: </Typography>
-                    <Typography>{targets[visibleTarget].target_value}</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <Typography fontSize="1em">Reduction: </Typography>
+                    <Typography fontSize="1.1em" fontWeight={600}>{targets[visibleTarget].target_value}</Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography>Classification: </Typography>
-                    <Typography>&nbsp;{targets[visibleTarget].target_classification}</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <Typography fontSize="1em">Classification: </Typography>
+                    <Typography fontSize="1.1em" fontWeight={600}>&nbsp;{targets[visibleTarget].target_classification}</Typography>
                   </Box>
                 </Box>}
               <Box sx={{ flex: 1, marginTop: { xs: '10px', lg: 0 } }}>
                 {targets[visibleTarget] !== undefined &&
-                  <Typography>{targets[visibleTarget].target_wording}</Typography>}
+                  <Typography fontSize="1.1em">{targets[visibleTarget].target_wording}</Typography>}
               </Box>
             </Box>
             <Box sx={{ flex: 1, marginTop: { xs: '10px', lg: 0 }, px: 2 }}>
