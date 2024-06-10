@@ -342,6 +342,10 @@
   content: "Download";
 }
 
+a + .wp-block-file__button.wp-element-button {
+  margin-left:20px;
+}
+
 .wordpress-container a.wp-block-button__link {
   color: var(--wp--preset--color--background);
 }
