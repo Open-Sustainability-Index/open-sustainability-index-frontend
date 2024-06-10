@@ -16,7 +16,7 @@ interface WordpressListPageProps {
 const WordpressListPage = ({ title, description, wordpressPosts }: WordpressListPageProps): React.ReactElement => {
   return (
     <>
-      <PageTopBanner subtitle='News' title={title} />
+      <PageTopBanner subtitle={description} title={title} />
       <Container>
         {wordpressPosts?.map((post, index) => (
           <Grid container spacing={2} key={index} p={4}>
@@ -41,7 +41,7 @@ export async function getStaticProps (context: GetStaticPropsContext): Promise<G
     props: {
       wordpressPosts,
       title: 'News',
-      description: `The latest news from ${config.appName as string}.`
+      description: `The latest news from ${config.appName as string}`
     },
     revalidate: 5 * 60
   }
