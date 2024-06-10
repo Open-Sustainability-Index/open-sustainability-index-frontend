@@ -55,6 +55,6 @@ export async function getStaticProps (context: GetStaticPropsContext<HomePagePar
       wordpressSlug,
       wordpressPost
     },
-    revalidate: 5 * 60
+    // revalidate: 5 * 60
   }
 }
