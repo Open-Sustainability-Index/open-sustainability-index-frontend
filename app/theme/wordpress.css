@@ -12,6 +12,7 @@
   --wp--preset--font-size--xx-large: clamp(1.728rem, 1.728rem + ((1vw - 0.2rem) * 0.814), 2.074rem);
   --wp--preset--font-size--xxx-large: clamp(2.074rem, 2.074rem + ((1vw - 0.2rem) * 2.146), 2.986rem);
 
+  --wp--preset--spacing--20: 0.4rem;
   --wp--preset--spacing--30: 0.5rem;
   --wp--preset--spacing--40: 0.875rem;
   --wp--preset--spacing--50: 1.75rem;
@@ -31,6 +32,10 @@
   --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
   --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);
   --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
+}
+
+.wordpress-container p {
+  font-size: var(--wp--preset--font-size--medium);
 }
 
 .has-primary-color {
@@ -164,10 +169,27 @@
   margin: auto; /* Center the block */
 }
 
+.is-layout-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.is-content-justification-center {
+  justify-content: center;
+}
+
 .wp-block-columns-is-layout-flex {
   flex-wrap: nowrap;
   gap: var(--wp--preset--spacing--50);
   justify-content: flex-start;
+}
+
+.is-vertical {
+  flex-direction: column;
+}
+
+.is-horizontal {
+  gap: var(--wp--preset--spacing--40);
 }
 
 /* ----- Typography ----- */
@@ -574,17 +596,17 @@ hr {
   margin: 0;
 }
 
+/* Removed by Tom
 .wp-block-post-content .two-column-border div:nth-child(2) {
   padding-left: 3rem;
 }
+*/
 
 /* END from Petter 2024-04-28 */
 
-
-.wordpress-container > .wp-block-group {
+.wordpress-container .has-global-padding {
   padding: 5rem 1.8rem !important;
 }
-
 
 @media (min-width:782px) {
   .wordpress-container .kpis {
