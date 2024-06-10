@@ -25,7 +25,7 @@ export interface CompanyListPageProps {
 function CompanyListPage ({ companies, page, detailPageLink, filters }: CompanyListPageProps): React.ReactElement {
   return (
     <>
-      <PageTopBanner subtitle='Companies' title={filters?.tags || 'Find any company'} />
+      <PageTopBanner subtitle='Companies' title={filters?.tags?.toUpperCase() || 'Find any company'} />
       <CompanyList
         companies={companies}
         page={page}
