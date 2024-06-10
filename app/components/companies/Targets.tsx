@@ -5,6 +5,7 @@ import { COLORS } from 'app/theme/theme'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import NextMUILink from '../navigation/NextMUILink'
 
 export function Targets ({ company: { targets, commitment } }: { company: Company }): React.ReactElement {
   const [visibleTarget, setVisibleTarget] = useState(0)
@@ -58,6 +59,9 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
                 {targets[visibleTarget] !== undefined &&
                   <Typography>{targets[visibleTarget].target_wording}</Typography>}
               </Box>
+            </Box>
+            <Box sx={{ flex: 1, marginTop: { xs: '10px', lg: 0 }, px: 2 }}>
+              <Typography fontSize="1em">Source: <NextMUILink sx={{ color: COLORS.WHITE }} href="https://sciencebasedtargets.org/" >Science Based Target initative</NextMUILink></Typography>
             </Box>
           </Box>
           )
