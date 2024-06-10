@@ -312,6 +312,14 @@
 
 /* ----- Buttons ----- */
 
+.wp-block-file__button.wp-element-button {
+  color: white;
+}
+
+.wp-block-file__button.wp-element-button:empty:after {
+  content: "Download";
+}
+
 .wordpress-container a.wp-block-button__link {
   color: var(--wp--preset--color--background);
 }
