@@ -2,14 +2,14 @@ import React from 'react'
 import { Box, Container, Typography } from '@mui/material'
 
 interface PageTopBannerProps {
+  subtitle?: string
   title?: string
-  description?: string
   children?: React.ReactNode
 }
 
 const PageTopBanner = ({
-  title = 'Welcome',
-  description = 'Welcome to a world of open, accessible, transparent, actionable sustainability data. We just launched.',
+  subtitle = 'Welcome',
+  title = 'Welcome to a world of open, accessible, transparent, actionable sustainability data. We just launched.',
   children
 }: PageTopBannerProps): React.ReactElement => {
   return (
@@ -27,10 +27,10 @@ const PageTopBanner = ({
     >
       <Container>
         <Typography variant='subtitle1' component='h2'>
-          {title}
+          {subtitle}
         </Typography>
         <Typography variant='h1' sx={{ marginTop: '8px' }}>
-          {description}
+          {title}
         </Typography>
         {children}
       </Container>

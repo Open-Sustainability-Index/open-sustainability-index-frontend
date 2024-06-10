@@ -27,7 +27,7 @@ function IndustryListPage ({ page }: IndustryListPageProps): React.ReactElement 
   }))
   return (
     <>
-      <PageTopBanner title='Industries' description='Find any industry' />
+      <PageTopBanner subtitle='Industries' title='Find any industry' />
       <IndustryList industries={industriesWithSlug} page={page} />
     </>
   )

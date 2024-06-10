@@ -23,7 +23,7 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
 
   return (
     <>
-      <PageTopBanner title='Company' description={companyName}>
+      <PageTopBanner subtitle='Company' title={companyName}>
         <StatsGrid emission={lastEmission} />
       </PageTopBanner>
       <Container>

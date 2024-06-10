@@ -16,7 +16,7 @@ interface WordpressListPageProps {
 const WordpressListPage = ({ title, description, wordpressPosts }: WordpressListPageProps): React.ReactElement => {
   return (
     <>
-      <PageTopBanner title='News' description={title} />
+      <PageTopBanner subtitle='News' title={title} />
       <Container>
         {wordpressPosts?.map((post, index) => (
           <Grid container spacing={2} key={index} p={4}>

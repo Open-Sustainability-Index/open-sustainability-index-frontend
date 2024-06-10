@@ -26,7 +26,7 @@ const WordpressPage = ({ title, description, wordpressSlug, wordpressPost }: Wor
   } else {
     return (
       <>
-        <PageTopBanner title={title} description={description} />
+        <PageTopBanner subtitle={title} title={description} />
         {wordpressPost?.content !== undefined && (
           <Container>
             <Typography

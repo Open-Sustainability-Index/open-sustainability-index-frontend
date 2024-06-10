@@ -24,7 +24,7 @@ const WordpressPage = ({ title, description, wordpressPost }: WordpressPageProps
   } else {
     return (
       <>
-        <PageTopBanner title='News' description={title} />
+        <PageTopBanner subtitle='News' title={title} />
         {wordpressPost?.content !== undefined && (
           <Container>
             <Grid container spacing={2} p={4}>

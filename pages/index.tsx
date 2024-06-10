@@ -26,7 +26,7 @@ const HomePage = ({ title, description, wordpressPost }: HomePageProps): React.R
   } else {
     return (
       <>
-        <PageTopBanner title={title} description={description} />
+        <PageTopBanner subtitle={title} title={description} />
         {/*
         <Placeholder title='Search Block' />
         <Placeholder title='3 Graphs' height='20em' />
