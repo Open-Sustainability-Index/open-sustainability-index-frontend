@@ -1,13 +1,14 @@
 // import { CodegenConfig } from '@graphql-codegen/cli'
 
-const config = { // : CodegenConfig
+const config = {
+  // : CodegenConfig
   schema: 'http://localhost:5174/api/graphql',
   documents: ['graphql/**/*.ts*'],
   generates: {
     './graphql/__generated__/': {
       preset: 'client',
       presetConfig: {
-        gqlTagName: 'gql'
+        gqlTagName: 'gql',
       },
       plugins: [
         // 'typescript',
@@ -17,10 +18,10 @@ const config = { // : CodegenConfig
         // flattenGeneratedTypes: true,
         // flattenGeneratedTypesIncludeFragments: true,
         // exportFragmentSpreadSubTypes: true
-      }
-    }
+      },
+    },
   },
-  ignoreNoDocuments: true
-}
+  ignoreNoDocuments: true,
+};
 
-export default config
+export default config;

@@ -1,41 +1,41 @@
-import React from 'react'
+import React from 'react';
 
-import { CompaniesCompany } from 'types/global'
-import { formatAmount } from 'lib/strings'
+import { CompaniesCompany } from 'types/global';
+import { formatAmount } from 'lib/strings';
 
-import DataTable, { DataTableHeader } from '../common/DataTable'
-import SearchBlock from '../navigation/SearchBlock'
-import FiltersBlock from '../navigation/FiltersBlock'
+import DataTable, { DataTableHeader } from '../common/DataTable';
+import SearchBlock from '../navigation/SearchBlock';
+import FiltersBlock from '../navigation/FiltersBlock';
 
 const headers: readonly DataTableHeader[] = [
   {
     field: 'company_name',
     label: 'Company',
     displayOnMobile: true,
-    defaultSortOrder: 'asc'
+    defaultSortOrder: 'asc',
   },
   {
     field: 'jurisdiction',
     label: 'Jurisdiction',
-    defaultSortOrder: 'asc'
+    defaultSortOrder: 'asc',
   },
   {
     field: 'industry',
     label: 'Industry',
-    defaultSortOrder: 'asc'
+    defaultSortOrder: 'asc',
   },
   {
     field: 'nearTerm',
     label: 'Near-term',
     type: 'status',
-    statusField: 'nearTermStatus'
+    statusField: 'nearTermStatus',
   },
   {
     field: 'netZero',
     label: 'Net Zero',
     type: 'status',
     statusField: 'netZeroStatus',
-    displayOnMobile: true
+    displayOnMobile: true,
   },
   {
     field: 'total_reported_emission_scope_1_2_3',
@@ -43,7 +43,7 @@ const headers: readonly DataTableHeader[] = [
     type: 'number',
     align: 'right',
     defaultSortOrder: 'desc',
-    format: (value: number): string => formatAmount(value)
+    format: (value: number): string => formatAmount(value),
   },
   {
     field: 'revenue',
@@ -51,7 +51,7 @@ const headers: readonly DataTableHeader[] = [
     type: 'number',
     align: 'right',
     defaultSortOrder: 'desc',
-    format: (value: number): string => formatAmount(value)
+    format: (value: number): string => formatAmount(value),
   },
   {
     field: 'emission_intensity',
@@ -60,24 +60,28 @@ const headers: readonly DataTableHeader[] = [
     align: 'right',
     displayOnMobile: true,
     defaultSortOrder: 'desc',
-    format: (value: number): string => formatAmount(value)
+    format: (value: number): string => formatAmount(value),
   },
   {
     field: 'year',
     label: 'Year',
     type: 'number',
     align: 'center',
-    defaultSortOrder: 'asc'
-  }
-]
+    defaultSortOrder: 'asc',
+  },
+];
 
 interface CompanyListProps {
-  companies?: CompaniesCompany[]
-  page?: number
-  detailPageLink?: string
+  companies?: CompaniesCompany[];
+  page?: number;
+  detailPageLink?: string;
 }
 
-const CompanyList = ({ companies, page, detailPageLink = '/company/:key' }: CompanyListProps): React.ReactElement | string => {
+const CompanyList = ({
+  companies,
+  page,
+  detailPageLink = '/company/:key',
+}: CompanyListProps): React.ReactElement | string => {
   return (
     <>
       <SearchBlock>
@@ -91,6 +95,6 @@ const CompanyList = ({ companies, page, detailPageLink = '/company/:key' }: Comp
         page={page}
       />
     </>
-  )
-}
-export default CompanyList
+  );
+};
+export default CompanyList;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -12,33 +12,33 @@ import {
   useTheme,
   useMediaQuery,
   createTheme,
-  ThemeProvider
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+  ThemeProvider,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
-import links from './links'
-import theme, { COLORS } from 'app/theme/theme'
-import NextMUILink from './NextMUILink'
-import Image from 'next/image'
+import links from './links';
+import theme, { COLORS } from 'app/theme/theme';
+import NextMUILink from './NextMUILink';
+import Image from 'next/image';
 
 const headerTheme = createTheme({
   ...theme,
   palette: {
     background: {
-      default: '#FFFFFF'
+      default: '#FFFFFF',
     },
     text: {
-      primary: COLORS.BLUE_MEDIUM
-    }
+      primary: COLORS.BLUE_MEDIUM,
+    },
   },
   typography: {
     ...theme.typography,
     fontSize: 15,
     h6: {
       '@media (max-width:600px)': {
-        fontSize: '1em'
-      }
-    }
+        fontSize: '1em',
+      },
+    },
   },
   components: {
     ...theme.components,
@@ -46,9 +46,9 @@ const headerTheme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: 'none',
-          borderBottom: `1px solid ${COLORS.BLUE_LIGHT}`
-        }
-      }
+          borderBottom: `1px solid ${COLORS.BLUE_LIGHT}`,
+        },
+      },
     },
     MuiLink: {
       styleOverrides: {
@@ -57,89 +57,127 @@ const headerTheme = createTheme({
           textDecoration: 'none',
           '&:hover': {
             color: COLORS.BLUE_HOVER,
-            textDecoration: 'underline'
-          }
-        }
-      }
+            textDecoration: 'underline',
+          },
+        },
+      },
     },
     MuiTypography: {
       styleOverrides: {
         root: {
           fontSize: '1.2rem',
-          fontWeight: 500
-        }
-      }
-    }
-  }
-})
+          fontWeight: 500,
+        },
+      },
+    },
+  },
+});
 
-function Header (): React.ReactElement {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const theme = useTheme()
-  const showHamburgerMenu = useMediaQuery(theme.breakpoints.down('md'))
+function Header(): React.ReactElement {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+  const showHamburgerMenu = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleDrawerToggle = (): void => {
-    setMobileOpen(!mobileOpen)
-  }
+    setMobileOpen(!mobileOpen);
+  };
 
   const menuLinks = (
     <>
       <List>
-        {links.filter(link => link.display.includes('header')).map((link) => (
-          <NextMUILink href={link.path} key={link.name}>
-            <ListItem>
-              <ListItemText primary={link.name} />
-            </ListItem>
-          </NextMUILink>
-        ))}
+        {links
+          .filter((link) => link.display.includes('header'))
+          .map((link) => (
+            <NextMUILink href={link.path} key={link.name}>
+              <ListItem>
+                <ListItemText primary={link.name} />
+              </ListItem>
+            </NextMUILink>
+          ))}
       </List>
-      <Button href='/report' variant='contained' color='secondary' sx={{ margin: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
+      <Button
+        href='/report'
+        variant='contained'
+        color='secondary'
+        sx={{
+          margin: 2,
+          textTransform: 'none',
+          fontSize: '1rem',
+          padding: '10px 30px',
+          borderRadius: '50px',
+        }}
+      >
         Report Data
       </Button>
     </>
-  )
+  );
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       {menuLinks}
     </Box>
-  )
+  );
 
   return (
     <ThemeProvider theme={headerTheme}>
       <AppBar position='sticky' sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
         <Box sx={{ maxWidth: '1248px', width: '100%', margin: '0 auto' }}>
-          <Toolbar sx={{ minHeight: { md: '110px' }, display: 'flex', justifyContent: 'space-between' }}>
+          <Toolbar
+            sx={{ minHeight: { md: '110px' }, display: 'flex', justifyContent: 'space-between' }}
+          >
             <NextMUILink href='/'>
-              <Image src='/images/logo.svg' alt='Open Sustainability Index Logo' width={62} height={62} />
+              <Image
+                src='/images/logo.svg'
+                alt='Open Sustainability Index Logo'
+                width={62}
+                height={62}
+              />
             </NextMUILink>
-            {showHamburgerMenu
-              ? (
-                <IconButton
-                  color='inherit'
-                  aria-label='open drawer'
-                  edge='end'
-                  onClick={handleDrawerToggle}
-                >
-                  <MenuIcon />
-                </IconButton>
-                )
-              : (
-                <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'space-between' }}>
-                  <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
-                    {links.filter(link => link.display.includes('header')).map((link) => (
+            {showHamburgerMenu ? (
+              <IconButton
+                color='inherit'
+                aria-label='open drawer'
+                edge='end'
+                onClick={handleDrawerToggle}
+              >
+                <MenuIcon />
+              </IconButton>
+            ) : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexGrow: 1,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Box sx={{ display: 'flex', paddingLeft: '1em' }}>
+                  {links
+                    .filter((link) => link.display.includes('header'))
+                    .map((link) => (
                       <NextMUILink href={link.path} key={link.name}>
                         <ListItem>
                           <ListItemText primary={link.name} />
                         </ListItem>
                       </NextMUILink>
                     ))}
-                  </Box>
-                  <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
-                    Report Data
-                  </Button>
                 </Box>
-                )}
+                <Button
+                  href='/report'
+                  variant='contained'
+                  color='secondary'
+                  sx={{
+                    marginLeft: 2,
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                    padding: '10px 30px',
+                    borderRadius: '50px',
+                  }}
+                >
+                  Report Data
+                </Button>
+              </Box>
+            )}
           </Toolbar>
         </Box>
         <Drawer
@@ -147,14 +185,14 @@ function Header (): React.ReactElement {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {drawer}
         </Drawer>
       </AppBar>
     </ThemeProvider>
-  )
+  );
 }
 
-export default Header
+export default Header;

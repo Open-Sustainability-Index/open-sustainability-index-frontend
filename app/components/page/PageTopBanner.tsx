@@ -1,16 +1,16 @@
-import React from 'react'
-import { Box, Container, Typography } from '@mui/material'
+import React from 'react';
+import { Box, Container, Typography } from '@mui/material';
 
 interface PageTopBannerProps {
-  subtitle?: string
-  title?: string
-  children?: React.ReactNode
+  subtitle?: string;
+  title?: string;
+  children?: React.ReactNode;
 }
 
 const PageTopBanner = ({
   subtitle = 'Welcome',
   title = 'Welcome to a world of open, accessible, transparent, actionable sustainability data. We just launched.',
-  children
+  children,
 }: PageTopBannerProps): React.ReactElement => {
   return (
     <Box
@@ -20,9 +20,9 @@ const PageTopBanner = ({
         px: '1.75rem',
         py: {
           xs: 6,
-          md: 12
+          md: 12,
         },
-        mb: 4
+        mb: 4,
       }}
     >
       <Container>
@@ -35,7 +35,7 @@ const PageTopBanner = ({
         {children}
       </Container>
     </Box>
-  )
-}
+  );
+};
 
-export default PageTopBanner
+export default PageTopBanner;

@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles';
 
 export const COLORS = {
   BLACK: '#1c1b1f',
@@ -20,26 +20,21 @@ export const COLORS = {
   PURPLE_GRADIENT: 'radial-gradient(394.12% 110.28% at 84.11% 15.37%, #7400B8 0%, #6930C3 100%)',
   PURPLE_LIGHT: '#cd9aff',
   PURPLE_DARK: '#ba08e6',
-  PURPLE_DARKER: '#7110bc'
-
-}
+  PURPLE_DARKER: '#7110bc',
+};
 
 // Define custom MUI theme
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#171d3a'
+      main: '#171d3a',
     },
     secondary: {
-      main: '#f598ff'
-    }
+      main: '#f598ff',
+    },
   },
   typography: {
-    fontFamily: [
-      'Open Sans',
-      'Arial',
-      'sans-serif'
-    ].join(','),
+    fontFamily: ['Open Sans', 'Arial', 'sans-serif'].join(','),
     fontSize: 18,
 
     h1: {
@@ -47,32 +42,32 @@ const theme = createTheme({
       fontSize: '3em',
       color: 'black',
       '@media (maxWidth:600px)': {
-        fontSize: '1.2em'
-      }
+        fontSize: '1.2em',
+      },
     },
     h2: {
       fontWeight: 'bold',
-      fontSize: '2em'
+      fontSize: '2em',
     },
     h3: {
       fontWeight: 'bold',
-      fontSize: '1.5em'
+      fontSize: '1.5em',
     },
     body2: {
       color: COLORS.GRAY_MEDIUM,
-      marginTop: '1em'
+      marginTop: '1em',
     },
     subtitle1: {
       color: COLORS.BLUE_MEDIUM,
       fontSize: '1.5em',
       fontWeight: 'bold',
       '@media (maxWidth:600px)': {
-        fontSize: '1em'
-      }
+        fontSize: '1em',
+      },
     },
     caption: {
-      color: '#171d3a'
-    }
+      color: '#171d3a',
+    },
   },
   components: {
     MuiButton: {
@@ -84,19 +79,19 @@ const theme = createTheme({
           boxShadow: 'none',
           '&:hover': {
             backgroundColor: COLORS.BLUE_HOVER,
-            boxShadow: 'none'
-          }
-        }
-      }
+            boxShadow: 'none',
+          },
+        },
+      },
     },
     MuiContainer: {
       styleOverrides: {
         root: {
-          padding: '0 !important'
-        }
-      }
-    }
-  }
-})
+          padding: '0 !important',
+        },
+      },
+    },
+  },
+});
 
-export default theme
+export default theme;

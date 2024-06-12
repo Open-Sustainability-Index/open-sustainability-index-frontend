@@ -1,18 +1,24 @@
-import React from 'react'
+import React from 'react';
 
-import { Industry } from 'types/global'
-import DataTable, { DataTableHeader } from '../common/DataTable'
-import SearchBlock from '../navigation/SearchBlock'
+import { Industry } from 'types/global';
+import DataTable, { DataTableHeader } from '../common/DataTable';
+import SearchBlock from '../navigation/SearchBlock';
 
 const headers: readonly DataTableHeader[] = [
   {
     field: 'name',
     label: 'Industry',
-    displayOnMobile: true
-  }
-]
+    displayOnMobile: true,
+  },
+];
 
-const IndustryList = ({ industries, page }: { industries?: Industry[], page: number }): React.ReactElement | string => {
+const IndustryList = ({
+  industries,
+  page,
+}: {
+  industries?: Industry[];
+  page: number;
+}): React.ReactElement | string => {
   return (
     <>
       <SearchBlock />
@@ -23,6 +29,6 @@ const IndustryList = ({ industries, page }: { industries?: Industry[], page: num
         detailPageLink='/companies?industry='
       />
     </>
-  )
-}
-export default IndustryList
+  );
+};
+export default IndustryList;

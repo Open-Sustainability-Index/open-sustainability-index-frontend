@@ -9,10 +9,10 @@ const nextConfig = {
       {
         source: '/companies/:slug',
         destination: '/company/:slug',
-        permanent: false
+        permanent: false,
       },
-    ]
+    ];
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

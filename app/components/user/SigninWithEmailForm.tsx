@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 // import { getAuth, sendSignInLinkToEmail } from 'firebase/auth'
 
 // import { firebaseApp } from 'lib/firebase'
@@ -10,30 +10,37 @@ import React, { useState } from 'react'
 
 interface SimpleEvent {
   target: {
-    name: string
-    value: string
-  }
+    name: string;
+    value: string;
+  };
 }
 
 interface SigninWithEmailFormProps {
-  buttonText?: string
-  thankyouText?: string
-  googleEventName?: string
-  redirectTo?: string
-  onCompleted?: (error: Error | null, inputs: { email: string }) => void
+  buttonText?: string;
+  thankyouText?: string;
+  googleEventName?: string;
+  redirectTo?: string;
+  onCompleted?: (error: Error | null, inputs: { email: string }) => void;
 }
 
-const SigninWithEmailForm = ({ buttonText = 'Sign in', thankyouText = 'Check your email for a sign-in link!', googleEventName = 'user_login', redirectTo, onCompleted }: SigninWithEmailFormProps): React.ReactElement => {
-  const [inProgress, setInProgress] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+const SigninWithEmailForm = ({
+  buttonText = 'Sign in',
+  thankyouText = 'Check your email for a sign-in link!',
+  googleEventName = 'user_login',
+  redirectTo,
+  onCompleted,
+}: SigninWithEmailFormProps): React.ReactElement => {
+  const [inProgress, setInProgress] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // const auth = getAuth(firebaseApp)
 
-  const [inputs, setInputs] = useState({ email: '' })
-  const handleInputChange = ({ target }: SimpleEvent): void => setInputs({ ...inputs, [target.name]: target.value })
+  const [inputs, setInputs] = useState({ email: '' });
+  const handleInputChange = ({ target }: SimpleEvent): void =>
+    setInputs({ ...inputs, [target.name]: target.value });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    event.preventDefault()
-    setInProgress(true)
+    event.preventDefault();
+    setInProgress(true);
 
     try {
       // Firebase sign-in with just email link, no password
@@ -42,56 +49,55 @@ const SigninWithEmailForm = ({ buttonText = 'Sign in', thankyouText = 'Check you
       //   handleCodeInApp: true
       // }
       // await sendSignInLinkToEmail(auth, inputs.email, actionCodeSettings)
-      window.localStorage.setItem('emailForSignIn', inputs.email)
+      window.localStorage.setItem('emailForSignIn', inputs.email);
       // makeRestRequest('/api/notifications', { email: anonymizeEmail(inputs.email) }, { method: 'POST' })
-      handleInputChange({ target: { name: 'email', value: '' } })
-      setIsSubmitted(true)
+      handleInputChange({ target: { name: 'email', value: '' } });
+      setIsSubmitted(true);
       // if (googleEventName) googleEvent(googleEventName)
-      onCompleted?.(null, inputs)
+      onCompleted?.(null, inputs);
     } catch (error: any) {
-      console.warn(error.message as string)
+      console.warn(error.message as string);
       // showNotification(`Could not sign in: ${error.message}`, 'error')
-      onCompleted?.(null, inputs)
+      onCompleted?.(null, inputs);
     } finally {
-      setInProgress(false)
+      setInProgress(false);
     }
-  }
+  };
 
   return (
     <div>
-      {!isSubmitted
-        ? (
-          <>
-            <form className='signin-form' onSubmit={(event) => { void handleSubmit(event) }}>
-              <input
-                id='email'
-                name='email'
-                type='email'
-                autoComplete='email'
-                placeholder='Your email'
-                required
-                value={inputs.email}
-                onChange={handleInputChange}
-                disabled={inProgress}
-              />
-              <button
-                type='submit'
-                color='primary'
-                disabled={inProgress}
-              >
-                Sign in
-              </button>
-            </form>
-            <div style={{ marginTop: '1em' }}>
-              (No password necessary, we will send a sign-in link to your email inbox)
-            </div>
-          </>
-          )
-        : (
-          <div className='thankyou'>{thankyouText}</div>
-          )}
+      {!isSubmitted ? (
+        <>
+          <form
+            className='signin-form'
+            onSubmit={(event) => {
+              void handleSubmit(event);
+            }}
+          >
+            <input
+              id='email'
+              name='email'
+              type='email'
+              autoComplete='email'
+              placeholder='Your email'
+              required
+              value={inputs.email}
+              onChange={handleInputChange}
+              disabled={inProgress}
+            />
+            <button type='submit' color='primary' disabled={inProgress}>
+              Sign in
+            </button>
+          </form>
+          <div style={{ marginTop: '1em' }}>
+            (No password necessary, we will send a sign-in link to your email inbox)
+          </div>
+        </>
+      ) : (
+        <div className='thankyou'>{thankyouText}</div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default SigninWithEmailForm
+export default SigninWithEmailForm;

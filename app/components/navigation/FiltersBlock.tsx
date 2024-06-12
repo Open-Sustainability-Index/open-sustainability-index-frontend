@@ -1,5 +1,5 @@
-import React from 'react'
-import { useRouter } from 'next/router'
+import React from 'react';
+import { useRouter } from 'next/router';
 import {
   Container,
   Grid,
@@ -8,16 +8,16 @@ import {
   FormControl,
   InputLabel,
   useTheme,
-  useMediaQuery
-} from '@mui/material'
+  useMediaQuery,
+} from '@mui/material';
 
-import { changeQueryString } from 'lib/strings'
-import industries from 'app/services/industries.json'
+import { changeQueryString } from 'lib/strings';
+import industries from 'app/services/industries.json';
 
 interface FilterField {
-  value: string
-  label: string
-  options: Array<{ value: string, label?: string }>
+  value: string;
+  label: string;
+  options: Array<{ value: string; label?: string }>;
 }
 
 const filterFields = [
@@ -26,16 +26,13 @@ const filterFields = [
     value: 'industry',
     options: [
       { label: '(all)', value: '' },
-      ...industries.map((industry) => ({ value: industry.name }))
-    ]
+      ...industries.map((industry) => ({ value: industry.name })),
+    ],
   },
   {
     label: 'Jurisdiction',
     value: 'jurisdiction',
-    options: [
-      { label: '(all)', value: '' },
-      { value: 'World-wide' }
-    ]
+    options: [{ label: '(all)', value: '' }, { value: 'World-wide' }],
   },
   {
     label: 'Org. type',
@@ -44,8 +41,8 @@ const filterFields = [
       { label: '(all)', value: '' },
       { value: 'SME' },
       { value: 'Company' },
-      { value: 'Financial Institution' }
-    ]
+      { value: 'Financial Institution' },
+    ],
   },
   {
     label: 'Near-term',
@@ -54,8 +51,8 @@ const filterFields = [
       { label: '(all)', value: '' },
       { value: 'Active', label: 'Committed' },
       { value: 'Target set', label: 'Target Set' },
-      { value: 'Removed' }
-    ]
+      { value: 'Removed' },
+    ],
   },
   {
     label: 'Net zero',
@@ -64,43 +61,34 @@ const filterFields = [
       { label: '(all)', value: '' },
       { value: 'Active', label: 'Committed' },
       { value: 'Target set', label: 'Target Set' },
-      { value: 'Removed' }
-    ]
+      { value: 'Removed' },
+    ],
   },
   {
     label: 'Year',
     value: 'year',
-    options: [
-      { label: '(all)', value: '' },
-      { value: '2023' },
-      { value: '2022' }
-    ]
+    options: [{ label: '(all)', value: '' }, { value: '2023' }, { value: '2022' }],
   },
   {
     label: 'Currency',
     value: 'currency',
-    options: [
-      { label: '(all)', value: '' },
-      { value: 'EUR' },
-      { value: 'USD' },
-      { value: 'SEK' }
-    ]
-  }
-]
+    options: [{ label: '(all)', value: '' }, { value: 'EUR' }, { value: 'USD' }, { value: 'SEK' }],
+  },
+];
 
 const FiltersBlock = (): React.ReactElement | null => {
-  const router = useRouter()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   if (isMobile) {
-    return null
+    return null;
   }
 
   const handleChange = (field: string, value: string): void => {
-    const newPath = router.pathname + '?' + changeQueryString(router.query, field, value)
-    void router.push(newPath)
-  }
+    const newPath = router.pathname + '?' + changeQueryString(router.query, field, value);
+    void router.push(newPath);
+  };
 
   return (
     <Container>
@@ -109,7 +97,7 @@ const FiltersBlock = (): React.ReactElement | null => {
         spacing={2}
         sx={{
           justifyContent: 'center',
-          marginTop: '0.5em'
+          marginTop: '0.5em',
         }}
       >
         {filterFields.map((field) => (
@@ -122,15 +110,15 @@ const FiltersBlock = (): React.ReactElement | null => {
         ))}
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default FiltersBlock
+export default FiltersBlock;
 
 interface FilterSectionProps {
-  field: FilterField
-  value: string
-  onChange: (field: string, value: string) => void
+  field: FilterField;
+  value: string;
+  onChange: (field: string, value: string) => void;
 }
 
 const FilterSection = ({ field, value, onChange }: FilterSectionProps): React.ReactElement => {
@@ -145,16 +133,12 @@ const FilterSection = ({ field, value, onChange }: FilterSectionProps): React.Re
           sx={{ fontSize: '14px' }}
         >
           {field.options.map((option) => (
-            <MenuItem
-              key={option.value}
-              value={option.value}
-              sx={{ fontSize: '14px' }}
-            >
+            <MenuItem key={option.value} value={option.value} sx={{ fontSize: '14px' }}>
               {option.label ?? option.value}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
     </Grid>
-  )
-}
+  );
+};

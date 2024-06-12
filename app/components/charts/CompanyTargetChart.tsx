@@ -1,5 +1,5 @@
-import React from 'react'
-import { useTheme, useMediaQuery, Theme, Typography } from '@mui/material'
+import React from 'react';
+import { useTheme, useMediaQuery, Theme, Typography } from '@mui/material';
 import {
   // ChartContainer
   ResponsiveChartContainer,
@@ -11,20 +11,19 @@ import {
   ChartsTooltip,
   BarPlot,
   LinePlot,
-  MarkPlot
+  MarkPlot,
   // legendClasses
   // barElementClasses,
   // lineElementClasses
-} from '@mui/x-charts'
+} from '@mui/x-charts';
 
-import { COLORS } from 'app/theme/theme'
-import { Company } from 'types/global'
-import { formatAmount } from 'lib/strings'
-import PaperCard from '../common/PaperCard'
+import { COLORS } from 'app/theme/theme';
+import { Company } from 'types/global';
+import { formatAmount } from 'lib/strings';
+import PaperCard from '../common/PaperCard';
 
-const fillArray = (length: number, expression: (index: number) => any): any[] => [...Array(length)].map(
-  (empty, index) => expression(index)
-)
+const fillArray = (length: number, expression: (index: number) => any): any[] =>
+  [...Array(length)].map((empty, index) => expression(index));
 
 // const parseTargetValue = (targetValue: string | undefined, lastEmission: number): number => {
 //   const rawValue = parseFloat((targetValue ?? '0').replace(/[^0-9.]/g, ''))
@@ -34,26 +33,30 @@ const fillArray = (length: number, expression: (index: number) => any): any[] =>
 //   return Math.round(value)
 // }
 
-const CompanyTargetChart = ({ company }: { company: Company }): React.ReactElement | null | string => {
-  const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+const CompanyTargetChart = ({
+  company,
+}: {
+  company: Company;
+}): React.ReactElement | null | string => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Find largest target year
   // const targetYear = company.targets.reduce((results: number, target): number => ((target?.target_year ?? 0) > results ? (target?.target_year ?? 0) : results), 0)
-  const target = company.targets.find((target) => target.target === 'Near-term')
-  const targetYear = target?.target_year ?? 0
-  const firstYear = company.emissions[0]?.year ?? 0
+  const target = company.targets.find((target) => target.target === 'Near-term');
+  const targetYear = target?.target_year ?? 0;
+  const firstYear = company.emissions[0]?.year ?? 0;
   // const lastYear = company.emissions[company.emissions.length - 1] ?.year ?? 0
-  console.log('CompanyTargetChart (1):', { firstYear, targetYear, targets: company.targets })
+  console.log('CompanyTargetChart (1):', { firstYear, targetYear, targets: company.targets });
 
   if (company === undefined) {
-    return null
+    return null;
   }
   if (company.emissions.length === 0 || firstYear === 0) {
-    return <Typography variant='body2'>(No emissions data available to show graph)</Typography>
+    return <Typography variant='body2'>(No emissions data available to show graph)</Typography>;
   }
   if (targetYear === 0) {
-    return <Typography variant='body2'>(No target data available to show graph)</Typography>
+    return <Typography variant='body2'>(No target data available to show graph)</Typography>;
   }
 
   // const lastEmission = company.emissions[company.emissions.length - 1] ?.total_reported_emission_scope_1_2_3 ?? 0
@@ -61,11 +64,13 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
   // const emissionReductionPerYear = Math.round((lastEmission - targetEmission) / (targetYear - lastYear + 1))
 
   // Construct data series
-  const dataLabels = fillArray(targetYear - firstYear + 1, (index) => firstYear + index)
+  const dataLabels = fillArray(targetYear - firstYear + 1, (index) => firstYear + index);
   const emissionsHistory = dataLabels.map((year) => {
-    const emission = company.emissions.find((emission) => emission.year === year)?.total_reported_emission_scope_1_2_3
-    return emission ?? null
-  })
+    const emission = company.emissions.find(
+      (emission) => emission.year === year,
+    )?.total_reported_emission_scope_1_2_3;
+    return emission ?? null;
+  });
 
   // const emissionsProjected = fillArray(targetYear - firstYear + 1, (index) => {
   //   if (index <= lastYear - firstYear) {
@@ -91,8 +96,8 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
       type: 'bar',
       color: COLORS.TURQUOISE_MEDIUM,
       data: emissionsHistory,
-      valueFormatter: (v: any) => formatAmount(v)
-    }
+      valueFormatter: (v: any) => formatAmount(v),
+    },
     // {
     //   label: 'Projected',
     //   type: 'bar',
@@ -108,12 +113,12 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
     //   connectNulls: true,
     //   valueFormatter: (v: any) => formatAmount(v)
     // }
-  ]
+  ];
 
   // const Container = isSmallScreen ? ResponsiveChartContainer : ChartContainer
   const sizingProps = isSmallScreen
     ? { width: 380, height: 300, margin: { left: 70, right: 70 } }
-    : { width: 500, height: 500, margin: { left: 80, right: 100 } }
+    : { width: 500, height: 500, margin: { left: 80, right: 100 } };
 
   return (
     <PaperCard>
@@ -125,12 +130,10 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
             data: dataLabels,
             scaleType: 'band',
             id: 'x-axis-id',
-            valueFormatter: (v: any) => v.toString()
-          }
+            valueFormatter: (v: any) => v.toString(),
+          },
         ]}
-        yAxis={[
-          { id: 'emissionsAxis', scaleType: 'linear' }
-        ]}
+        yAxis={[{ id: 'emissionsAxis', scaleType: 'linear' }]}
         {...sizingProps}
       >
         <BarPlot
@@ -141,7 +144,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
             // },
             rx: 6,
             ry: 6,
-            width: 6
+            width: 6,
           })}
         />
         <LinePlot />
@@ -156,7 +159,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
             fontSize: '12px',
             transform: 'rotate(0deg) translate(10px, -215px)',
             textAlign: 'right',
-            fill: COLORS.GRAY_LIGHTER
+            fill: COLORS.GRAY_LIGHTER,
           }}
         />
         <ChartsLegend
@@ -168,11 +171,11 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
               labelStyle: {
                 fontSize: '12px',
                 fontWeight: 'normal',
-                fill: COLORS.GRAY_LIGHTER
+                fill: COLORS.GRAY_LIGHTER,
               },
               markGap: 6,
-              itemGap: 20
-            }
+              itemGap: 20,
+            },
           }}
           sx={(theme: Theme) => ({
             // [`.${legendClasses.root}`]: {
@@ -189,7 +192,7 @@ const CompanyTargetChart = ({ company }: { company: Company }): React.ReactEleme
         <ChartsTooltip />
       </ResponsiveChartContainer>
     </PaperCard>
-  )
-}
+  );
+};
 
-export default CompanyTargetChart
+export default CompanyTargetChart;

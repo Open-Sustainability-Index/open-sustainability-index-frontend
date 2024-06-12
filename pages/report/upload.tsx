@@ -1,10 +1,10 @@
 // pages/upload.js
-import React, { useState, useMemo } from 'react'
-import type { GetStaticPropsResult } from 'next'
-import { Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
+import React, { useState, useMemo } from 'react';
+import type { GetStaticPropsResult } from 'next';
+import { Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material';
 
-import jsonToTSV from 'app/utils/jsonToTSV'
-import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
+import jsonToTSV from 'app/utils/jsonToTSV';
+import DataTable, { DataTableHeader } from 'app/components/common/DataTable';
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
@@ -73,50 +73,58 @@ const headers: readonly DataTableHeader[] = [
   { field: 'source_revenue_link' },
   { field: 'publication_date' },
   { field: 'comment' },
-  { field: 'status' }
-]
+  { field: 'status' },
+];
 
 interface AnalysisResults {
-  message?: string
+  message?: string;
   analysis: {
-    yearlyReports: Array<Record<string, string>>
-  }
+    yearlyReports: Array<Record<string, string>>;
+  };
 }
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
-  const [selectedFile, setSelectedFile] = useState<File | undefined>()
-  const [specialInstructions, setSpecialInstructions] = useState<string>('')
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
-  const inProgress = useMemo(() => analysisResults === null, [analysisResults])
+  const [selectedFile, setSelectedFile] = useState<File | undefined>();
+  const [specialInstructions, setSpecialInstructions] = useState<string>('');
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(); // testImageAnalysis
+  const inProgress = useMemo(() => analysisResults === null, [analysisResults]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
-      setSelectedFile(event.target.files?.[0])
+      setSelectedFile(event.target.files?.[0]);
     }
-  }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    event.preventDefault()
+    event.preventDefault();
     if (selectedFile !== undefined) {
-      setAnalysisResults(null)
-      const formData = new FormData()
-      formData.append('file', selectedFile)
-      formData.append('specialInstructions', specialInstructions)
+      setAnalysisResults(null);
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('specialInstructions', specialInstructions);
 
       const res = await fetch('/api/uploadAnalysis', {
         method: 'POST',
-        body: formData
-      })
+        body: formData,
+      });
 
-      const analysisData = await res.json()
-      setAnalysisResults(analysisData)
+      const analysisData = await res.json();
+      setAnalysisResults(analysisData);
     }
-  }
+  };
 
   return (
     <Container>
-      <Typography variant='h1' gutterBottom>{title}</Typography>
-      <Box component='form' onSubmit={(e) => { void handleSubmit(e) }} sx={{ mt: 2 }}>
+      <Typography variant='h1' gutterBottom>
+        {title}
+      </Typography>
+      <Box
+        component='form'
+        onSubmit={(e) => {
+          void handleSubmit(e);
+        }}
+        sx={{ mt: 2 }}
+      >
         <TextField
           type='file'
           inputProps={{ accept: 'image/*' }}
@@ -131,11 +139,9 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           onChange={(event) => setSpecialInstructions(event.target.value)}
           sx={{ mb: 2 }}
         />
-        {(selectedFile !== undefined) && (
+        {selectedFile !== undefined && (
           <Box sx={{ mt: 2 }}>
-            <Typography variant='body1'>
-              Selected file: {selectedFile?.name}
-            </Typography>
+            <Typography variant='body1'>Selected file: {selectedFile?.name}</Typography>
             <Button
               variant='contained'
               color='primary'
@@ -148,48 +154,56 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           </Box>
         )}
       </Box>
-      {(inProgress) && (
-        <CircularProgress />
-      )}
-      {(analysisResults !== null && analysisResults !== undefined) && (
+      {inProgress && <CircularProgress />}
+      {analysisResults !== null && analysisResults !== undefined && (
         <>
           <CopyToClipboardButton
             textToCopy={jsonToTSV(analysisResults?.analysis?.yearlyReports, headers)}
             label='Copy sheet data'
           />
-          <DataTable
-            data={analysisResults?.analysis?.yearlyReports ?? []}
-            headers={headers}
-          />
+          <DataTable data={analysisResults?.analysis?.yearlyReports ?? []} headers={headers} />
         </>
       )}
     </Container>
-  )
-}
-export default UploadReportPage
+  );
+};
+export default UploadReportPage;
 
-function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: string, label: string }): React.ReactElement {
+function CopyToClipboardButton({
+  textToCopy,
+  label = 'Copy',
+}: {
+  textToCopy: string;
+  label: string;
+}): React.ReactElement {
   const handleCopyClick = (): void => {
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
-        alert('Text copied to clipboard!')
+        alert('Text copied to clipboard!');
       })
       .catch((err) => {
-        console.error('Failed to copy text: ', err)
-      })
-  }
+        console.error('Failed to copy text: ', err);
+      });
+  };
 
   return (
-    <Button variant='outlined' color='primary' type='submit' sx={{ mt: 2 }} onClick={handleCopyClick}>
+    <Button
+      variant='outlined'
+      color='primary'
+      type='submit'
+      sx={{ mt: 2 }}
+      onClick={handleCopyClick}
+    >
       {label}
     </Button>
-  )
+  );
 }
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
-      title: 'Upload image for analysis'
-    }
-  }
-}
+      title: 'Upload image for analysis',
+    },
+  };
+};

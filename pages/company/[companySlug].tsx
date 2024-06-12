@@ -1,56 +1,60 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
-import { ParsedUrlQuery } from 'querystring'
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import type {
+  GetStaticPropsContext,
+  GetStaticPropsResult,
+  GetStaticPathsContext,
+  GetStaticPathsResult,
+} from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
-import { fetchCompanyHistory, companyPageProps } from 'app/services/companies'
-import CompanyDetails from '../../app/components/companies/CompanyDetails'
-import { Company } from 'types/global'
+import { fetchCompanyHistory, companyPageProps } from 'app/services/companies';
+import CompanyDetails from '../../app/components/companies/CompanyDetails';
+import { Company } from 'types/global';
 
 interface CompanyPageParams extends ParsedUrlQuery {
-  companySlug: string
+  companySlug: string;
 }
 
 interface CompanyPageProps {
-  company: Company | undefined
-  companySlug?: string | null
-  title: string
+  company: Company | undefined;
+  companySlug?: string | null;
+  title: string;
 }
 
 const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     if (company?.slug_new !== undefined) {
-      router.push(`/company/${company?.slug_new}`)
-    }  
-  }, [company?.slug_new])
+      router.push(`/company/${company?.slug_new}`);
+    }
+  }, [company?.slug_new]);
 
-  return (
-    <CompanyDetails
-      company={company ?? undefined}
-      loading={company === undefined}
-    />
-  )
-}
+  return <CompanyDetails company={company ?? undefined} loading={company === undefined} />;
+};
 
-export default CompanyPage
+export default CompanyPage;
 
-export async function getStaticProps (context: GetStaticPropsContext<CompanyPageParams>): Promise<GetStaticPropsResult<CompanyPageProps>> {
-  const companySlug = context.params?.companySlug
-  const company = await fetchCompanyHistory(companySlug as string)
+export async function getStaticProps(
+  context: GetStaticPropsContext<CompanyPageParams>,
+): Promise<GetStaticPropsResult<CompanyPageProps>> {
+  const companySlug = context.params?.companySlug;
+  const company = await fetchCompanyHistory(companySlug as string);
   return {
     props: {
       ...companyPageProps(company),
       companySlug,
-      company
-    }
-  }
+      company,
+    },
+  };
 }
 
-export async function getStaticPaths (context: GetStaticPathsContext): Promise<GetStaticPathsResult<CompanyPageParams>> {
+export async function getStaticPaths(
+  context: GetStaticPathsContext,
+): Promise<GetStaticPathsResult<CompanyPageParams>> {
   // const locales = context.locales ?? ['en']
   return {
     paths: [],
-    fallback: true // false → 404, true: Next.js tries to generate page
-  }
+    fallback: true, // false → 404, true: Next.js tries to generate page
+  };
 }

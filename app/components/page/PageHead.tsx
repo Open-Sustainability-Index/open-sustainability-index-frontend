@@ -1,27 +1,37 @@
-import React from 'react'
-import Head from 'next/head'
+import React from 'react';
+import Head from 'next/head';
 
-import { config } from 'config/config'
+import { config } from 'config/config';
 
 interface PageHeadProps {
-  title?: string
-  description?: string
-  imageUrl?: string
-  iconUrl?: string
-  path?: string
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  iconUrl?: string;
+  path?: string;
 }
 
-const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', path = '/' }: PageHeadProps): React.ReactElement | null => {
-  const pageTitle = (title !== undefined && title !== null)
-    ? `${(title)} – ${config.appName as string}`
-    : `${config.appName as string} – ${(config.appTagline as string)}`
+const PageHead = ({
+  title,
+  description,
+  imageUrl,
+  iconUrl = '/favicon.png',
+  path = '/',
+}: PageHeadProps): React.ReactElement | null => {
+  const pageTitle =
+    title !== undefined && title !== null
+      ? `${title} – ${config.appName as string}`
+      : `${config.appName as string} – ${config.appTagline as string}`;
 
-  const pageDescription = description ?? config.appDescription ?? ''
+  const pageDescription = description ?? config.appDescription ?? '';
 
-  const thumbnailUrl = imageUrl ?? `${config.appUrl as string}images/preview_default.jpg` // ?? `https://screens.myscreenshooterserver.com/?url=${config.appUrl}${path.slice(1)}${(path.includes('?') ? '&' : '?')}thumbnail=true`
+  const thumbnailUrl = imageUrl ?? `${config.appUrl as string}images/preview_default.jpg`; // ?? `https://screens.myscreenshooterserver.com/?url=${config.appUrl}${path.slice(1)}${(path.includes('?') ? '&' : '?')}thumbnail=true`
 
   // SEO: title 60 characters, description 160 characters
-  if (config.isDevelopment === true) console.log(`SEO Metadata:\n• title (${60 - pageTitle.length}): “${pageTitle}”\n• description (${160 - pageDescription.length}): “${pageDescription}”\n• imageUrl: ${thumbnailUrl}`)
+  if (config.isDevelopment === true)
+    console.log(
+      `SEO Metadata:\n• title (${60 - pageTitle.length}): “${pageTitle}”\n• description (${160 - pageDescription.length}): “${pageDescription}”\n• imageUrl: ${thumbnailUrl}`,
+    );
 
   return (
     <Head>
@@ -41,7 +51,7 @@ const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', path
       <meta property='og:description' content={pageDescription} />
       <meta property='og:locale' content={config.locale} />
 
-      {(thumbnailUrl !== undefined && thumbnailUrl !== null) && (
+      {thumbnailUrl !== undefined && thumbnailUrl !== null && (
         <>
           <meta property='og:image' content={thumbnailUrl} />
           <meta name='twitter:image' content={thumbnailUrl} />
@@ -65,8 +75,7 @@ const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', path
 
         <meta name='twitter:site' content={`@${config.landingPage.social.twitter}`} />
       */}
-
     </Head>
-  )
-}
-export default PageHead
+  );
+};
+export default PageHead;
