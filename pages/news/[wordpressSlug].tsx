@@ -1,10 +1,5 @@
 import React from 'react';
-import type {
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-  GetStaticPathsContext,
-  GetStaticPathsResult,
-} from 'next';
+import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsResult } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { Typography, Container, Grid } from '@mui/material';
 
@@ -23,11 +18,7 @@ interface WordpressPageProps {
   description: string;
 }
 
-const WordpressPage = ({
-  title,
-  description,
-  wordpressPost,
-}: WordpressPageProps): React.ReactElement => {
+const WordpressPage = ({ title, wordpressPost }: WordpressPageProps): React.ReactElement => {
   if (wordpressPost === null) {
     return <Typography>Wordpress page not found</Typography>;
   } else {
@@ -78,9 +69,7 @@ export async function getStaticProps(
   };
 }
 
-export async function getStaticPaths(
-  context: GetStaticPathsContext,
-): Promise<GetStaticPathsResult<WordpressPageParams>> {
+export async function getStaticPaths(): Promise<GetStaticPathsResult<WordpressPageParams>> {
   // const locales = context.locales ?? ['en']
   return {
     paths: [],

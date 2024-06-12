@@ -24,7 +24,7 @@ interface SitemapProps {
 
 const Sitemap = ({ pagePaths }: SitemapProps): string => {
   return `<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
-      ${pagePaths?.map((path, index) => SiteUrl({ path })).join('\n')}
+      ${pagePaths?.map((path) => SiteUrl({ path })).join('\n')}
     </urlset>`;
 };
 

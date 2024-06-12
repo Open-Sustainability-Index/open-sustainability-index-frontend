@@ -11,7 +11,7 @@ const RobotsTxt: NextPage = () => null;
 
 export async function getServerSideProps({
   res,
-}: GetServerSidePropsContext): Promise<{ props: any }> {
+}: GetServerSidePropsContext): Promise<{ props: Record<string, string> }> {
   if (res !== undefined) {
     res.setHeader('Content-Type', 'text/plain');
     res.write(robotsTxt);

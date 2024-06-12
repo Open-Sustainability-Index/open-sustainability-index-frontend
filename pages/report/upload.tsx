@@ -200,7 +200,9 @@ function CopyToClipboardButton({
   );
 }
 
-export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
+export const getStaticProps = async (): Promise<
+  GetStaticPropsResult<{ props: { title: string } }>
+> => {
   return {
     props: {
       title: 'Upload image for analysis',

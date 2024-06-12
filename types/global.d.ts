@@ -3,7 +3,7 @@ declare module 'react-toastify';
 
 declare global {
   interface Window {
-    gtag: (event: string, action: string, options: any) => void;
+    gtag: (event: string, action: string, options: Record<string, string>) => void;
   }
 }
 
@@ -19,7 +19,7 @@ export interface ListEndpointParams {
   pageSize?: number;
   sort?: string;
   order?: string;
-  filters?: Record<string, any>;
+  filters?: Record<string, string>;
 }
 
 export interface ListPageOptions {

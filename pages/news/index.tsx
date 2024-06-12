@@ -1,5 +1,5 @@
 import React from 'react';
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import type { GetStaticPropsResult } from 'next';
 import { Typography, Container, Grid } from '@mui/material';
 
 import config from 'config/config';
@@ -39,9 +39,7 @@ const WordpressListPage = ({
 
 export default WordpressListPage;
 
-export async function getStaticProps(
-  context: GetStaticPropsContext,
-): Promise<GetStaticPropsResult<WordpressListPageProps>> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<WordpressListPageProps>> {
   const wordpressPosts = await getPostsList();
   return {
     props: {

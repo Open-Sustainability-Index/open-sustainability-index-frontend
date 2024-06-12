@@ -1,5 +1,5 @@
 import React from 'react';
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import type { GetStaticPropsResult } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 import { Industry } from 'types/global';
@@ -35,9 +35,7 @@ function IndustryListPage({ page }: IndustryListPageProps): React.ReactElement {
 
 export default IndustryListPage;
 
-export const getStaticProps = async (
-  context: GetStaticPropsContext<IndustryListPageParams>,
-): Promise<GetStaticPropsResult<{}>> => {
+export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
       ...industriesPageProps(industries),
