@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "echo npm run api-types:watch & npm run dev:next",
     "dev:next": "next dev -p 5174",
-    "build": "next build",
+    "build": "npm run lint && next build",
     "start": "next start",
     "lint": "eslint .",
     "fix": "eslint --fix .",
