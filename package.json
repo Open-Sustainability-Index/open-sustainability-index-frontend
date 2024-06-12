@@ -9,20 +9,13 @@
     "dev:next": "next dev -p 5174",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:standard": "ts-standard",
-    "fix": "ts-standard --fix",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
     "api-types": "graphql-codegen",
     "api-types:watch": "graphql-codegen --watch",
     "api-types:EXTERNALAPI": "npx openapi-typescript@5.4.0 https://EXTERNALAPI.com/REST/v1/openapi.json --output types/EXTERNALAPI.ts",
     "new:collection": "mkdir graphql/collections/_NEW && cp graphql/collections/_TEMPLATE/* graphql/collections/_NEW && echo '\\i graphql/collections/_NEW/schema.sql' >> graphql/collections/all_tables.sql",
     "database:reset": "eval $(grep '^POSTGRES_URL' .env.local) && psql ${POSTGRES_URL} -a -f graphql/collections/all_tables.sql"
-  },
-  "ts-standard": {
-    "ignore": [
-      "next-env.d.ts",
-      "graphql/__generated__"
-    ]
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -35,8 +28,6 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "dayjs": "^1.11.10",
-    "eslint": "8.48.0",
-    "eslint-config-next": "13.4.19",
     "formidable": "^3.5.1",
     "html-entities": "^2.5.2",
     "next": "^14.2.3",
@@ -53,6 +44,10 @@
     "@types/formidable": "^3.4.5",
     "@types/next": "^9.0.0",
     "@types/swagger-ui-react": "^4.18.3",
-    "ts-standard": "^12.0.2"
+    "eslint": "^8.57.0",
+    "eslint-config-next": "13.4.19",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.3.2"
   }
 }

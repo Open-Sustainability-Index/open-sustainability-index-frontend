@@ -1,15 +1,4 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": false,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "prettier.useTabs": false,
-  "prettier.tabWidth": 2,
-  "prettier.printWidth": 80,
-  "prettier.semi": true,
-  "prettier.singleQuote": true,
-  "prettier.bracketSpacing": true,
-  "prettier.arrowParens": "always",
-  "prettier.bracketSameLine": false,
-  "prettier.trailingComma": "es5"
+  "editor.formatOnSave": true
 }
