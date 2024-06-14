@@ -4,7 +4,8 @@ import { ParsedUrlQuery } from 'querystring'
 
 import { fetchCompanies, companiesPageProps } from 'app/services/companies'
 
-import { ListEndpointParams, CompaniesCompany } from 'types/global'
+import { ListEndpointParams, CompaniesCompany, PageProps } from 'types/global'
+
 import toSlug from 'lib/toSlug'
 import CompanyList from 'app/components/companies/CompanyList'
 import PageTopBanner from 'app/components/page/PageTopBanner'
@@ -13,9 +14,7 @@ export interface CompanyListPageParams extends ParsedUrlQuery {
   page: string
 }
 
-export interface CompanyListPageProps {
-  title: string
-  description: string
+export interface CompanyListPageProps extends PageProps {
   companies?: CompaniesCompany[]
   page: number
   detailPageLink?: string
@@ -146,7 +145,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<Comp
     sort: sort as string,
     order: order as string,
     page: parseInt(page as string ?? '1'),
-    filters,
+    filters: filters as Record<string, string | undefined>,
     pageSize: filters.tags ? 200 : 20,
   }, context)
 }

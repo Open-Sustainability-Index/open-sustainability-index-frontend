@@ -7,10 +7,13 @@ declare global {
   }
 }
 
-interface PageProps {
+export interface PageProps {
   title: string
   description: string
   imageUrl?: string
+  iconUrl?: string
+  canonicalPath?: string
+  redirectTo?: string
   showFooter?: boolean
 }
 
@@ -19,7 +22,7 @@ export interface ListEndpointParams {
   pageSize?: number
   sort?: string
   order?: string
-  filters?: Record<string, any>
+  filters?: Record<string, string | undefined>
 }
 
 export interface ListPageOptions {

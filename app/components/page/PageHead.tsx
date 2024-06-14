@@ -2,16 +2,9 @@ import React from 'react'
 import Head from 'next/head'
 
 import { config } from 'config/config'
+import { PageProps } from 'types/global'
 
-interface PageHeadProps {
-  title?: string
-  description?: string
-  imageUrl?: string
-  iconUrl?: string
-  path?: string
-}
-
-const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', path = '/' }: PageHeadProps): React.ReactElement | null => {
+const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', canonicalPath, redirectTo }: PageProps): React.ReactElement | null => {
   const pageTitle = (title !== undefined && title !== null)
     ? `${(title)} – ${config.appName as string}`
     : `${config.appName as string} – ${(config.appTagline as string)}`
@@ -57,15 +50,12 @@ const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', path
       <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
       <meta name='apple-mobile-web-app-title' content={config.appName} />
 
-      {/*
-        <link rel='apple-touch-startup-image' href='' />
-
-        <link rel='canonical' href={websiteUrl} />
-        <meta property='og:url' content={websiteUrl} />
-
-        <meta name='twitter:site' content={`@${config.landingPage.social.twitter}`} />
-      */}
-
+      {(canonicalPath !== undefined) && (
+        <link rel='canonical' href={`${config.appUrl as string}${canonicalPath.slice(1)}`} />
+      )}
+      {(redirectTo !== undefined) && (
+        <meta httpEquiv='refresh' content={`0;url=${config.appUrl as string}${redirectTo.slice(1)}`} />
+      )}
     </Head>
   )
 }

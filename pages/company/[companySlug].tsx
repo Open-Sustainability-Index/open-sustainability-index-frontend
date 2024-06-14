@@ -1,30 +1,21 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import React from 'react'
 import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
 import { fetchCompanyHistory, companyPageProps } from 'app/services/companies'
 import CompanyDetails from '../../app/components/companies/CompanyDetails'
-import { Company } from 'types/global'
+import { Company, PageProps } from 'types/global'
 
 interface CompanyPageParams extends ParsedUrlQuery {
   companySlug: string
 }
 
-interface CompanyPageProps {
+interface CompanyPageProps extends PageProps {
   company: Company | undefined
   companySlug?: string | null
-  title: string
 }
 
 const CompanyPage = ({ title, company, companySlug }: CompanyPageProps): React.ReactElement => {
-  const router = useRouter()
-  useEffect(() => {
-    if (company?.slug_new !== undefined) {
-      router.push(`/company/${company?.slug_new}`)
-    }  
-  }, [company?.slug_new])
-
   return (
     <CompanyDetails
       company={company ?? undefined}
@@ -42,7 +33,9 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
     props: {
       ...companyPageProps(company),
       companySlug,
-      company
+      company,
+      canonicalPath: `/company/${company?.slug}`,
+      ...(company?.slug_new !== undefined ? { redirectTo: `/company/${company?.slug_new}` } : {})
     }
   }
 }
