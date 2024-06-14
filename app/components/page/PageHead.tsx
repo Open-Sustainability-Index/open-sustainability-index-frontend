@@ -51,7 +51,10 @@ const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', cano
       <meta name='apple-mobile-web-app-title' content={config.appName} />
 
       {(canonicalPath !== undefined) && (
-        <link rel='canonical' href={`${config.appUrl as string}${canonicalPath.slice(1)}`} />
+        <>
+          <link rel='canonical' href={`${config.appUrl as string}${canonicalPath.slice(1)}`} />
+          <meta property='og:url' content={`${config.appUrl as string}${canonicalPath.slice(1)}`} />
+        </>
       )}
       {(redirectTo !== undefined) && (
         <meta httpEquiv='refresh' content={`0;url=${config.appUrl as string}${redirectTo.slice(1)}`} />
