@@ -6,7 +6,7 @@ import { PageProps } from 'types/global'
 
 const PageHead = ({ title, description, imageUrl, iconUrl = '/favicon.png', canonicalPath, redirectTo }: PageProps): React.ReactElement | null => {
   const pageTitle = (title !== undefined && title !== null)
-    ? `${(title)} – ${config.appName as string}`
+    ? title + (title.length <= (60 - ` – ${config.appName as string}`.length) ? ` – ${config.appName as string}` : '')
     : `${config.appName as string} – ${(config.appTagline as string)}`
 
   const pageDescription = description ?? config.appDescription ?? ''
