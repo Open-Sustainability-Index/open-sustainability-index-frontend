@@ -15,6 +15,7 @@ import {
   useMediaQuery
 } from '@mui/material'
 import { useRouter } from 'next/router'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 import { COLORS } from 'app/theme/theme'
 import { changeQuery, changeQueryString } from 'lib/strings'
@@ -201,7 +202,7 @@ const DataTableCell = ({ index, row, header, align }: DataTableCellProps): React
         : header.type === 'link'
           ? (
             <a href={row[header.field]} target='_blank' rel='noreferrer noopener'>
-              (link)
+              <OpenInNewIcon fontSize='small' />
             </a>
             )
           : header.format !== undefined
