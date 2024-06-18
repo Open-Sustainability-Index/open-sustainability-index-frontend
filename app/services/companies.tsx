@@ -26,10 +26,9 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
-import { CompaniesCompany, Company, ListEndpointParams, ListPageOptions, PageProps } from 'types/global'
+import { CompaniesCompany, Company, ListEndpointParams, PageProps } from 'types/global'
 import makeRestRequest from 'lib/makeRestRequest'
-import toSlug from 'lib/toSlug'
-import { titleCase } from 'lib/strings'
+import { titleCase, capitalizeFirstLetter } from 'lib/strings'
 
 interface CompaniesInputProps {
   children: React.ReactNode
@@ -42,11 +41,15 @@ interface CompaniesReturnProps {
 export const companiesPageProps = (companies: CompaniesCompany[], options?: ListEndpointParams): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   const filterTags = options?.filters?.tags !== undefined ? `${options?.filters?.tags?.toUpperCase()} ` : ''
-  const whichCompanies = filterTags ? `${filterTags}companies` : 'All companies'
+  const whichCompanies = filterTags
+    ? `${filterTags}companies`
+    : options?.sort !== undefined
+      ? `companies with ${options?.order === 'desc' ? 'high' : 'low'} ${options?.sort?.replace(/_/g, ' ')}`
+      : undefined
   return {
-    title: 'Company CO₂ emissions, targets, and revenue ' + (filterTags !== '' ? `for ${whichCompanies}` : 'per industry and year'),
-    titleH1: whichCompanies,
-    description: `Get CO₂ emission data (scope 1/2/3) for ${whichCompanies} such as ${first3CompanyNames}. Includes CO₂ emissions per year, emission intensity, sustainability commitments and targets. Data is open-source and global.`
+    title: 'Company CO₂ emissions, targets, and revenue ' + (whichCompanies !== undefined ? `for ${whichCompanies ?? 'companies'}` : 'per industry and year'),
+    titleH1: capitalizeFirstLetter(whichCompanies ?? 'All companies'),
+    description: `Get CO₂ emission data (scope 1/2/3) for ${whichCompanies ?? 'companies'} such as ${first3CompanyNames}. Includes GHG emissions per year, emission intensity, sustainability commitments and targets. Data is open-source and global.`
   }
 }
 
