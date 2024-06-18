@@ -42,11 +42,11 @@ interface CompaniesReturnProps {
 export const companiesPageProps = (companies: CompaniesCompany[], options?: ListEndpointParams): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   const filterTags = options?.filters?.tags !== undefined ? `${options?.filters?.tags?.toUpperCase()} ` : ''
-  const forCompanies = `for ${filterTags}companies`
+  const whichCompanies = filterTags ? `${filterTags}companies` : 'All companies'
   return {
-    title: 'Company GHG emission data ' + ((filterTags !== '' ? forCompanies : undefined) ?? 'per industry and year'),
-    titleH1: filterTags || 'Find any company',
-    description: `Get open-source global GHG emission data (scope 1/2/3) ${forCompanies} such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
+    title: 'Company CO₂ emissions, targets, and revenue ' + (filterTags !== '' ? `for ${whichCompanies}` : 'per industry and year'),
+    titleH1: whichCompanies,
+    description: `Get CO₂ emission data (scope 1/2/3) for ${whichCompanies} such as ${first3CompanyNames}. Includes CO₂ emissions per year, emission intensity, sustainability commitments and targets. Data is open-source and global.`
   }
 }
 
