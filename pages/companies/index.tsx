@@ -134,7 +134,7 @@ export const getCompaniesListProps = async (params: ListEndpointParams, context:
       ...companiesPageProps(cleanedCompanies, params),
       page: params.page ?? 1,
       companies: cleanedCompanies,
-      detailPageLink: '/company'
+      detailPageLink: '/companies' // Can't be '/company' because it messes up sorting
     }
   }
 }
