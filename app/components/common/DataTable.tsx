@@ -15,6 +15,7 @@ import {
   useMediaQuery
 } from '@mui/material'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 import { COLORS } from 'app/theme/theme'
@@ -112,6 +113,8 @@ const DataTable = ({
                     index={index}
                     row={row}
                     header={header}
+                    detailPageLink={detailPageLink}
+                    rowKeyField={rowKeyField}
                   />
                 ))}
               </TableRow>
@@ -181,43 +184,59 @@ interface DataTableCellProps {
   row: DataTableRow
   header: DataTableHeader
   align?: 'left' | 'right' | 'center'
+  detailPageLink?: string
+  rowKeyField?: string
 }
 
-const DataTableCell = ({ index, row, header, align }: DataTableCellProps): React.ReactElement => (
-  <TableCell
-    component={index === 0 ? 'th' : undefined}
-    scope={index === 0 ? 'row' : undefined}
-    align={align ?? header.align ?? 'left'}
-    sx={{ fontSize: '16px' }}
-  >
-    {(
-      header.type === 'status'
-        ? ((row[header.field] !== null && row[header.field] !== undefined) && (
-          <Chip
-            label={row[header.field]}
-            color={row[header.statusField as keyof typeof row]}
-          />
+const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField }: DataTableCellProps): React.ReactElement => {
+  const innerValue = (
+    header.type === 'status'
+      ? ((row[header.field] !== null && row[header.field] !== undefined) && (
+        <Chip
+          label={row[header.field]}
+          color={row[header.statusField as keyof typeof row]}
+        />
+        )
+        )
+      : header.type === 'link'
+        ? (
+          <a href={row[header.field]} target='_blank' rel='noreferrer noopener'>
+            <OpenInNewIcon fontSize='small' />
+          </a>
           )
-          )
-        : header.type === 'link'
-          ? (
-            <a href={row[header.field]} target='_blank' rel='noreferrer noopener'>
-              <OpenInNewIcon fontSize='small' />
-            </a>
-            )
-          : header.format !== undefined
-            ? header.format(row[header.field])
-            : row[header.field]
-    )}
-  </TableCell>
-)
+        : header.format !== undefined
+          ? header.format(row[header.field])
+          : row[header.field]
+  )
+  const innerValueLinked = (index === 0 && detailPageLink !== undefined)
+    ? (
+      <Link
+        href={getDetailPageLink(detailPageLink, rowKeyField ?? 'slug', row)}
+      >
+        {innerValue}
+      </Link>
+    )
+    : innerValue
+  return (
+    <TableCell
+      component={(index === 0) ? 'th' : undefined}
+      scope={(index === 0) ? 'row' : undefined}
+      align={align ?? header.align ?? 'left'}
+      sx={{ fontSize: '16px' }}
+    >
+      {innerValueLinked}
+    </TableCell>
+  )
+}
 
 /* ----- Horizontal ----- */
 
 export const DataTableHorizontal = ({
   headers,
   data,
-  title
+  title,
+  detailPageLink,
+  rowKeyField
 }: DataTableProps): React.ReactElement => {
   return (
     <TableContainer component={Paper}>
@@ -245,6 +264,8 @@ export const DataTableHorizontal = ({
                   key={`${index}-${rowIndex}`}
                   row={row}
                   header={header}
+                  detailPageLink={detailPageLink}
+                  rowKeyField={rowKeyField}
                 />
               ))}
             </TableRow>
