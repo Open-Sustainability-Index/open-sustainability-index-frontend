@@ -8,12 +8,13 @@ declare global {
 }
 
 export interface PageProps {
-  title: string
-  description: string
+  title: string // Meta title
+  titleH1?: string // Optional H1 title, if different from meta title
+  description: string // Meta description
   imageUrl?: string
   iconUrl?: string
   canonicalPath?: string
-  redirectTo?: string
+  redirectTo?: string // Will use meta httpEquiv='refresh' to redirect to another path
   showFooter?: boolean
 }
 

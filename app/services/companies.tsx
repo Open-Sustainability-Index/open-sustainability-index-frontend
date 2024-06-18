@@ -45,6 +45,7 @@ export const companiesPageProps = (companies: CompaniesCompany[], options?: List
   const forCompanies = `for ${filterTags}companies`
   return {
     title: 'Company GHG emission data ' + ((filterTags !== '' ? forCompanies : undefined) ?? 'per industry and year'),
+    titleH1: filterTags || 'Find any company',
     description: `Get open-source global GHG emission data (scope 1/2/3) ${forCompanies} such as ${first3CompanyNames}. Includes emissions per year, industry, country, and company intensity factors.`
   }
 }

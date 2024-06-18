@@ -21,10 +21,10 @@ export interface CompanyListPageProps extends PageProps {
   filters: ListEndpointParams['filters']
 }
 
-function CompanyListPage ({ companies, page, detailPageLink, filters }: CompanyListPageProps): React.ReactElement {
+function CompanyListPage ({ companies, page, detailPageLink, titleH1 }: CompanyListPageProps): React.ReactElement {
   return (
     <>
-      <PageTopBanner subtitle='Companies' title={filters?.tags?.toUpperCase() || 'Find any company'} />
+      <PageTopBanner subtitle='Companies' title={titleH1} />
       <CompanyList
         companies={companies}
         page={page}
