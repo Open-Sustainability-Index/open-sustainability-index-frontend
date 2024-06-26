@@ -10,7 +10,7 @@ const links = [
   { name: 'Contact', path: '/contact', display: ['footer'] },
   { name: 'API', path: '/api', display: ['header', 'footer'] },
   // { name: 'FAQ', path: '/faq', display: ['footer'] },
-  { name: 'Press', path: '/press', display: ['footer'] },
+  // { name: 'Press', path: '/press', display: ['footer'] },
   { name: 'Roadmap', path: '/roadmap', display: ['footer'] }
   // { name: 'Partners', path: '/partners', display: ['footer'] },
   // { name: 'Governance', path: '/governance', display: ['footer'] },
