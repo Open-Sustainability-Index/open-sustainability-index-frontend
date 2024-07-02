@@ -4,6 +4,8 @@
 
 Copy `.env.example` to `.env.local`
 
+Running [`climate-wiki-backend`](https://github.com/Open-Sustainability-Index/open-sustainability-index-backend) locally is _optional_; the frontend will connect to the live backend if you don’t override `BACKEND_BASE_URL`.
+
 ## How to run
 
     npm run dev
@@ -18,3 +20,5 @@ Copy `.env.example` to `.env.local`
 ## API
 
 - GET http://localhost:5174/api
+
+Note: the main API is in [`climate-wiki-backend`](https://github.com/Open-Sustainability-Index/open-sustainability-index-backend).
