@@ -113,7 +113,7 @@ const EmissionsOverviewTable = ({ company }: { company: Company }): React.ReactE
         { field: 'year', label: 'Year', align: 'right' },
         { field: 'total_emission_market_based', label: 'Total Emissions - Market Based (t CO₂e)', align: 'right', format: (value: number): string => formatAmount(value) },
         { field: 'emission_intensity', label: 'Emissions Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) },
-        { field: 'cradle_to_gate:', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) }
+        { field: 'cradle_to_gate', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) }
       ]}
       data={company.emissions}
     />
