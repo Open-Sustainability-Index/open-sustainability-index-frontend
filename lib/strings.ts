@@ -19,5 +19,5 @@ export const formatAmount = (value: string | number | null): string => {
     return ''
   }
   const numberValue = typeof value === 'string' ? parseFloat(value) : value
-  return numberValue.toLocaleString()
+  return numberValue.toLocaleString('en-US')
 }
