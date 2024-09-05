@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Typography, Box } from '@mui/material'
+import { Typography, Box, InputBase, styled } from '@mui/material'
 import { Company } from 'types/global'
 import { COLORS } from 'app/theme/theme'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import NextMUILink from '../navigation/NextMUILink'
+import { Padding } from '@mui/icons-material'
+
 
 export function Targets ({ company: { targets, commitment } }: { company: Company }): React.ReactElement {
   const [visibleTarget, setVisibleTarget] = useState(0)
@@ -14,6 +16,18 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
     setVisibleTarget(event.target.value as unknown as number)
   }
 
+  const BootstrapInput = styled(InputBase)(({ theme }) => ({
+    '& .MuiInputBase-input': {
+      border: '1px solid white',
+      padding: '10px 26px 10px 12px',
+      '&:hover': {
+        outline: '1px solid white',
+      },
+    },
+  }));
+  
+
+
   return (
     <>
       <Typography variant='h2' mb={2}>Targets</Typography>
@@ -21,13 +35,16 @@ export function Targets ({ company: { targets, commitment } }: { company: Compan
         ? (
           <Box sx={{ background: COLORS.PURPLE_GRADIENT, color: COLORS.WHITE, borderRadius: '.5em', fontSize: '16px' }} p={4}>
 
-            <FormControl fullWidth>
+            <FormControl fullWidth >
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 value={visibleTarget as unknown as string}
                 onChange={handleChange}
-                sx={{ color: COLORS.WHITE }}
+                sx={{ color: COLORS.WHITE,'& .MuiSelect-icon': {
+                    color: COLORS.WHITE,
+                  },}}
+                 input={<BootstrapInput />}
               >
                 {targets.map((target, index) =>
                   <MenuItem value={index} key={index}>{target.target} for {target.target_year} (scope {target.scope})</MenuItem>
