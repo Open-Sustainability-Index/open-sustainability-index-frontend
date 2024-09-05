@@ -1,5 +1,9 @@
 # Open Sustainability Index (frontend)
 
+## Introduction for new contributors
+
+See the README on https://github.com/Open-Sustainability-Index
+
 ## How to set up
 
 Copy `.env.example` to `.env.local`
