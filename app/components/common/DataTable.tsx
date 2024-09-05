@@ -46,7 +46,7 @@ interface DataTableProps {
   title?: string // Optional title for the table
 }
 
-const getDetailPageLink = (detailPageLink: string, rowKeyField: string, row: DataTableRow): string => (detailPageLink + '/' + (row[rowKeyField as keyof typeof row] as string))
+const getDetailPageLink = (detailPageLink: string, rowKeyField: string, row: DataTableRow): string => (detailPageLink + '/' + (row[rowKeyField] as string))
   .replace('=/', '=') // for e.g. /companies?industry=Media
 
 const DataTable = ({
@@ -215,7 +215,7 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField 
       >
         {innerValue}
       </Link>
-    )
+      )
     : innerValue
   return (
     <TableCell

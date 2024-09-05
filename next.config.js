@@ -4,15 +4,15 @@ const nextConfig = {
   swcMinify: true,
   transpilePackages: ['@mui/x-charts'],
 
-  async redirects() {
+  async redirects () {
     return [
       {
         source: '/companies/:slug',
         destination: '/company/:slug',
         permanent: false
-      },
+      }
     ]
-  },
+  }
 }
 
 module.exports = nextConfig

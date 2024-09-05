@@ -25,7 +25,7 @@ export const getChatCompletion = async (
         }
       : {})
   })
-  console.log(`\nUsage tokens: ${completion.usage ?.prompt_tokens}/${completion.usage ?.completion_tokens}, est. cost $${((completion.usage ?.prompt_tokens ?? 0) * 0.005 / 1000 + (completion.usage ?.completion_tokens ?? 0) * 0.015 / 1000).toFixed(4)}`);
+  console.log(`\nUsage tokens: ${completion.usage?.prompt_tokens}/${completion.usage?.completion_tokens}, est. cost $${((completion.usage?.prompt_tokens ?? 0) * 0.005 / 1000 + (completion.usage?.completion_tokens ?? 0) * 0.015 / 1000).toFixed(4)}`)
   const response = completion.choices[0].message
   return response
 }
