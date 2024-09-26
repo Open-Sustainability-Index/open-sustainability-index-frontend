@@ -146,6 +146,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<Comp
     order: order as string,
     page: parseInt(page as string ?? '1'),
     filters: filters as Record<string, string | undefined>,
-    pageSize: filters.tags ? 200 : 20,
+    pageSize: filters.tags ? 200 : 20
   }, context)
 }
