@@ -41,6 +41,7 @@ export interface WordpressPost {
   ID: number
   slug: string
   title: string
+  content?: string
   featured_image: string
   date: string
   description: string
