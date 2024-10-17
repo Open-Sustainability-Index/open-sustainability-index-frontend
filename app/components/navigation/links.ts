@@ -1,8 +1,10 @@
 const links = [
   { name: 'Companies', path: '/companies', display: ['header'], buildStaticWordpressPage: false },
   { name: 'Industries', path: '/industries', display: ['header', 'footer'], buildStaticWordpressPage: false },
+  { name: 'Use Cases', path: '/use-cases', display: ['header', 'footer'], buildStaticWordpressPage: false },
   // { name: 'Countries', path: '/countries', display: ['header'], buildStaticWordpressPage: false },
   { name: 'News', path: '/news', display: ['header', 'footer'], buildStaticWordpressPage: false },
+  { name: 'Press Releases', path: '/press-releases', display: ['footer'], buildStaticWordpressPage: false },
   // { name: 'Reports', path: '/reports', display: ['footer'] },
   { name: 'Documentation', path: '/documentation', display: ['footer'] },
   { name: 'About', path: '/about', display: ['header', 'footer'] },

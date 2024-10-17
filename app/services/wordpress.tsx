@@ -21,17 +21,36 @@ const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, ''
 const stripNewLines = str => str.replace(/\n/g, '')
 const getFirstSentence = str => str.replace(/[!?:;(–]/g, '.').split('.')[0]
 
-export interface WordpressPost {
-  title: string
+export interface WordpressCategory {
+  ID: number
   description: string
-  category: string
-  date: string
-  dateFormatted: string
+  meta: {
+    links: {
+      self: string
+      help: string
+      site: string
+    }
+  }
+  name: string
+  parent: number
+  post_count: number
   slug: string
-  url: string
-  imageUrl: string
-  bigImageUrl: string
-  content: string
+}
+
+export interface WordpressPost {
+  ID: number
+  slug: string
+  title: string
+  featured_image: string
+  date: string
+  description: string
+  attachments: Record<string, any>
+  categories: Record<string, WordpressCategory>
+  tags: Record<string, any>
+  sticky: boolean
+  imageUrl: string | null
+  bigImageUrl: string | null
+  dateFormatted: string
 }
 
 const fixWordpressPost = post => {
@@ -65,13 +84,37 @@ export const getCategories = async function (): Promise<any[]> {
     .then(res => res.categories.map(({ meta, feed_url, ...category }) => category)) // eslint-disable-line camelcase
 }
 
-export const getCategoryDetails = async function (slug): Promise<any[]> {
+export interface WordpressCategory {
+  ID: number
+  name: string
+  slug: string
+  description: string
+  post_count: number
+  feed_url: string
+  parent: number
+  meta: {
+    links: {
+      self: string
+      help: string
+      site: string
+    }
+  }
+}
+
+export const getCategoryDetails = async function (slug): Promise<WordpressCategory> {
   const url = `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/categories/slug:${slug}`
   return await fetch(url) // eslint-disable-line no-undef
     .then(async res => await res.json())
 }
 
-export const getPostsList = async function (options = {}): Promise<WordpressPost[]> {
+interface PostListOptions {
+  fields?: string
+  order?: string
+  category?: string
+  search?: string
+}
+
+export const getPostsList = async function (options: PostListOptions = {}): Promise<WordpressPost[]> {
   const { fields = 'ID,slug,title,featured_image,date,description,attachments,categories,tags,sticky' } = options
   const url = [
     `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/posts/?`,
@@ -105,3 +148,9 @@ export const postPageProps = (post: WordpressPost): PageProps => ({
   description: post.description,
   imageUrl: post.imageUrl
 })
+
+export interface WordpressListPageProps {
+  wordpressPosts?: WordpressPost[]
+  title: string
+  description: string
+}
