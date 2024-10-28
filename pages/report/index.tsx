@@ -151,9 +151,10 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const inProgress = useMemo(() => analysisResults === null, [analysisResults])
 
   const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
 
   const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
-    console.log('handleValueChange:', { columnIndex, field, value })
     const newEmissions = emissions.map((emission, index) => {
       if (index === columnIndex) {
         return { ...emission, [field]: value?.name }
@@ -174,13 +175,36 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
     ])
   }
 
+  const handleSubmitDataForm = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault()
+    const response = await fetch('/api/slack', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        jsonData: emissions
+      })
+    })
+    if (response.ok) {
+      window.alert('Data submitted successfully!')
+      setEmissions(DEFAULT_EMISSIONS)
+      setName('')
+      setEmail('')
+    } else {
+      window.alert('Failed to submit data.')
+    }
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
       setSelectedFile(event.target.files?.[0])
     }
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmitImage = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     if (selectedFile !== undefined) {
       setAnalysisResults(null)
@@ -201,7 +225,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   return (
     <Container>
       <Typography variant='h1' gutterBottom>{title}</Typography>
-      <Box component='form' onSubmit={(e) => { void handleSubmit(e) }} sx={{ mt: 2 }}>
+      <Box component='form' onSubmit={(e) => { void handleSubmitImage(e) }} sx={{ mt: 2 }}>
         <TextField
           type='file'
           inputProps={{ accept: 'image/*' }}
@@ -236,18 +260,44 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       {(inProgress) && (
         <CircularProgress />
       )}
-      <Grid item xs={12} sx={{ textAlign: 'right' }}>
-        <Button onClick={handleAddYear}>Add year</Button>
-      </Grid>
-      <Grid item xs={12}>
-        <RevenueTable emissions={emissions} onChange={handleValueChange} />
-      </Grid>
-      <Grid item xs={12}>
-        <EmissionsOverviewTable emissions={emissions} onChange={handleValueChange} />
-      </Grid>
-      <Grid item xs={12}>
-        <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
-      </Grid>
+      <form onSubmit={handleSubmitDataForm}>
+        <Grid item xs={12} sx={{ textAlign: 'right' }}>
+          <Button onClick={handleAddYear}>Add year</Button>
+        </Grid>
+        <Grid item xs={12}>
+          <RevenueTable emissions={emissions} onChange={handleValueChange} />
+        </Grid>
+        <Grid item xs={12}>
+          <EmissionsOverviewTable emissions={emissions} onChange={handleValueChange} />
+        </Grid>
+        <Grid item xs={12}>
+          <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
+        </Grid>
+        <Grid item xs={12} sx={{ textAlign: 'right' }}>
+          <Typography variant='h3'>
+            Your info
+          </Typography>
+          <TextField
+            label='Name'
+            placeholder='Enter your name'
+            fullWidth
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label='Email'
+            placeholder='Enter your email'
+            fullWidth
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }} disabled={inProgress}>
+            Submit data
+          </Button>
+        </Grid>
+      </form>
       {(analysisResults !== null && analysisResults !== undefined) && (
         <>
           <CopyToClipboardButton
@@ -269,7 +319,7 @@ function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: st
   const handleCopyClick = (): void => {
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
-        alert('Text copied to clipboard!')
+        window.alert('Text copied to clipboard!')
       })
       .catch((err) => {
         console.error('Failed to copy text: ', err)
