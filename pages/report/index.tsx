@@ -1,11 +1,10 @@
-// pages/upload.js
 import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
 import { Emission } from 'types/global'
 import jsonToTSV from 'app/utils/jsonToTSV'
-import DataTable, { DataTableHeader, DataTableOnChangeFunction } from 'app/components/common/DataTable'
+import { DataTableHeader, DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
@@ -145,21 +144,44 @@ const DEFAULT_EMISSIONS: Emission[] = [
 ]
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
+  const [inProgress, setInProgress] = useState<boolean>(false)
+  const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
   return (
     <Container>
       <Typography variant='h1' gutterBottom>{title}</Typography>
-      <ImageAnalysisForm />
-      <CompanyDataForm />
+      <ImageAnalysisForm
+        emissions={emissions}
+        setEmissions={setEmissions}
+        inProgress={inProgress}
+        setInProgress={setInProgress}
+      />
+
+      <CopyToClipboardButton
+        textToCopy={jsonToTSV(emissions, headers)}
+        label='Copy sheet data'
+      />
+
+      <CompanyDataForm
+        emissions={emissions}
+        setEmissions={setEmissions}
+        inProgress={inProgress}
+        setInProgress={setInProgress}
+      />
     </Container>
   )
 }
 export default UploadReportPage
 
-const CompanyDataForm: React.FC = () => {
-  const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
+interface EmissionsFormProps {
+  emissions: Emission[]
+  setEmissions: (emissions: Emission[]) => void
+  inProgress: boolean
+  setInProgress: (inProgress: boolean) => void
+}
+
+const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
-  const [inProgress, setInProgress] = useState<boolean>(false)
 
   const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
     const newEmissions = emissions.map((emission, index) => {
@@ -184,6 +206,7 @@ const CompanyDataForm: React.FC = () => {
 
   const handleSubmitDataForm = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
+    setInProgress(true)
     const response = await fetch('/api/slack', {
       method: 'POST',
       headers: {
@@ -203,10 +226,11 @@ const CompanyDataForm: React.FC = () => {
     } else {
       window.alert('Failed to submit data.')
     }
+    setInProgress(false)
   }
 
   return (
-    <form onSubmit={handleSubmitDataForm}>
+    <form onSubmit={(e) => { void handleSubmitDataForm(e) }}>
       <Grid item xs={12} sx={{ textAlign: 'right' }}>
         <Button onClick={handleAddYear}>Add year</Button>
       </Grid>
@@ -247,11 +271,11 @@ const CompanyDataForm: React.FC = () => {
   )
 }
 
-const ImageAnalysisForm: React.FC = () => {
+const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
   const [specialInstructions, setSpecialInstructions] = useState<string>('')
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
-  const inProgress = useMemo(() => analysisResults === null, [analysisResults])
+  const inProgressAnalysis = useMemo(() => analysisResults === null, [analysisResults])
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
@@ -274,6 +298,7 @@ const ImageAnalysisForm: React.FC = () => {
 
       const analysisData = await res.json()
       setAnalysisResults(analysisData)
+      setEmissions(analysisData?.analysis?.yearlyReports ?? [])
     }
   }
 
@@ -304,27 +329,15 @@ const ImageAnalysisForm: React.FC = () => {
               color='primary'
               type='submit'
               sx={{ mt: 2, mb: 2 }}
-              disabled={inProgress}
+              disabled={inProgressAnalysis}
             >
               Start the AI analysis
             </Button>
           </Box>
         )}
       </Box>
-      {(inProgress) && (
+      {(inProgressAnalysis) && (
         <CircularProgress />
-      )}
-      {(analysisResults !== null && analysisResults !== undefined) && (
-        <>
-          <CopyToClipboardButton
-            textToCopy={jsonToTSV(analysisResults?.analysis?.yearlyReports, headers)}
-            label='Copy sheet data'
-          />
-          <DataTable
-            data={analysisResults?.analysis?.yearlyReports ?? []}
-            headers={headers}
-          />
-        </>
       )}
     </>
   )
