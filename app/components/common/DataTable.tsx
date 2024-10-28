@@ -26,7 +26,7 @@ import { changeQuery, changeQueryString } from 'lib/strings'
 export interface DataTableHeader {
   field: string
   label?: string
-  type?: 'string' /* default, leave blank */ | 'number' | 'date' | 'status' | 'image' | 'link'
+  type?: 'string' /* default, leave blank */ | 'number' | 'date' | 'status' | 'image' | 'link' | 'none'
   align?: 'left' /* default, leave blank */ | 'right' | 'center'
   width?: string
   sortable?: boolean
@@ -172,13 +172,14 @@ const DataTableHeaderCell = ({
 }: DataTableHeaderCellProps): React.ReactElement => {
   const headerTitle = title ?? header.label ?? header.field
   // If cell is editable
-  const innerValueEditableOrNot = onChange !== undefined
+  // TODO: header.type !== 'none' not working
+  const innerValueEditableOrNot = (onChange !== undefined && header.type !== 'none')
     ? (
       <TextField
         value={headerTitle}
         placeholder={header.field.replace(/_/g, ' ')}
         onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
-        type='number'
+        type={header.type === 'number' ? 'number' : 'text'}
         InputProps={{
           inputProps: { step: 1 },
           style: { textAlign: 'right', fontSize: '16px' }
@@ -256,7 +257,7 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField,
         value={row[header.field] ?? ''}
         placeholder={header.field.replace(/_/g, ' ')}
         onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
-        type='number'
+        type={header.type === 'number' ? 'number' : 'text'}
         InputProps={{
           inputProps: { step: 0.01 },
           style: { textAlign: 'right', fontSize: '16px' }
