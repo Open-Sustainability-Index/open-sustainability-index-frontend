@@ -41,7 +41,7 @@ interface CompaniesReturnProps {
 export const companiesPageProps = (companies: CompaniesCompany[], options?: ListEndpointParams): PageProps => {
   const first3CompanyNames = companies.slice(0, 3).map((company) => titleCase(company.company_name)).join(', ')
   const filterTags = options?.filters?.tags !== undefined ? `${options?.filters?.tags?.toUpperCase()} ` : ''
-  const whichCompanies = filterTags
+  const whichCompanies = options?.filters?.tags !== undefined
     ? `${filterTags}companies`
     : options?.sort !== undefined
       ? `companies with ${options?.order === 'desc' ? 'high' : 'low'} ${options?.sort?.replace(/_/g, ' ')}`
