@@ -161,6 +161,16 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companyName, setCompany
       return
     }
     setInProgress(true)
+    // Trim null/empty values
+    const jsonData = emissions.map((emission) => {
+      const newEmission = { ...emission }
+      for (const key in newEmission) {
+        if (newEmission[key as keyof typeof newEmission] === null || newEmission[key as keyof typeof newEmission] === '') {
+          delete newEmission[key as keyof typeof newEmission]
+        }
+      }
+      return newEmission
+    })
     const response = await fetch('/api/slack', {
       method: 'POST',
       headers: {
@@ -170,7 +180,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companyName, setCompany
         companyName,
         name: submitterName,
         email: submitterEmail,
-        jsonData: emissions
+        jsonData
       })
     })
     if (response.ok) {

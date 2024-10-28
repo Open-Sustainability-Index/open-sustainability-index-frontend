@@ -7,7 +7,7 @@ const client = new WebClient(process.env.SLACK_BOT_TOKEN)
 // Send the message to a specific channel
 export async function postToSlack ({ jsonData, email, name }: { jsonData: Array<{ [key: string]: any }>, email: string, name?: string }): Promise<ChatPostMessageResponse | string | unknown | undefined> {
   try {
-    const message = `The user ${name as string} with email ${email} just submitted the following JSON:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
+    const message = `${name as string ?? '(Someone)'} with email ${email ?? 'n/a'} just submitted the following data:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
 
     const response = await client.chat.postMessage({
       channel: '#data-submissions',
