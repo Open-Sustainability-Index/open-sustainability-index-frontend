@@ -355,7 +355,7 @@ function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: st
   }
 
   return (
-    <Button variant='outlined' color='primary' type='submit' sx={{ mt: 2 }} onClick={handleCopyClick}>
+    <Button color='secondary' type='submit' sx={{ mt: 2 }} onClick={handleCopyClick}>
       {label}
     </Button>
   )
@@ -364,7 +364,7 @@ function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: st
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
-      title: 'Upload image for analysis'
+      title: 'Report data'
     }
   }
 }
