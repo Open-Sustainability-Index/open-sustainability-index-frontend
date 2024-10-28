@@ -46,7 +46,7 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
             <Button
               component='a'
               href={`/report?companyName=${company?.company_name}`}
-              sx={{ textDecoration: 'none' }}
+              sx={{ textDecoration: 'none', mb: 4 }}
             >
               Report missing data
             </Button>

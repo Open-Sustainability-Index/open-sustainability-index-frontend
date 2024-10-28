@@ -203,7 +203,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
 
   return (
     <form>
-      <Box sx={{ textAlign: 'right' }}>
+      <Box sx={{ textAlign: 'right', mb: 4 }}>
         <Button onClick={handleAddYear}>+ Add year</Button>
       </Box>
       <Grid item xs={12}>
