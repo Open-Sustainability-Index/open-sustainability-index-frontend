@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField'
 
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchSearch } from 'app/services/search'
-import toSlug from 'lib/toSlug'
 import { SearchResult } from 'types/global'
 
 interface SearchBlockProps {
@@ -34,11 +33,12 @@ const SearchBlock = ({ children }: SearchBlockProps): React.ReactElement => {
 export default SearchBlock
 
 interface SearchFieldProps {
+  label?: string
   doReroute?: boolean
   onChange?: (newValue: string) => void
 }
 
-export const SearchField: React.FC<SearchFieldProps> = ({ doReroute = true, onChange }) => {
+export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for company', doReroute = true, onChange }) => {
   const [userInput, setUserInput] = useState<string>('')
   const debouncedUserInput = useDebounce(userInput, 500)
 
@@ -59,6 +59,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ doReroute = true, onCh
 
   return (
     <Autocomplete
+      freeSolo={!doReroute}
       options={listOptions}
       value={selectedOption}
       renderOption={(props, option) => (
@@ -67,7 +68,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ doReroute = true, onCh
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption as SearchResult)
         if (doReroute) {
-          if (newSelectedOption !== null) {
+          if (newSelectedOption !== null && typeof newSelectedOption !== 'string') {
             void router.push(`/company/${newSelectedOption?.slug}`)
           } else {
             void router.push('/companies')
@@ -78,7 +79,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ doReroute = true, onCh
       renderInput={(params) => (
         <TextField
           {...params}
-          label='Search for company'
+          label={label}
           size='small'
           margin='normal'
         />

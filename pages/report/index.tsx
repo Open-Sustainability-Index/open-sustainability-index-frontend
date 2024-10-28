@@ -235,7 +235,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
   return (
     <form>
       <Grid item xs={12}>
-        <Typography>Company:</Typography> <SearchField doReroute={false} onChange={(str) => setCompanyName(str)} />
+        <SearchField label='Company name' doReroute={false} onChange={(str) => setCompanyName(str)} />
       </Grid>
       <Grid item xs={12} sx={{ textAlign: 'right' }}>
         <Button onClick={handleAddYear}>Add year</Button>
