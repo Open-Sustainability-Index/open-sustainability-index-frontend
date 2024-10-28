@@ -172,7 +172,6 @@ const DataTableHeaderCell = ({
 }: DataTableHeaderCellProps): React.ReactElement => {
   const headerTitle = title ?? header.label ?? header.field
   // If cell is editable
-  // TODO: header.type !== 'none' not working
   const innerValueEditableOrNot = (onChange !== undefined && header.type !== 'none')
     ? (
       <TextField
@@ -251,7 +250,7 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField,
       )
     : innerValue
   // If cell is editable
-  const innerValueEditableOrNot = onChange !== undefined
+  const innerValueEditableOrNot = (onChange !== undefined && header.type !== 'none')
     ? (
       <TextField
         value={row[header.field] ?? ''}
