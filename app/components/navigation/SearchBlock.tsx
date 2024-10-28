@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField'
 
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchSearch } from 'app/services/search'
-import toSlug from 'lib/toSlug'
 import { SearchResult } from 'types/global'
 
 interface SearchBlockProps {
@@ -33,7 +32,13 @@ const SearchBlock = ({ children }: SearchBlockProps): React.ReactElement => {
 
 export default SearchBlock
 
-const SearchField = (): React.ReactElement => {
+interface SearchFieldProps {
+  label?: string
+  doReroute?: boolean
+  onChange?: (newValue: string, searchResult?: SearchResult) => void
+}
+
+export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for company', doReroute = true, onChange }) => {
   const [userInput, setUserInput] = useState<string>('')
   const debouncedUserInput = useDebounce(userInput, 500)
 
@@ -54,6 +59,7 @@ const SearchField = (): React.ReactElement => {
 
   return (
     <Autocomplete
+      freeSolo={!doReroute}
       options={listOptions}
       value={selectedOption}
       renderOption={(props, option) => (
@@ -61,25 +67,31 @@ const SearchField = (): React.ReactElement => {
       )}
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption as SearchResult)
-        if (newSelectedOption !== null) {
-          void router.push(`/company/${newSelectedOption?.slug}`)
-        } else {
-          void router.push('/companies')
+        if (typeof newSelectedOption !== 'string') {
+          onChange?.(newSelectedOption?.name as string, newSelectedOption ?? undefined)
+        }
+        if (doReroute) {
+          if (newSelectedOption !== null && typeof newSelectedOption !== 'string') {
+            void router.push(`/company/${newSelectedOption?.slug}`)
+          } else {
+            void router.push('/companies')
+          }
         }
       }}
       inputValue={userInput !== '' ? userInput : selectedOption?.name}
       renderInput={(params) => (
         <TextField
           {...params}
-          label='Search for company'
+          label={label}
           size='small'
           margin='normal'
         />
       )}
       onInputChange={(event, newInputValue) => {
         setUserInput(newInputValue)
+        onChange?.(newInputValue)
       }}
-      getOptionLabel={(option) => option.name ?? '(none)'}
+      getOptionLabel={(option) => (typeof option === 'string' ? option : option.name) ?? '(none)'}
       /*
       isOptionEqualToValue={(option, value) => option === value}
       */

@@ -7,6 +7,11 @@ declare global {
   }
 }
 
+interface NameAndId {
+  id: number
+  name: string | null
+}
+
 export interface PageProps {
   title: string // Meta title
   titleH1?: string // Optional H1 title, if different from meta title
@@ -115,58 +120,66 @@ export interface Commitment {
 }
 
 export interface Emission {
-  year: number | null
-  cat_1: string | null
-  cat_2: string | null
-  cat_3: string | null
-  cat_4: string | null
-  cat_5: string | null
-  cat_6: string | null
-  cat_7: string | null
-  cat_8: string | null
-  cat_9: string | null
-  cat_10: string | null
-  cat_11: string | null
-  cat_12: string | null
-  cat_13: string | null
-  cat_14: string | null
-  cat_15: string | null
-  source: string | null
-  status: string | null
-  comment: string | null
-  revenue: number | null
-  scope_1: number | null
   all_cats: string | null
-  currency: string | null
-  industry: string | null
-  isic_rev_4: string | null
+  cat_1: number | null
+  cat_2: number | null
+  cat_3: number | null
+  cat_4: number | null
+  cat_5: number | null
+  cat_6: number | null
+  cat_7: number | null
+  cat_8: number | null
+  cat_9: number | null
+  cat_10: number | null
+  cat_11: number | null
+  cat_12: number | null
+  cat_13: number | null
+  cat_14: number | null
+  cat_15: number | null
+  company_slug: string | null
+  cradle_to_gate: number | null
+  created_at: string | null // using `string` for ISO timestamp format compatibility
+  currency_local: string | null // up to 4 characters
+  currency: string | null // 3 characters, defaults to 'USD'
+  emission_intensity: number | null
+  emission_page: string | null
   fiscal_year: string | null
-  company_name: string | null
   ghg_standard: string | null
   page_revenue: string | null
-  emission_page: string | null
-  total_scope_3: string | null
-  cradle_to_gate: number | null
-  source_revenue: string | null
-  hq_country_move: string | null
-  revenue_million: number | null
-  scope_2_unknown: string | null
-  publication_date: string | null
-  upstream_scope_3: string | null
-  emission_intensity: number | null
-  source_revenue_link: string | null
-  scope_2_market_based: string | null
+  publication_date: string | null // using `string` for ISO date format compatibility
+  revenue_local: number | null
+  revenue: number | null
+  scope_1_share_of_total_upstream_emissions: number | null
+  scope_1: number | null
+  scope_2_location_based: number | null
+  scope_2_market_based: number | null
+  scope_2_unknown: number | null
+  share_upstream_of_scope_3: number | null
   source_emission_link: string | null
-  scope_2_location_based: string | null
   source_emission_report: string | null
-  total_upstream_emissions: number | null
-  share_upstream_of_scope_3: string | null
-  source_emisions_page_move: string | null
-  total_emission_market_based: string | null
-  total_emission_location_based: string | null
-  total_reported_emission_scope_1_2: number | null
+  source_emissions_page_move: string | null
+  source_revenue_link: string | null
+  source_revenue: string | null
+  status: string | null
+  total_emission_location_based: number | null
+  total_emission_market_based: number | null
   total_reported_emission_scope_1_2_3: number | null
-  scope_1_share_of_total_upstream_emissions: string | null
+  total_reported_emission_scope_1_2: number | null
+  total_scope_3: number | null
+  total_upstream_emissions: number | null
+  updated_at: string | null // using `string` for ISO timestamp format compatibility
+  upstream_scope_3: number | null
+  year: number
+}
+
+// Has some partials
+export type EmissionInput = Omit<Emission, 'company_slug' | 'currency_local' | 'revenue_local' | 'updated_at' | 'created_at'>
+export type EmissionOptional = EmissionInput & {
+  company_slug?: string | null
+  currency_local?: string | null
+  revenue_local?: number | null
+  updated_at?: string
+  created_at?: string
 }
 
 export interface Target {

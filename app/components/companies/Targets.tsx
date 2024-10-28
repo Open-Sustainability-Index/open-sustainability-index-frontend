@@ -6,7 +6,6 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import NextMUILink from '../navigation/NextMUILink'
-import { Padding } from '@mui/icons-material'
 
 export function Targets ({ company: { targets, commitment } }: { company: Company }): React.ReactElement {
   const [visibleTarget, setVisibleTarget] = useState(0)

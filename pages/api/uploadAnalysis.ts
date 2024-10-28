@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
 import fs from 'fs'
 
+import { EmissionInput } from 'types/global'
 import { supabase } from 'lib/supabase'
 import { getChatCompletion, createFunction, OpenAIFunctionParameterItems } from 'lib/openai'
 import { toSlugWithPeriods } from 'lib/toSlug'
@@ -114,13 +115,9 @@ export async function analyzeFile (imageUrl: string, specialInstructions: string
   return results
 }
 
-const YEARLY_REPORT_FIELDS: Record<string, OpenAIFunctionParameterItems> = {
-  company_name: { type: 'string', description: 'Name of the company reporting emissions' },
+const YEARLY_REPORT_FIELDS: Record<keyof EmissionInput, OpenAIFunctionParameterItems> = {
   year: { type: 'integer', description: 'Year the data pertains to' },
   fiscal_year: { type: 'integer', description: 'Fiscal year the data pertains to' },
-  industry: { type: 'string', description: 'Industry sector of the company' },
-  isic_rev_4: { type: 'string', description: 'International Standard Industrial Classification code' },
-  hq_country_move: { type: 'string', description: 'Country where company headquarters is located' },
 
   scope_1: { type: 'number', description: 'Direct emissions from owned or controlled sources' },
   scope_2_market_based: { type: 'number', description: 'Indirect emissions from the generation of purchased electricity, heat, and steam, based on market-based methods' },
@@ -153,12 +150,10 @@ const YEARLY_REPORT_FIELDS: Record<string, OpenAIFunctionParameterItems> = {
   total_upstream_emissions: { type: 'number', description: 'Total upstream emissions in CO₂ equivalents' },
   revenue: { type: 'number', description: 'Company revenue' },
   currency: { type: 'string', description: 'Currency of the revenue' },
-  revenue_million: { type: 'number', description: 'Company revenue in millions' },
   cradle_to_gate: { type: 'number', description: 'Emissions from cradle-to-gate activities' },
   ghg_standard: { type: 'string', description: 'Greenhouse gas accounting standard used' },
   emission_intensity: { type: 'number', description: 'Emission intensity (t CO₂e / million)' },
 
-  source: { type: 'string', description: 'Source of the emissions data, e.g. name of company' },
   source_emissions_page_move: { type: 'integer', description: 'Report page number for emissions data' },
   source_emission_report: { type: 'string', description: 'Source report for emissions data' },
   emission_page: { type: 'integer', description: 'Report page number containing emission data' },
@@ -167,6 +162,5 @@ const YEARLY_REPORT_FIELDS: Record<string, OpenAIFunctionParameterItems> = {
   page_revenue: { type: 'integer', description: 'Report page number containing revenue data' },
   source_revenue_link: { type: 'string', description: 'Link to the source of the revenue data' },
   publication_date: { type: 'string', description: 'Date of publication of the data, format YYYY-MM-DD' },
-  comment: { type: 'string', description: 'Additional comments or notes' },
   status: { type: 'string', description: 'Status of the data or report', enum: ['Not Started', 'Ongoing', 'Done'] }
 }

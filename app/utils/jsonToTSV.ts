@@ -5,7 +5,8 @@ interface JSONObject { [key: string]: any }
 export default function jsonToTSV (
   jsonArray: JSONObject[],
   headers?: readonly DataTableHeader[],
-  includeHeaders = true
+  includeHeaders = true,
+  delimiter = '\t'
 ): string {
   if (jsonArray.length === 0) return ''
 
@@ -22,13 +23,13 @@ export default function jsonToTSV (
   // Join headers with a tab character
   if (includeHeaders) {
     const headerLabels = (headers !== undefined) ? headers.map(header => header.label ?? header.field) : headerFields
-    tsvArray.push(headerLabels.join('\t'))
+    tsvArray.push(headerLabels.join(delimiter))
   }
 
   // Process each JSON object into a TSV string
   jsonArray.forEach(obj => {
     const row = headerFields.map(field => obj[field])
-    tsvArray.push(row.join('\t'))
+    tsvArray.push(row.join(delimiter))
   })
 
   // Join all rows with a newline character
