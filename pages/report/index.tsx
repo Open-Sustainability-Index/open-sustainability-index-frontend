@@ -1,10 +1,12 @@
 // pages/upload.js
 import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
-import { Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
+import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
+import { Emission } from 'types/global'
 import jsonToTSV from 'app/utils/jsonToTSV'
 import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
+import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
@@ -83,11 +85,70 @@ interface AnalysisResults {
   }
 }
 
+const DEFAULT_EMISSIONS: Emission[] = [
+  {
+    year: new Date().getFullYear() - 1,
+    total_emission_market_based: '',
+    emission_intensity: null,
+    cradle_to_gate: null,
+    scope_1: null,
+    scope_2_location_based: '',
+    scope_2_market_based: '',
+    scope_2_unknown: '',
+    total_scope_3: '',
+    cat_1: '',
+    cat_2: '',
+    cat_3: '',
+    cat_4: '',
+    cat_5: '',
+    cat_6: '',
+    cat_7: '',
+    cat_8: '',
+    cat_9: '',
+    cat_10: '',
+    cat_11: '',
+    cat_12: '',
+    cat_13: '',
+    cat_14: '',
+    cat_15: '',
+    total_reported_emission_scope_1_2_3: null,
+    source_emission_link: '',
+    source: null,
+    status: null,
+    comment: null,
+    revenue: null,
+    all_cats: null,
+    currency: null,
+    industry: null,
+    isic_rev_4: null,
+    fiscal_year: null,
+    company_name: null,
+    ghg_standard: null,
+    page_revenue: null,
+    emission_page: null,
+    source_revenue: null,
+    hq_country_move: null,
+    revenue_million: null,
+    publication_date: null,
+    upstream_scope_3: null,
+    source_revenue_link: null,
+    source_emission_report: null,
+    total_upstream_emissions: null,
+    share_upstream_of_scope_3: null,
+    source_emisions_page_move: null,
+    total_emission_location_based: null,
+    total_reported_emission_scope_1_2: null,
+    scope_1_share_of_total_upstream_emissions: null
+  }
+]
+
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
   const [specialInstructions, setSpecialInstructions] = useState<string>('')
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
   const inProgress = useMemo(() => analysisResults === null, [analysisResults])
+
+  const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
@@ -151,6 +212,15 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       {(inProgress) && (
         <CircularProgress />
       )}
+      <Grid item xs={12}>
+        <RevenueTable emissions={emissions} />
+      </Grid>
+      <Grid item xs={12}>
+        <EmissionsOverviewTable emissions={emissions} />
+      </Grid>
+      <Grid item xs={12}>
+        <EmissionsDetailsTable emissions={emissions} />
+      </Grid>
       {(analysisResults !== null && analysisResults !== undefined) && (
         <>
           <CopyToClipboardButton

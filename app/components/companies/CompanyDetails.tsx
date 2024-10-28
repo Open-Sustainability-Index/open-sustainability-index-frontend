@@ -5,7 +5,7 @@ import { Container, Grid, Typography } from '@mui/material'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
 import CompanyTargetChart from '../charts/CompanyTargetChart'
 import { DataTableHorizontal } from '../common/DataTable'
-import { Company } from 'types/global'
+import { Company, Emission } from 'types/global'
 import { titleCase, formatAmount } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
@@ -43,13 +43,13 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
           </Grid>
 
           <Grid item xs={12}>
-            <RevenueTable company={company} />
+            <RevenueTable emissions={company?.emissions} />
           </Grid>
           <Grid item xs={12}>
-            <EmissionsOverviewTable company={company} />
+            <EmissionsOverviewTable emissions={company?.emissions} />
           </Grid>
           <Grid item xs={12}>
-            <EmissionsDetailsTable company={company} />
+            <EmissionsDetailsTable emissions={company?.emissions} />
           </Grid>
         </Grid>
       </Container>
@@ -91,7 +91,7 @@ const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactE
   )
 }
 
-const RevenueTable = ({ company }: { company: Company }): React.ReactElement => {
+export const RevenueTable = ({ emissions = [] }: { emissions: Emission[] }): React.ReactElement => {
   return (
     <DataTableHorizontal
       title='Revenue'
@@ -100,12 +100,12 @@ const RevenueTable = ({ company }: { company: Company }): React.ReactElement => 
         { field: 'revenue', label: 'Net Revenue (M USD)', align: 'right', format: (value: number): string => formatAmount(value) },
         { field: 'source_revenue', label: 'Revenue Source', type: 'link', align: 'right' }
       ]}
-      data={company.emissions}
+      data={emissions}
     />
   )
 }
 
-const EmissionsOverviewTable = ({ company }: { company: Company }): React.ReactElement => {
+export const EmissionsOverviewTable = ({ emissions = [] }: { emissions: Emission[] }): React.ReactElement => {
   return (
     <DataTableHorizontal
       title='Emissions Overview'
@@ -115,12 +115,12 @@ const EmissionsOverviewTable = ({ company }: { company: Company }): React.ReactE
         { field: 'emission_intensity', label: 'Emissions Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) },
         { field: 'cradle_to_gate', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) }
       ]}
-      data={company.emissions}
+      data={emissions}
     />
   )
 }
 
-const EmissionsDetailsTable = ({ company }: { company: Company }): React.ReactElement => {
+export const EmissionsDetailsTable = ({ emissions = [] }: { emissions: Emission[] }): React.ReactElement => {
   return (
     <DataTableHorizontal
       title='Emissions Details'
@@ -158,7 +158,7 @@ const EmissionsDetailsTable = ({ company }: { company: Company }): React.ReactEl
 
         { field: 'source_emission_link', label: 'Emission Source', type: 'link', align: 'right' }
       ]}
-      data={company.emissions}
+      data={emissions}
     />
   )
 }
