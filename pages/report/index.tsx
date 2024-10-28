@@ -222,6 +222,11 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
     }
   }
 
+  async function postData(event: React.FormEvent<HTMLFormElement>){
+    event.preventDefault()
+    console.log('POST TO /api/slack')
+  }
+
   return (
     <Container>
       <Typography variant='h1' gutterBottom>{title}</Typography>
@@ -310,6 +315,16 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           />
         </>
       )}
+      <Box component='form' onSubmit={(e) => { void postData(e) }} sx={{ mt: 2 }}>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          sx={{ mt: 2, mb: 2 }}
+        >
+          Post to Slack
+        </Button>
+      </Box>
     </Container>
   )
 }
