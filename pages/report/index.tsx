@@ -85,9 +85,11 @@ interface AnalysisResults {
   }
 }
 
+const DEFAULT_YEAR = new Date().getFullYear() - 1
+
 const DEFAULT_EMISSIONS: Emission[] = [
   {
-    year: new Date().getFullYear() - 1,
+    year: DEFAULT_YEAR,
     total_emission_market_based: '',
     emission_intensity: null,
     cradle_to_gate: null,
@@ -161,6 +163,17 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
     setEmissions(newEmissions)
   }
 
+  const handleAddYear = (): void => {
+    const lastEmission = emissions?.[emissions?.length - 1] ?? DEFAULT_EMISSIONS[0]
+    setEmissions([
+      ...emissions,
+      {
+        ...DEFAULT_EMISSIONS[0],
+        year: parseInt((lastEmission?.year ?? DEFAULT_YEAR).toString()) + 1
+      }
+    ])
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
       setSelectedFile(event.target.files?.[0])
@@ -223,6 +236,9 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       {(inProgress) && (
         <CircularProgress />
       )}
+      <Grid item xs={12} sx={{ textAlign: 'right' }}>
+        <Button onClick={handleAddYear}>Add year</Button>
+      </Grid>
       <Grid item xs={12}>
         <RevenueTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
