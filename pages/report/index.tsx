@@ -145,14 +145,21 @@ const DEFAULT_EMISSIONS: Emission[] = [
 ]
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
-  const [selectedFile, setSelectedFile] = useState<File | undefined>()
-  const [specialInstructions, setSpecialInstructions] = useState<string>('')
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
-  const inProgress = useMemo(() => analysisResults === null, [analysisResults])
+  return (
+    <Container>
+      <Typography variant='h1' gutterBottom>{title}</Typography>
+      <ImageAnalysisForm />
+      <CompanyDataForm />
+    </Container>
+  )
+}
+export default UploadReportPage
 
+const CompanyDataForm: React.FC = () => {
   const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
+  const [inProgress, setInProgress] = useState<boolean>(false)
 
   const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
     const newEmissions = emissions.map((emission, index) => {
@@ -198,6 +205,54 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
     }
   }
 
+  return (
+    <form onSubmit={handleSubmitDataForm}>
+      <Grid item xs={12} sx={{ textAlign: 'right' }}>
+        <Button onClick={handleAddYear}>Add year</Button>
+      </Grid>
+      <Grid item xs={12}>
+        <RevenueTable emissions={emissions} onChange={handleValueChange} />
+      </Grid>
+      <Grid item xs={12}>
+        <EmissionsOverviewTable emissions={emissions} onChange={handleValueChange} />
+      </Grid>
+      <Grid item xs={12}>
+        <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
+      </Grid>
+      <Grid item xs={12} sx={{ textAlign: 'right' }}>
+        <Typography variant='h3'>
+          Your info
+        </Typography>
+        <TextField
+          label='Name'
+          placeholder='Enter your name'
+          fullWidth
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label='Email'
+          placeholder='Enter your email'
+          fullWidth
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }} disabled={inProgress}>
+          Submit data
+        </Button>
+      </Grid>
+    </form>
+  )
+}
+
+const ImageAnalysisForm: React.FC = () => {
+  const [selectedFile, setSelectedFile] = useState<File | undefined>()
+  const [specialInstructions, setSpecialInstructions] = useState<string>('')
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
+  const inProgress = useMemo(() => analysisResults === null, [analysisResults])
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
       setSelectedFile(event.target.files?.[0])
@@ -222,14 +277,8 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
     }
   }
 
-  async function postData(event: React.FormEvent<HTMLFormElement>){
-    event.preventDefault()
-    console.log('POST TO /api/slack')
-  }
-
   return (
-    <Container>
-      <Typography variant='h1' gutterBottom>{title}</Typography>
+    <>
       <Box component='form' onSubmit={(e) => { void handleSubmitImage(e) }} sx={{ mt: 2 }}>
         <TextField
           type='file'
@@ -265,44 +314,6 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       {(inProgress) && (
         <CircularProgress />
       )}
-      <form onSubmit={handleSubmitDataForm}>
-        <Grid item xs={12} sx={{ textAlign: 'right' }}>
-          <Button onClick={handleAddYear}>Add year</Button>
-        </Grid>
-        <Grid item xs={12}>
-          <RevenueTable emissions={emissions} onChange={handleValueChange} />
-        </Grid>
-        <Grid item xs={12}>
-          <EmissionsOverviewTable emissions={emissions} onChange={handleValueChange} />
-        </Grid>
-        <Grid item xs={12}>
-          <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
-        </Grid>
-        <Grid item xs={12} sx={{ textAlign: 'right' }}>
-          <Typography variant='h3'>
-            Your info
-          </Typography>
-          <TextField
-            label='Name'
-            placeholder='Enter your name'
-            fullWidth
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label='Email'
-            placeholder='Enter your email'
-            fullWidth
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }} disabled={inProgress}>
-            Submit data
-          </Button>
-        </Grid>
-      </form>
       {(analysisResults !== null && analysisResults !== undefined) && (
         <>
           <CopyToClipboardButton
@@ -315,20 +326,9 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
           />
         </>
       )}
-      <Box component='form' onSubmit={(e) => { void postData(e) }} sx={{ mt: 2 }}>
-        <Button
-          variant='contained'
-          color='primary'
-          type='submit'
-          sx={{ mt: 2, mb: 2 }}
-        >
-          Post to Slack
-        </Button>
-      </Box>
-    </Container>
+    </>
   )
 }
-export default UploadReportPage
 
 function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: string, label: string }): React.ReactElement {
   const handleCopyClick = (): void => {
