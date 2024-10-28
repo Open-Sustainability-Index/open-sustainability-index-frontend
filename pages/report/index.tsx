@@ -69,75 +69,6 @@ const DEFAULT_EMISSIONS: Emission[] = [
   }
 ]
 
-// TODO: merge with list in uploadAnalysis
-const headers: readonly DataTableHeader[] = [
-  { field: 'source' },
-  { field: 'Bonn_company' },
-
-  { field: 'year', displayOnMobile: true },
-  { field: 'fiscal_year' },
-  { field: 'company_name' },
-  { field: 'company_lookup' },
-  { field: 'sbti_lookup' },
-  { field: 'sbti_group_level' },
-  { field: 'sbti_comment' },
-  { field: 'csrd_comment_report' },
-  { field: 'industry' },
-  { field: 'isic_rev_4' },
-  { field: 'hq_country_move' },
-
-  { field: 'scope_1' },
-  { field: 'scope_2_market_based' },
-  { field: 'scope_2_location_based' },
-  { field: 'scope_2_unknown' },
-  { field: 'total_scope_3', displayOnMobile: true },
-  { field: 'total_emission_market_based' },
-  { field: 'total_emission_location_based' },
-  { field: 'total_reported_emission_scope_1_2' },
-  { field: 'total_reported_emission_scope_1_2_3' },
-  { field: 'cat_1' },
-  { field: 'cat_2' },
-  { field: 'cat_3' },
-  { field: 'cat_4' },
-  { field: 'cat_5' },
-  { field: 'cat_6' },
-  { field: 'cat_7' },
-  { field: 'cat_8' },
-  { field: 'cat_9' },
-  { field: 'cat_10' },
-  { field: 'cat_11' },
-  { field: 'cat_12' },
-  { field: 'cat_13' },
-  { field: 'cat_14' },
-  { field: 'cat_15' },
-  { field: 'all_cats' },
-
-  { field: 'Observation_comment' },
-  { field: 'All Cats_comment_from report' },
-
-  { field: 'upstream_scope_3' },
-  { field: 'share_upstream_of_scope_3' },
-  { field: 'scope_1_share_of_total_upstream_emissions' },
-  { field: 'total_upstream_emissions' },
-  { field: 'revenue' },
-  { field: 'currency' },
-  { field: 'revenue_million' },
-  { field: 'cradle_to_gate' },
-  { field: 'ghg_standard' },
-
-  { field: 'source_emissions_page_move' },
-  { field: 'emission_intensity' },
-  { field: 'source_emission_report' },
-  { field: 'emission_page' },
-  { field: 'source_emission_link' },
-  { field: 'source_revenue' },
-  { field: 'page_revenue' },
-  { field: 'source_revenue_link' },
-  { field: 'publication_date' },
-  { field: 'comment' },
-  { field: 'status' }
-]
-
 interface AnalysisResults {
   message?: string
   analysis: {
@@ -238,13 +169,6 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
       <Grid item xs={12}>
         <SearchField label='Company name' doReroute={false} onChange={(str) => setCompanyName(str)} />
       </Grid>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <CopyToClipboardButton
-          textToCopy={jsonToTSV(emissions, headers)}
-          label='Copy sheet data'
-        />
-        <Button onClick={handleAddYear}>Add year column</Button>
-      </Box>
       <Grid item xs={12}>
         <RevenueTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
