@@ -166,7 +166,7 @@ export interface Emission {
   source_emission_report: string | null
   total_upstream_emissions: number | null
   share_upstream_of_scope_3: string | null
-  source_emisions_page_move: string | null
+  source_emissions_page_move: string | null
   total_emission_market_based: string | null
   total_emission_location_based: string | null
   total_reported_emission_scope_1_2: number | null

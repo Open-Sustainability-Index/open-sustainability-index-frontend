@@ -138,7 +138,7 @@ const DEFAULT_EMISSIONS: Emission[] = [
     source_emission_report: null,
     total_upstream_emissions: null,
     share_upstream_of_scope_3: null,
-    source_emisions_page_move: null,
+    source_emissions_page_move: null,
     total_emission_location_based: null,
     total_reported_emission_scope_1_2: null,
     scope_1_share_of_total_upstream_emissions: null
