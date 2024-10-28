@@ -4,7 +4,7 @@ import { Container, Grid, Typography } from '@mui/material'
 // import { Company } from 'graphql/__generated__/graphql'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
 import CompanyTargetChart from '../charts/CompanyTargetChart'
-import { DataTableHorizontal } from '../common/DataTable'
+import { DataTableHorizontal, DataTableOnChangeFunction } from '../common/DataTable'
 import { Company, Emission } from 'types/global'
 import { titleCase, formatAmount } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
@@ -91,7 +91,12 @@ const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactE
   )
 }
 
-export const RevenueTable = ({ emissions = [] }: { emissions: Emission[] }): React.ReactElement => {
+interface EmissionTableProps {
+  emissions: Emission[]
+  onChange?: DataTableOnChangeFunction
+}
+
+export const RevenueTable = ({ emissions = [], onChange }: EmissionTableProps): React.ReactElement => {
   return (
     <DataTableHorizontal
       title='Revenue'
@@ -101,11 +106,12 @@ export const RevenueTable = ({ emissions = [] }: { emissions: Emission[] }): Rea
         { field: 'source_revenue', label: 'Revenue Source', type: 'link', align: 'right' }
       ]}
       data={emissions}
+      onChange={onChange}
     />
   )
 }
 
-export const EmissionsOverviewTable = ({ emissions = [] }: { emissions: Emission[] }): React.ReactElement => {
+export const EmissionsOverviewTable = ({ emissions = [], onChange }: EmissionTableProps): React.ReactElement => {
   return (
     <DataTableHorizontal
       title='Emissions Overview'
@@ -116,11 +122,12 @@ export const EmissionsOverviewTable = ({ emissions = [] }: { emissions: Emission
         { field: 'cradle_to_gate', label: 'Cradle-to-gate Intensity (t CO₂e / M USD)', align: 'right', format: (value: number): string => formatAmount(value) }
       ]}
       data={emissions}
+      onChange={onChange}
     />
   )
 }
 
-export const EmissionsDetailsTable = ({ emissions = [] }: { emissions: Emission[] }): React.ReactElement => {
+export const EmissionsDetailsTable = ({ emissions = [], onChange }: EmissionTableProps): React.ReactElement => {
   return (
     <DataTableHorizontal
       title='Emissions Details'
@@ -159,6 +166,7 @@ export const EmissionsDetailsTable = ({ emissions = [] }: { emissions: Emission[
         { field: 'source_emission_link', label: 'Emission Source', type: 'link', align: 'right' }
       ]}
       data={emissions}
+      onChange={onChange}
     />
   )
 }

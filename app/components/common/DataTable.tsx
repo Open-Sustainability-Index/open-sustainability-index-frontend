@@ -12,13 +12,15 @@ import {
   Stack,
   Pagination,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  TextField
 } from '@mui/material'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 import { COLORS } from 'app/theme/theme'
+import { NameAndId } from 'types/global'
 import { changeQuery, changeQueryString } from 'lib/strings'
 
 export interface DataTableHeader {
@@ -37,6 +39,8 @@ export interface DataTableHeader {
 
 type DataTableRow = Record<string, any>
 
+export type DataTableOnChangeFunction = (id: number, fieldName: string, value: NameAndId | null) => void
+
 interface DataTableProps {
   headers: readonly DataTableHeader[]
   data: readonly DataTableRow[]
@@ -44,6 +48,8 @@ interface DataTableProps {
   detailPageLink?: string
   page?: number
   title?: string // Optional title for the table
+  onChange?: DataTableOnChangeFunction
+  onDelete?: (id: number) => void
 }
 
 const getDetailPageLink = (detailPageLink: string, rowKeyField: string, row: DataTableRow): string => (detailPageLink + '/' + (row[rowKeyField] as string))
@@ -54,7 +60,8 @@ const DataTable = ({
   data,
   rowKeyField,
   detailPageLink,
-  page
+  page,
+  onChange
 }: DataTableProps): React.ReactElement => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
@@ -115,6 +122,7 @@ const DataTable = ({
                     header={header}
                     detailPageLink={detailPageLink}
                     rowKeyField={rowKeyField}
+                    onChange={onChange}
                   />
                 ))}
               </TableRow>
@@ -186,9 +194,10 @@ interface DataTableCellProps {
   align?: 'left' | 'right' | 'center'
   detailPageLink?: string
   rowKeyField?: string
+  onChange?: DataTableOnChangeFunction
 }
 
-const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField }: DataTableCellProps): React.ReactElement => {
+const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField, onChange }: DataTableCellProps): React.ReactElement => {
   const innerValue = (
     header.type === 'status'
       ? ((row[header.field] !== null && row[header.field] !== undefined) && (
@@ -208,6 +217,7 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField 
           ? header.format(row[header.field])
           : row[header.field]
   )
+  // If link in cell
   const innerValueLinked = (index === 0 && detailPageLink !== undefined)
     ? (
       <Link
@@ -217,6 +227,20 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField 
       </Link>
       )
     : innerValue
+  // If cell is editable
+  const innerValueEditableOrNot = onChange !== undefined
+    ? (
+      <TextField
+        value={row[header.field]}
+        onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
+        type='number'
+        InputProps={{
+          inputProps: { step: 0.01 },
+          style: { textAlign: 'right', fontSize: '16px' }
+        }}
+      />
+      )
+    : innerValueLinked
   return (
     <TableCell
       component={(index === 0) ? 'th' : undefined}
@@ -224,7 +248,7 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField 
       align={align ?? header.align ?? 'left'}
       sx={{ fontSize: '16px' }}
     >
-      {innerValueLinked}
+      {innerValueEditableOrNot}
     </TableCell>
   )
 }
@@ -236,7 +260,8 @@ export const DataTableHorizontal = ({
   data,
   title,
   detailPageLink,
-  rowKeyField
+  rowKeyField,
+  onChange
 }: DataTableProps): React.ReactElement => {
   return (
     <TableContainer component={Paper}>
@@ -266,6 +291,7 @@ export const DataTableHorizontal = ({
                   header={header}
                   detailPageLink={detailPageLink}
                   rowKeyField={rowKeyField}
+                  onChange={onChange}
                 />
               ))}
             </TableRow>

@@ -5,7 +5,7 @@ import { Grid, Container, Typography, Button, Box, TextField, CircularProgress }
 
 import { Emission } from 'types/global'
 import jsonToTSV from 'app/utils/jsonToTSV'
-import DataTable, { DataTableHeader } from 'app/components/common/DataTable'
+import DataTable, { DataTableHeader, DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
@@ -150,6 +150,17 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
 
   const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
 
+  const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
+    console.log('handleValueChange:', { columnIndex, field, value })
+    const newEmissions = emissions.map((emission, index) => {
+      if (index === columnIndex) {
+        return { ...emission, [field]: value?.name }
+      }
+      return emission
+    })
+    setEmissions(newEmissions)
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files?.[0] !== null) {
       setSelectedFile(event.target.files?.[0])
@@ -213,13 +224,13 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
         <CircularProgress />
       )}
       <Grid item xs={12}>
-        <RevenueTable emissions={emissions} />
+        <RevenueTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
-        <EmissionsOverviewTable emissions={emissions} />
+        <EmissionsOverviewTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
-        <EmissionsDetailsTable emissions={emissions} />
+        <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
       {(analysisResults !== null && analysisResults !== undefined) && (
         <>

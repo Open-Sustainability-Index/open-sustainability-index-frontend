@@ -7,6 +7,11 @@ declare global {
   }
 }
 
+interface NameAndId {
+  id: number
+  name: string | null
+}
+
 export interface PageProps {
   title: string // Meta title
   titleH1?: string // Optional H1 title, if different from meta title
