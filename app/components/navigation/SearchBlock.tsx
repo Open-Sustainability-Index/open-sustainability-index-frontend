@@ -35,7 +35,7 @@ export default SearchBlock
 interface SearchFieldProps {
   label?: string
   doReroute?: boolean
-  onChange?: (newValue: string) => void
+  onChange?: (newValue: string, searchResult?: SearchResult) => void
 }
 
 export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for company', doReroute = true, onChange }) => {
@@ -67,6 +67,9 @@ export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for co
       )}
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption as SearchResult)
+        if (typeof newSelectedOption !== 'string') {
+          onChange?.(newSelectedOption?.name as string, newSelectedOption ?? undefined)
+        }
         if (doReroute) {
           if (newSelectedOption !== null && typeof newSelectedOption !== 'string') {
             void router.push(`/company/${newSelectedOption?.slug}`)

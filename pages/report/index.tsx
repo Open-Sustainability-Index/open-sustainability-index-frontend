@@ -109,6 +109,13 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
   const [submitterName, setSubmitterName] = useState<string>('')
   const [submitterEmail, setSubmitterEmail] = useState<string>('')
 
+  const setCompanySlug = (slug?: string): void => {
+    const newEmissions = emissions.map((emission) => {
+      return { ...emission, company_slug: slug ?? '?' }
+    })
+    setEmissions(newEmissions)
+  }
+
   const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
     const newEmissions = emissions.map((emission, index) => {
       if (index === columnIndex) {
@@ -164,7 +171,12 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
   return (
     <form>
       <Grid item xs={12}>
-        <SearchField label='Company name' doReroute={false} onChange={(str) => setCompanyName(str)} />
+        <SearchField
+          label='Company name' doReroute={false} onChange={(name, option) => {
+            setCompanyName(name)
+            setCompanySlug(option?.slug)
+          }}
+        />
       </Grid>
       <Box sx={{ textAlign: 'right' }}>
         <Button onClick={handleAddYear}>Add year column</Button>
