@@ -2,69 +2,67 @@ import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
-import { Emission } from 'types/global'
+import { Emission, EmissionOptional } from 'types/global'
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
+import { dateAsISO } from 'lib/formatDate'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
 const DEFAULT_YEAR = new Date().getFullYear() - 1
 
-const DEFAULT_EMISSIONS: Emission[] = [
+const DEFAULT_EMISSIONS: EmissionOptional[] = [
   {
     year: DEFAULT_YEAR,
-    total_emission_market_based: '',
-    emission_intensity: null,
-    cradle_to_gate: null,
-    scope_1: null,
-    scope_2_location_based: '',
-    scope_2_market_based: '',
-    scope_2_unknown: '',
-    total_scope_3: '',
-    cat_1: '',
-    cat_2: '',
-    cat_3: '',
-    cat_4: '',
-    cat_5: '',
-    cat_6: '',
-    cat_7: '',
-    cat_8: '',
-    cat_9: '',
-    cat_10: '',
-    cat_11: '',
-    cat_12: '',
-    cat_13: '',
-    cat_14: '',
-    cat_15: '',
-    total_reported_emission_scope_1_2_3: null,
-    source_emission_link: '',
-    source: null,
-    status: null,
-    comment: null,
-    revenue: null,
+    created_at: dateAsISO(new Date()) as string,
+    updated_at: dateAsISO(new Date()) as string,
     all_cats: null,
+    cat_1: null,
+    cat_2: null,
+    cat_3: null,
+    cat_4: null,
+    cat_5: null,
+    cat_6: null,
+    cat_7: null,
+    cat_8: null,
+    cat_9: null,
+    cat_10: null,
+    cat_11: null,
+    cat_12: null,
+    cat_13: null,
+    cat_14: null,
+    cat_15: null,
+    cradle_to_gate: null,
+    currency_local: null,
     currency: null,
-    industry: null,
-    isic_rev_4: null,
+    emission_intensity: null,
+    emission_page: null,
     fiscal_year: null,
-    company_name: null,
     ghg_standard: null,
     page_revenue: null,
-    emission_page: null,
-    source_revenue: null,
-    hq_country_move: null,
-    revenue_million: null,
     publication_date: null,
-    upstream_scope_3: null,
-    source_revenue_link: null,
-    source_emission_report: null,
-    total_upstream_emissions: null,
+    revenue_local: null,
+    revenue: null,
+    scope_1_share_of_total_upstream_emissions: null,
+    scope_1: null,
+    scope_2_location_based: null,
+    scope_2_market_based: null,
+    scope_2_unknown: null,
     share_upstream_of_scope_3: null,
+    source_emission_link: '',
+    source_emission_report: null,
     source_emissions_page_move: null,
+    source_revenue_link: null,
+    source_revenue: null,
+    status: null,
     total_emission_location_based: null,
+    total_emission_market_based: null,
+    total_reported_emission_scope_1_2_3: null,
     total_reported_emission_scope_1_2: null,
-    scope_1_share_of_total_upstream_emissions: null
+    total_scope_3: null,
+    total_upstream_emissions: null,
+    upstream_scope_3: null
   }
 ]
 
@@ -77,7 +75,7 @@ interface AnalysisResults {
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
-  const [emissions, setEmissions] = useState<Emission[]>(DEFAULT_EMISSIONS)
+  const [emissions, setEmissions] = useState<EmissionOptional[]>(DEFAULT_EMISSIONS)
   return (
     <Container>
       <Typography variant='h1' gutterBottom>{title}</Typography>
@@ -100,8 +98,8 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
 export default UploadReportPage
 
 interface EmissionsFormProps {
-  emissions: Emission[]
-  setEmissions: (emissions: Emission[]) => void
+  emissions: EmissionOptional[]
+  setEmissions: (emissions: EmissionOptional[]) => void
   inProgress: boolean
   setInProgress: (inProgress: boolean) => void
 }
@@ -172,13 +170,13 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
         <Button onClick={handleAddYear}>Add year column</Button>
       </Box>
       <Grid item xs={12}>
-        <RevenueTable emissions={emissions} onChange={handleValueChange} />
+        <RevenueTable emissions={emissions as Emission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
-        <EmissionsOverviewTable emissions={emissions} onChange={handleValueChange} />
+        <EmissionsOverviewTable emissions={emissions as Emission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
-        <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
+        <EmissionsDetailsTable emissions={emissions as Emission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
         <Typography variant='body2'>Your info (optional)</Typography>
