@@ -10,6 +10,7 @@ import { SearchField } from 'app/components/navigation/SearchBlock'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
+// TODO: merge with list in uploadAnalysis
 const headers: readonly DataTableHeader[] = [
   { field: 'source' },
   { field: 'Bonn_company' },
@@ -157,11 +158,6 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
         setInProgress={setInProgress}
       />
 
-      <CopyToClipboardButton
-        textToCopy={jsonToTSV(emissions, headers)}
-        label='Copy sheet data'
-      />
-
       <CompanyDataForm
         emissions={emissions}
         setEmissions={setEmissions}
@@ -182,8 +178,8 @@ interface EmissionsFormProps {
 
 const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
   const [companyName, setCompanyName] = useState<string>('')
-  const [name, setName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
+  const [submitterName, setSubmitterName] = useState<string>('')
+  const [submitterEmail, setSubmitterEmail] = useState<string>('')
 
   const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
     const newEmissions = emissions.map((emission, index) => {
@@ -208,6 +204,10 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
 
   const handleSubmitDataForm = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     event.preventDefault()
+    if (companyName === '') {
+      window.alert('Missing company name')
+      return
+    }
     setInProgress(true)
     const response = await fetch('/api/slack', {
       method: 'POST',
@@ -216,16 +216,17 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
       },
       body: JSON.stringify({
         companyName,
-        name,
-        email,
+        name: submitterName,
+        email: submitterEmail,
         jsonData: emissions
       })
     })
     if (response.ok) {
       window.alert('Data submitted successfully!')
       setEmissions(DEFAULT_EMISSIONS)
-      setName('')
-      setEmail('')
+      setCompanyName('')
+      setSubmitterName('')
+      setSubmitterEmail('')
     } else {
       window.alert('Failed to submit data.')
     }
@@ -237,9 +238,13 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
       <Grid item xs={12}>
         <SearchField label='Company name' doReroute={false} onChange={(str) => setCompanyName(str)} />
       </Grid>
-      <Grid item xs={12} sx={{ textAlign: 'right' }}>
-        <Button onClick={handleAddYear}>Add year</Button>
-      </Grid>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <CopyToClipboardButton
+          textToCopy={jsonToTSV(emissions, headers)}
+          label='Copy sheet data'
+        />
+        <Button onClick={handleAddYear}>Add year column</Button>
+      </Box>
       <Grid item xs={12}>
         <RevenueTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
@@ -249,31 +254,29 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
       <Grid item xs={12}>
         <EmissionsDetailsTable emissions={emissions} onChange={handleValueChange} />
       </Grid>
-      <Grid item xs={12} sx={{ textAlign: 'right' }}>
-        <Typography variant='h3'>
-          Your info
-        </Typography>
+      <Grid item xs={12}>
+        <Typography variant='body2'>Your info (optional)</Typography>
         <TextField
           label='Name'
           placeholder='Enter your name'
           fullWidth
-          value={name}
-          onChange={(event) => setName(event.target.value)}
+          value={submitterName}
+          onChange={(event) => setSubmitterName(event.target.value)}
           sx={{ mb: 2 }}
         />
         <TextField
           label='Email'
           placeholder='Enter your email'
           fullWidth
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          value={submitterEmail}
+          onChange={(event) => setSubmitterEmail(event.target.value)}
           sx={{ mb: 2 }}
         />
         <Button
           variant='contained'
           color='primary'
           type='button'
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, mb: 4 }}
           disabled={inProgress}
           onClick={(e) => { void handleSubmitDataForm(e) }}
         >
@@ -368,7 +371,7 @@ function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: st
   }
 
   return (
-    <Button color='secondary' type='submit' sx={{ mt: 2 }} onClick={handleCopyClick}>
+    <Button variant='text' type='button' onClick={handleCopyClick}>
       {label}
     </Button>
   )
