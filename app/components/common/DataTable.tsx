@@ -98,10 +98,12 @@ const DataTable = ({
               {headersToDisplay.map((header, index) => (
                 <DataTableHeaderCell
                   key={index}
+                  index={index}
                   header={header}
                   sort={sort as string}
                   order={order as string}
                   onSort={handleSortColumn}
+                  onChange={onChange}
                 />
               ))}
             </TableRow>
@@ -148,41 +150,61 @@ const DataTable = ({
 export default DataTable
 
 interface DataTableHeaderCellProps {
+  index: number
   header: DataTableHeader
   title?: string
   align?: 'left' | 'right' | 'center'
   sort?: string
   order?: string
   onSort?: (event: any, sort: string, order: 'asc' | 'desc') => void
+  onChange?: DataTableOnChangeFunction
 }
 
 const DataTableHeaderCell = ({
+  index,
   header,
   title,
   align,
   sort,
   order,
-  onSort
+  onSort,
+  onChange
 }: DataTableHeaderCellProps): React.ReactElement => {
   const headerTitle = title ?? header.label ?? header.field
+  // If cell is editable
+  const innerValueEditableOrNot = onChange !== undefined
+    ? (
+      <TextField
+        value={headerTitle}
+        placeholder={header.field.replace(/_/g, ' ')}
+        onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
+        type='number'
+        InputProps={{
+          inputProps: { step: 1 },
+          style: { textAlign: 'right', fontSize: '16px' }
+        }}
+      />
+      )
+    : headerTitle
+  const innerValueSortable = onChange === undefined && header.defaultSortOrder !== undefined
+    ? (
+      <TableSortLabel
+        active={sort === header.field}
+        direction={order === undefined ? undefined : (order === 'asc' ? 'asc' : 'desc')}
+        onClick={(event) => onSort?.(event, header.field, sort === header.field ? (order === 'asc' ? 'desc' : 'asc') : (header.defaultSortOrder ?? 'asc'))}
+      >
+        {headerTitle}
+      </TableSortLabel>
+      )
+    : (
+        innerValueEditableOrNot
+      )
   return (
     <TableCell
       align={align ?? header.align ?? 'left'}
       sx={{ fontSize: '16px', fontWeight: 500, color: COLORS.GRAY_MEDIUM, '&:not(:first-child)': { width: 150, textAlign: 'right' }, '&:first-child': { width: '50%' } }}
     >
-      {header.defaultSortOrder !== undefined
-        ? (
-          <TableSortLabel
-            active={sort === header.field}
-            direction={order === undefined ? undefined : (order === 'asc' ? 'asc' : 'desc')}
-            onClick={(event) => onSort?.(event, header.field, sort === header.field ? (order === 'asc' ? 'desc' : 'asc') : (header.defaultSortOrder ?? 'asc'))}
-          >
-            {headerTitle}
-          </TableSortLabel>
-          )
-        : (
-            headerTitle
-          )}
+      {innerValueSortable}
     </TableCell>
   )
 }
@@ -231,7 +253,8 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField,
   const innerValueEditableOrNot = onChange !== undefined
     ? (
       <TextField
-        value={row[header.field]}
+        value={row[header.field] ?? ''}
+        placeholder={header.field.replace(/_/g, ' ')}
         onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
         type='number'
         InputProps={{
@@ -269,20 +292,22 @@ export const DataTableHorizontal = ({
         <TableBody>
           {/* A special first row for headers */}
           <TableRow sx={{ backgroundColor: COLORS.BLUE_LIGHT }}>
-            <DataTableHeaderCell title={title} header={headers[0]} align='left' />
+            <DataTableHeaderCell index={-1} title={title} header={headers[0]} align='left' />
             {data.map((row, rowIndex) => (
               <DataTableHeaderCell
                 key={`header-${rowIndex}`}
-                header={{ field: String(rowIndex), label: `Header ${rowIndex + 1}` }}
+                index={rowIndex}
+                header={headers[0]}
                 title={row[headers[0]?.field]}
                 align={headers[rowIndex]?.align}
+                onChange={onChange}
               />
             ))}
           </TableRow>
           {/* Rest of rows */}
           {headers.slice(1).map((header, index) => (
             <TableRow key={index} sx={header.isHorizontalHeader === true ? { backgroundColor: COLORS.GRAY_LIGHT } : null}>
-              <DataTableHeaderCell header={header} align='left' />
+              <DataTableHeaderCell index={index} header={header} align='left' />
               {data.map((row, rowIndex) => (
                 <DataTableCell
                   index={rowIndex}
