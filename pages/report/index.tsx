@@ -75,11 +75,32 @@ interface AnalysisResults {
 
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
+  const [companyName, setCompanyName] = useState<string>('')
   const [emissions, setEmissions] = useState<EmissionOptional[]>(DEFAULT_EMISSIONS)
+
+  const setCompanySlug = (slug?: string): void => {
+    const newEmissions = emissions.map((emission) => {
+      return { ...emission, company_slug: slug ?? '?' }
+    })
+    setEmissions(newEmissions)
+  }
+
   return (
     <Container>
       <Typography variant='h1' gutterBottom>{title}</Typography>
+
+      <Grid item xs={12}>
+        <SearchField
+          label='Company name' doReroute={false} onChange={(name, option) => {
+            setCompanyName(name)
+            setCompanySlug(option?.slug)
+          }}
+        />
+      </Grid>
+
       <ImageAnalysisForm
+        companyName={companyName}
+        setCompanyName={setCompanyName}
         emissions={emissions}
         setEmissions={setEmissions}
         inProgress={inProgress}
@@ -87,6 +108,8 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       />
 
       <CompanyDataForm
+        companyName={companyName}
+        setCompanyName={setCompanyName}
         emissions={emissions}
         setEmissions={setEmissions}
         inProgress={inProgress}
@@ -98,23 +121,17 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
 export default UploadReportPage
 
 interface EmissionsFormProps {
+  companyName: string
+  setCompanyName: (companyName: string) => void
   emissions: EmissionOptional[]
   setEmissions: (emissions: EmissionOptional[]) => void
   inProgress: boolean
   setInProgress: (inProgress: boolean) => void
 }
 
-const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
-  const [companyName, setCompanyName] = useState<string>('')
+const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companyName, setCompanyName, emissions, setEmissions, inProgress, setInProgress }) => {
   const [submitterName, setSubmitterName] = useState<string>('')
   const [submitterEmail, setSubmitterEmail] = useState<string>('')
-
-  const setCompanySlug = (slug?: string): void => {
-    const newEmissions = emissions.map((emission) => {
-      return { ...emission, company_slug: slug ?? '?' }
-    })
-    setEmissions(newEmissions)
-  }
 
   const handleValueChange: DataTableOnChangeFunction = (columnIndex, field, value) => {
     const newEmissions = emissions.map((emission, index) => {
@@ -170,16 +187,8 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
 
   return (
     <form>
-      <Grid item xs={12}>
-        <SearchField
-          label='Company name' doReroute={false} onChange={(name, option) => {
-            setCompanyName(name)
-            setCompanySlug(option?.slug)
-          }}
-        />
-      </Grid>
       <Box sx={{ textAlign: 'right' }}>
-        <Button onClick={handleAddYear}>Add year column</Button>
+        <Button onClick={handleAddYear}>+ Add year</Button>
       </Box>
       <Grid item xs={12}>
         <RevenueTable emissions={emissions as Emission[]} onChange={handleValueChange} />
@@ -257,6 +266,9 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
   return (
     <>
       <Box component='form' onSubmit={(e) => { void handleSubmitImage(e) }} sx={{ mt: 2 }}>
+        <Typography variant='body1'>
+          To simplify adding data, drop a screenshot from an emissions report here, or click to select files
+        </Typography>
         <TextField
           type='file'
           inputProps={{ accept: 'image/*' }}
@@ -265,7 +277,7 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
         />
         <TextField
           label='Special instructions to the AI (optional)'
-          placeholder='e.g. “Note that all emissions are reported as millions of tonnes and need to be converted”'
+          placeholder='e.g. “Emissions are reported as millions of tonnes and need to be converted”'
           fullWidth
           value={specialInstructions}
           onChange={(event) => setSpecialInstructions(event.target.value)}
