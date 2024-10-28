@@ -76,14 +76,8 @@ interface AnalysisResults {
 const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
   const [companyName, setCompanyName] = useState<string>('')
+  const [companySlug, setCompanySlug] = useState<string | undefined>('')
   const [emissions, setEmissions] = useState<EmissionOptional[]>(DEFAULT_EMISSIONS)
-
-  const setCompanySlug = (slug?: string): void => {
-    const newEmissions = emissions.map((emission) => {
-      return { ...emission, company_slug: slug ?? '?' }
-    })
-    setEmissions(newEmissions)
-  }
 
   return (
     <Container>
@@ -99,6 +93,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       </Grid>
 
       <ImageAnalysisForm
+        companySlug={companySlug}
         companyName={companyName}
         setCompanyName={setCompanyName}
         emissions={emissions}
@@ -108,6 +103,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       />
 
       <CompanyDataForm
+        companySlug={companySlug}
         companyName={companyName}
         setCompanyName={setCompanyName}
         emissions={emissions}
@@ -121,6 +117,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
 export default UploadReportPage
 
 interface EmissionsFormProps {
+  companySlug?: string
   companyName: string
   setCompanyName: (companyName: string) => void
   emissions: EmissionOptional[]
@@ -129,7 +126,7 @@ interface EmissionsFormProps {
   setInProgress: (inProgress: boolean) => void
 }
 
-const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companyName, setCompanyName, emissions, setEmissions, inProgress, setInProgress }) => {
+const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyName, setCompanyName, emissions, setEmissions, inProgress, setInProgress }) => {
   const [submitterName, setSubmitterName] = useState<string>('')
   const [submitterEmail, setSubmitterEmail] = useState<string>('')
 
@@ -154,6 +151,14 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companyName, setCompany
     ])
   }
 
+  const insertCompanySlug = (): EmissionOptional[] => {
+    const newEmissions = emissions.map((emission) => {
+      return { ...emission, company_slug: companySlug ?? '?' }
+    })
+    setEmissions(newEmissions)
+    return newEmissions
+  }
+
   const handleSubmitDataForm = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     event.preventDefault()
     if (companyName === '') {
@@ -161,8 +166,9 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companyName, setCompany
       return
     }
     setInProgress(true)
+    // Fix slug
     // Trim null/empty values
-    const jsonData = emissions.map((emission) => {
+    const jsonData = insertCompanySlug().map((emission) => {
       const newEmission = { ...emission }
       for (const key in newEmission) {
         if (newEmission[key as keyof typeof newEmission] === null || newEmission[key as keyof typeof newEmission] === '') {
