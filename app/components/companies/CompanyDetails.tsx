@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Typography } from '@mui/material'
+import { Container, Grid, Typography, Button } from '@mui/material'
 
 // import { Company } from 'graphql/__generated__/graphql'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
@@ -43,6 +43,13 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
           </Grid>
 
           <Grid item xs={12}>
+            <Button
+              component='a'
+              href={`/report?companyName=${company?.company_name}`}
+              sx={{ textDecoration: 'none' }}
+            >
+              Report missing data
+            </Button>
             <RevenueTable emissions={company?.emissions} />
           </Grid>
           <Grid item xs={12}>
