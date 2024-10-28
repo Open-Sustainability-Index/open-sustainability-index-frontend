@@ -1,6 +1,5 @@
 import { WebClient, ChatPostMessageResponse } from '@slack/web-api'
 import jsonToTSV from 'app/utils/jsonToTSV'
-import { error } from 'console'
 
 // Initialize the Slack client with your bot token
 const client = new WebClient(process.env.SLACK_BOT_TOKEN)
