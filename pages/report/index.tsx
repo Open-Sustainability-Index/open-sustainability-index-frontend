@@ -3,8 +3,7 @@ import type { GetStaticPropsResult } from 'next'
 import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
 import { Emission } from 'types/global'
-import jsonToTSV from 'app/utils/jsonToTSV'
-import { DataTableHeader, DataTableOnChangeFunction } from 'app/components/common/DataTable'
+import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
 
@@ -283,24 +282,6 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
         <CircularProgress />
       )}
     </>
-  )
-}
-
-function CopyToClipboardButton ({ textToCopy, label = 'Copy' }: { textToCopy: string, label: string }): React.ReactElement {
-  const handleCopyClick = (): void => {
-    navigator.clipboard.writeText(textToCopy)
-      .then(() => {
-        window.alert('Text copied to clipboard!')
-      })
-      .catch((err) => {
-        console.error('Failed to copy text: ', err)
-      })
-  }
-
-  return (
-    <Button variant='text' type='button' onClick={handleCopyClick}>
-      {label}
-    </Button>
   )
 }
 
