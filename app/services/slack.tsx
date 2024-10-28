@@ -7,7 +7,7 @@ const client = new WebClient(process.env.SLACK_BOT_TOKEN)
 // Send the message to a specific channel
 export async function postToSlack ({ jsonData, email, name }: { jsonData: object, email: string, name?: string }) {
   try {
-    const message = `The user ${name} with email ${email} just submitted the following JSON:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\``
+    const message = `The user ${name as string} with email ${email} just submitted the following JSON:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\``
 
     const response = await client.chat.postMessage({
       channel: '#data-submissions', // Replace with your channel ID
