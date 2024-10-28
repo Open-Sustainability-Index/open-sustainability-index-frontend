@@ -1,5 +1,7 @@
 import { WebClient, ChatPostMessageResponse } from '@slack/web-api'
+
 import jsonToTSV from 'app/utils/jsonToTSV'
+import { config } from 'config/config'
 
 // Initialize the Slack client with your bot token
 const client = new WebClient(process.env.SLACK_BOT_TOKEN)
@@ -14,7 +16,12 @@ interface PostToSlackProps {
 // Send the message to a specific channel
 export async function postToSlack ({ companyName, jsonData, email, name }: PostToSlackProps): Promise<ChatPostMessageResponse | string | unknown | undefined> {
   try {
-    const message = `${name as string ?? '(Someone)'} with email ${email ?? 'n/a'} just submitted the following data for *${companyName}*:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
+    const message = `${name as string || '(Someone)'} with email ${email || '(n/a)'} just submitted the following data for *${companyName}*:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
+
+    if (config.sendRealMessages === false) {
+      console.log('Message not sent because sendRealMessages is false:', message)
+      return
+    }
 
     const response = await client.chat.postMessage({
       channel: '#data-submissions',

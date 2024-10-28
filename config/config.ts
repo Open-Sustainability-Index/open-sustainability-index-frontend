@@ -53,12 +53,14 @@ const completeConfig: AllConfigurations = {
     googleAnalyticsId: 'G-ZFQELW8YR1',
     databaseUrl: process.env.POSTGRES_URL,
     graphqlPath: '/api/graphql',
-    apiBaseUrl: process.env.BACKEND_BASE_URL ?? 'https://api.opensustainabilityindex.org/v1/'
+    apiBaseUrl: process.env.BACKEND_BASE_URL ?? 'https://api.opensustainabilityindex.org/v1/',
+    sendRealMessages: true
   },
 
   development: {
     appUrl: `http://localhost:${serverPort}/`,
-    googleAnalyticsId: null
+    googleAnalyticsId: null,
+    sendRealMessages: false
   },
 
   production: {
