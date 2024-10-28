@@ -33,7 +33,12 @@ const SearchBlock = ({ children }: SearchBlockProps): React.ReactElement => {
 
 export default SearchBlock
 
-const SearchField = (): React.ReactElement => {
+interface SearchFieldProps {
+  doReroute?: boolean
+  onChange?: (newValue: string) => void
+}
+
+export const SearchField: React.FC<SearchFieldProps> = ({ doReroute = true, onChange }) => {
   const [userInput, setUserInput] = useState<string>('')
   const debouncedUserInput = useDebounce(userInput, 500)
 
@@ -61,10 +66,12 @@ const SearchField = (): React.ReactElement => {
       )}
       onChange={(event, newSelectedOption) => {
         setSelectedOption(newSelectedOption as SearchResult)
-        if (newSelectedOption !== null) {
-          void router.push(`/company/${newSelectedOption?.slug}`)
-        } else {
-          void router.push('/companies')
+        if (doReroute) {
+          if (newSelectedOption !== null) {
+            void router.push(`/company/${newSelectedOption?.slug}`)
+          } else {
+            void router.push('/companies')
+          }
         }
       }}
       inputValue={userInput !== '' ? userInput : selectedOption?.name}
@@ -78,6 +85,7 @@ const SearchField = (): React.ReactElement => {
       )}
       onInputChange={(event, newInputValue) => {
         setUserInput(newInputValue)
+        onChange?.(newInputValue)
       }}
       getOptionLabel={(option) => option.name ?? '(none)'}
       /*

@@ -6,6 +6,7 @@ import { Emission } from 'types/global'
 import jsonToTSV from 'app/utils/jsonToTSV'
 import { DataTableHeader, DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
+import { SearchField } from 'app/components/navigation/SearchBlock'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
@@ -180,6 +181,7 @@ interface EmissionsFormProps {
 }
 
 const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
+  const [companyName, setCompanyName] = useState<string>('')
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
 
@@ -204,7 +206,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
     ])
   }
 
-  const handleSubmitDataForm = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmitDataForm = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     event.preventDefault()
     setInProgress(true)
     const response = await fetch('/api/slack', {
@@ -213,6 +215,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        companyName,
         name,
         email,
         jsonData: emissions
@@ -230,7 +233,10 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
   }
 
   return (
-    <form onSubmit={(e) => { void handleSubmitDataForm(e) }}>
+    <form>
+      <Grid item xs={12}>
+        <Typography>Company:</Typography> <SearchField doReroute={false} onChange={(str) => setCompanyName(str)} />
+      </Grid>
       <Grid item xs={12} sx={{ textAlign: 'right' }}>
         <Button onClick={handleAddYear}>Add year</Button>
       </Grid>
@@ -263,7 +269,14 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions
           onChange={(event) => setEmail(event.target.value)}
           sx={{ mb: 2 }}
         />
-        <Button variant='contained' color='primary' type='submit' sx={{ mt: 2 }} disabled={inProgress}>
+        <Button
+          variant='contained'
+          color='primary'
+          type='button'
+          sx={{ mt: 2 }}
+          disabled={inProgress}
+          onClick={(e) => { void handleSubmitDataForm(e) }}
+        >
           Submit data
         </Button>
       </Grid>
