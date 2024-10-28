@@ -1,4 +1,4 @@
-import { WebClient } from '@slack/web-api'
+import { WebClient, ChatPostMessageResponse } from '@slack/web-api'
 import jsonToTSV from 'app/utils/jsonToTSV'
 import { error } from 'console'
 
@@ -6,7 +6,7 @@ import { error } from 'console'
 const client = new WebClient(process.env.SLACK_BOT_TOKEN)
 
 // Send the message to a specific channel
-export async function postToSlack ({ jsonData, email, name }: { jsonData: Array<{ [key: string]: any }>, email: string, name?: string }) {
+export async function postToSlack ({ jsonData, email, name }: { jsonData: Array<{ [key: string]: any }>, email: string, name?: string }): Promise<ChatPostMessageResponse | string | unknown | undefined> {
   try {
     const message = `The user ${name as string} with email ${email} just submitted the following JSON:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
 
@@ -20,9 +20,9 @@ export async function postToSlack ({ jsonData, email, name }: { jsonData: Array<
       return response
     } else {
       console.error('Failed to send message:', response.error)
-      return error
+      return response.error
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error sending message:', error)
     return error
   }

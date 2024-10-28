@@ -88,7 +88,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for co
         setUserInput(newInputValue)
         onChange?.(newInputValue)
       }}
-      getOptionLabel={(option) => option.name ?? '(none)'}
+      getOptionLabel={(option) => (typeof option === 'string' ? option : option.name) ?? '(none)'}
       /*
       isOptionEqualToValue={(option, value) => option === value}
       */
