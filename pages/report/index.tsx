@@ -154,17 +154,8 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       return
     }
     setInProgress(true)
-    // Fix slug
-    // Trim null/empty values
-    const jsonData = insertCompanySlug().map((emission) => {
-      const newEmission = { ...emission }
-      for (const key in newEmission) {
-        if (newEmission[key as keyof typeof newEmission] === null || newEmission[key as keyof typeof newEmission] === '') {
-          delete newEmission[key as keyof typeof newEmission]
-        }
-      }
-      return newEmission
-    })
+    // Fix slug on all rows
+    const jsonData = insertCompanySlug()
     const response = await fetch('/api/slack', {
       method: 'POST',
       headers: {
