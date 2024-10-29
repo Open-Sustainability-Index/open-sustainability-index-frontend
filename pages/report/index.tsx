@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
-import { Emission, EmissionOptional } from 'types/global'
+import { Emission, EmissionInsert } from 'types/global'
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
@@ -13,12 +13,18 @@ import { dateAsISO } from 'lib/formatDate'
 
 const DEFAULT_YEAR = new Date().getFullYear() - 1
 
-const DEFAULT_EMISSIONS: EmissionOptional[] = [
+const DEFAULT_EMISSIONS: EmissionInsert[] = [
   {
+    company_slug: '?',
     year: DEFAULT_YEAR,
     created_at: dateAsISO(new Date()) as string,
     updated_at: dateAsISO(new Date()) as string,
-    all_cats: null,
+    fiscal_year: null,
+    scope_1: null,
+    scope_2_market_based: null,
+    scope_2_location_based: null,
+    scope_2_unknown: null,
+    total_scope_3: null,
     cat_1: null,
     cat_2: null,
     cat_3: null,
@@ -33,37 +39,7 @@ const DEFAULT_EMISSIONS: EmissionOptional[] = [
     cat_12: null,
     cat_13: null,
     cat_14: null,
-    cat_15: null,
-    cradle_to_gate: null,
-    currency_local: null,
-    currency: null,
-    emission_intensity: null,
-    emission_page: null,
-    fiscal_year: null,
-    ghg_standard: null,
-    page_revenue: null,
-    publication_date: null,
-    revenue_local: null,
-    revenue: null,
-    scope_1_share_of_total_upstream_emissions: null,
-    scope_1: null,
-    scope_2_location_based: null,
-    scope_2_market_based: null,
-    scope_2_unknown: null,
-    share_upstream_of_scope_3: null,
-    source_emission_link: '',
-    source_emission_report: null,
-    source_emissions_page_move: null,
-    source_revenue_link: null,
-    source_revenue: null,
-    status: null,
-    total_emission_location_based: null,
-    total_emission_market_based: null,
-    total_reported_emission_scope_1_2_3: null,
-    total_reported_emission_scope_1_2: null,
-    total_scope_3: null,
-    total_upstream_emissions: null,
-    upstream_scope_3: null
+    cat_15: null
   }
 ]
 
@@ -78,7 +54,7 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
   const [companyName, setCompanyName] = useState<string>('')
   const [companySlug, setCompanySlug] = useState<string | undefined>('')
-  const [emissions, setEmissions] = useState<EmissionOptional[]>(DEFAULT_EMISSIONS)
+  const [emissions, setEmissions] = useState<EmissionInsert[]>(DEFAULT_EMISSIONS)
 
   return (
     <Container>
@@ -132,8 +108,8 @@ interface EmissionsFormProps {
   companySlug?: string
   companyName: string
   setCompanyName: (companyName: string) => void
-  emissions: EmissionOptional[]
-  setEmissions: (emissions: EmissionOptional[]) => void
+  emissions: EmissionInsert[]
+  setEmissions: (emissions: EmissionInsert[]) => void
   inProgress: boolean
   setInProgress: (inProgress: boolean) => void
 }
@@ -163,7 +139,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
     ])
   }
 
-  const insertCompanySlug = (): EmissionOptional[] => {
+  const insertCompanySlug = (): EmissionInsert[] => {
     const newEmissions = emissions.map((emission) => {
       return { ...emission, company_slug: companySlug ?? '?' }
     })
@@ -338,7 +314,7 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
-      title: 'Report data'
+      title: 'Report Data'
     }
   }
 }

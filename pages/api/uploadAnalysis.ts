@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
 import fs from 'fs'
 
-import { EmissionInput } from 'types/global'
+import { EmissionInsert } from 'types/global'
 import { supabase } from 'lib/supabase'
 import { getChatCompletion, createFunction, OpenAIFunctionParameterItems } from 'lib/openai'
 import { toSlugWithPeriods } from 'lib/toSlug'
@@ -115,7 +115,7 @@ export async function analyzeFile (imageUrl: string, specialInstructions: string
   return results
 }
 
-const YEARLY_REPORT_FIELDS: Record<keyof EmissionInput, OpenAIFunctionParameterItems> = {
+const YEARLY_REPORT_FIELDS: Record<keyof EmissionInsert, OpenAIFunctionParameterItems> = {
   year: { type: 'integer', description: 'Year the data pertains to' },
   fiscal_year: { type: 'integer', description: 'Fiscal year the data pertains to' },
 

@@ -173,13 +173,49 @@ export interface Emission {
 }
 
 // Has some partials
-export type EmissionInput = Omit<Emission, 'company_slug' | 'currency_local' | 'revenue_local' | 'updated_at' | 'created_at'>
-export type EmissionOptional = EmissionInput & {
-  company_slug?: string | null
-  currency_local?: string | null
-  revenue_local?: number | null
-  updated_at?: string
-  created_at?: string
+export interface EmissionInsert {
+  company_slug: string
+  year: number
+  fiscal_year?: string | null
+  scope_1: number | null
+  scope_2_market_based: number | null
+  scope_2_location_based: number | null
+  scope_2_unknown: number | null
+  total_scope_3: number | null
+  cat_1: number | null
+  cat_2: number | null
+  cat_3: number | null
+  cat_4: number | null
+  cat_5: number | null
+  cat_6: number | null
+  cat_7: number | null
+  cat_8: number | null
+  cat_9: number | null
+  cat_10: number | null
+  cat_11: number | null
+  cat_12: number | null
+  cat_13: number | null
+  cat_14: number | null
+  cat_15: number | null
+
+  ghg_standard?: string | null
+
+  all_cats?: string | null
+  revenue_local?: number | null // In millions, in local currency
+  currency?: string // 3-character code, defaults to 'USD'
+
+  source_emission_report?: string | null
+  emission_page?: string | null
+  source_emission_link?: string | null
+  source_emissions_page_move?: string | null
+  source_revenue?: string | null
+  page_revenue?: string | null
+  source_revenue_link?: string | null
+
+  publication_date?: string | null // Using ISO string format for date
+  created_at?: string // ISO timestamp
+  updated_at?: string // ISO timestamp
+  status?: string | null
 }
 
 export interface Target {

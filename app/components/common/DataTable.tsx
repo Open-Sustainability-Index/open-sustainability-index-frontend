@@ -34,6 +34,7 @@ export interface DataTableHeader {
   displayOnMobile?: boolean
   defaultSortOrder?: 'asc' | 'desc'
   isHorizontalHeader?: boolean
+  isEditable?: boolean
   format?: (value: any) => string
 }
 
@@ -178,7 +179,7 @@ const DataTableHeaderCell = ({
 }: DataTableHeaderCellProps): React.ReactElement => {
   const headerTitle = title ?? header.label ?? header.field
   // If cell is editable
-  const innerValueEditableOrNot = (onChange !== undefined && header.type !== 'none')
+  const innerValueEditableOrNot = (onChange !== undefined && header.isEditable !== false)
     ? (
       <TextField
         value={headerTitle}
@@ -258,7 +259,7 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField,
       )
     : innerValue
   // If cell is editable
-  const innerValueEditableOrNot = (onChange !== undefined && header.type !== 'none')
+  const innerValueEditableOrNot = (onChange !== undefined && header.isEditable !== false)
     ? (
       <TextField
         value={row[header.field] ?? ''}
