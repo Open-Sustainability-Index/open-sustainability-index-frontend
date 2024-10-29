@@ -6,6 +6,7 @@ import { Emission, EmissionOptional } from 'types/global'
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
+import InfoHelpBox from 'app/components/common/InfoHelpBox'
 import { dateAsISO } from 'lib/formatDate'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
@@ -84,6 +85,17 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
       <Typography variant='h1' gutterBottom>{title}</Typography>
 
       <Grid item xs={12}>
+        <InfoHelpBox
+          title='Instructions'
+          instructions={[
+            'Search / add name of the company that you’d like to add missing data for',
+            'Upload a screenshot of revenue and emissions data and let AI fill the table – or add data manually if you prefer that',
+            'Verify / adjust data in the tables',
+            'Add name + email so we can get in touch for questions & verification (completely optional)',
+            'Submit the data'
+          ]}
+        />
+
         <SearchField
           label='Company name' doReroute={false} onChange={(name, option) => {
             setCompanyName(name)
