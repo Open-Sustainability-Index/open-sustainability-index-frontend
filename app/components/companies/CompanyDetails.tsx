@@ -121,8 +121,8 @@ const emissionsDetailsHeaders: EmissionsDataTableHeader[] = [
   { field: 'scope_1', label: 'Scope 1 Emissions (t CO₂e)', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
   { field: 'just_header', label: 'Scope 2 Emissions (t CO₂e)', isHorizontalHeader: true, isEditable: false, align: 'right' },
-  { field: 'scope_2_location_based', label: 'Scope 2 - Location Based', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'scope_2_market_based', label: 'Scope 2 - Market Based', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'scope_2_location_based', label: 'Scope 2 - Location Based', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'scope_2_unknown', label: 'Scope 2 - Not specified', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
   { field: 'total_scope_3', label: 'Scope 3 Emissions (t CO₂e)', isHorizontalHeader: true, type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
