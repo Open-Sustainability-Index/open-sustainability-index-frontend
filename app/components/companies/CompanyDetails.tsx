@@ -5,7 +5,7 @@ import { Container, Grid, Typography, Button } from '@mui/material'
 import CompanyIntensityChart from '../charts/CompanyIntensityChart'
 import CompanyTargetChart from '../charts/CompanyTargetChart'
 import { DataTableHorizontal, DataTableOnChangeFunction, DataTableHeader } from '../common/DataTable'
-import { Company, Emission } from 'types/global'
+import { Company, ViewEmission } from 'types/global'
 import { titleCase, formatAmount } from 'lib/strings'
 import PageTopBanner from '../page/PageTopBanner'
 import StatsGrid from './StatsGrid'
@@ -99,11 +99,11 @@ const AmbitionAndDevelopment = ({ company }: { company: Company }): React.ReactE
 }
 
 interface EmissionTableProps {
-  emissions: Emission[]
+  emissions: ViewEmission[]
   onChange?: DataTableOnChangeFunction
 }
 
-type EmissionsDataTableHeader = Omit<DataTableHeader, 'field'> & { field: keyof Emission | 'just_header' }
+type EmissionsDataTableHeader = Omit<DataTableHeader, 'field'> & { field: keyof ViewEmission | 'just_header' }
 
 const revenueHeaders: EmissionsDataTableHeader[] = [
   { field: 'year', label: 'Year', type: 'number', align: 'right' },

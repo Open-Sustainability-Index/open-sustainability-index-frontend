@@ -119,60 +119,7 @@ export interface Commitment {
   reason_for_commitment_extension_or_removal: string
 }
 
-export interface Emission {
-  all_cats: string | null
-  cat_1: number | null
-  cat_2: number | null
-  cat_3: number | null
-  cat_4: number | null
-  cat_5: number | null
-  cat_6: number | null
-  cat_7: number | null
-  cat_8: number | null
-  cat_9: number | null
-  cat_10: number | null
-  cat_11: number | null
-  cat_12: number | null
-  cat_13: number | null
-  cat_14: number | null
-  cat_15: number | null
-  company_slug: string | null
-  cradle_to_gate: number | null
-  created_at: string | null // using `string` for ISO timestamp format compatibility
-  currency_local: string | null // up to 4 characters
-  currency: string | null // 3 characters, defaults to 'USD'
-  emission_intensity: number | null
-  emission_page: string | null
-  fiscal_year: string | null
-  ghg_standard: string | null
-  page_revenue: string | null
-  publication_date: string | null // using `string` for ISO date format compatibility
-  revenue_local: number | null
-  revenue: number | null
-  scope_1_share_of_total_upstream_emissions: number | null
-  scope_1: number | null
-  scope_2_location_based: number | null
-  scope_2_market_based: number | null
-  scope_2_unknown: number | null
-  share_upstream_of_scope_3: number | null
-  source_emission_link: string | null
-  source_emission_report: string | null
-  source_emissions_page_move: string | null
-  source_revenue_link: string | null
-  source_revenue: string | null
-  status: string | null
-  total_emission_location_based: number | null
-  total_emission_market_based: number | null
-  total_reported_emission_scope_1_2_3: number | null
-  total_reported_emission_scope_1_2: number | null
-  total_scope_3: number | null
-  total_upstream_emissions: number | null
-  updated_at: string | null // using `string` for ISO timestamp format compatibility
-  upstream_scope_3: number | null
-  year: number
-}
-
-// Has some partials
+/** emission table in backend */
 export interface EmissionInsert {
   company_slug: string
   year: number
@@ -217,6 +164,24 @@ export interface EmissionInsert {
   updated_at?: string // ISO timestamp
   status?: string | null
 }
+
+/** view_emission in backend */
+export interface ViewEmission extends EmissionInsert {
+  cradle_to_gate: number | null
+  emission_intensity: number | null
+  revenue: number | null
+  scope_1_share_of_total_upstream_emissions: number | null
+  share_upstream_of_scope_3: number | null
+  total_emission_location_based: number | null
+  total_emission_market_based: number | null
+  total_reported_emission_scope_1_2: number | null
+  total_reported_emission_scope_1_2_3: number | null
+  total_upstream_emissions: number | null
+  upstream_scope_3: number | null
+}
+
+// TODO: annoying workaround to get uploadAnalysis to build
+export type EmissionAiInsert = Omit<EmissionInsert, 'company_slug' | 'created_at' | 'updated_at'>
 
 export interface Target {
   lei: string

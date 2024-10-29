@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
 import fs from 'fs'
 
-import { EmissionInsert } from 'types/global'
+import { EmissionAiInsert } from 'types/global'
 import { supabase } from 'lib/supabase'
 import { getChatCompletion, createFunction, OpenAIFunctionParameterItems } from 'lib/openai'
 import { toSlugWithPeriods } from 'lib/toSlug'
@@ -115,7 +115,7 @@ export async function analyzeFile (imageUrl: string, specialInstructions: string
   return results
 }
 
-const YEARLY_REPORT_FIELDS: Record<keyof EmissionInsert, OpenAIFunctionParameterItems> = {
+const YEARLY_REPORT_FIELDS: Record<keyof EmissionAiInsert, OpenAIFunctionParameterItems> = {
   year: { type: 'integer', description: 'Year the data pertains to' },
   fiscal_year: { type: 'integer', description: 'Fiscal year the data pertains to' },
 
@@ -124,10 +124,6 @@ const YEARLY_REPORT_FIELDS: Record<keyof EmissionInsert, OpenAIFunctionParameter
   scope_2_location_based: { type: 'number', description: 'Indirect emissions from the generation of purchased electricity, heat, and steam, based on location-based methods' },
   scope_2_unknown: { type: 'number', description: 'Indirect emissions from purchased electricity with an unspecified method' },
   total_scope_3: { type: 'number', description: 'Total reported emissions for Scope 3' },
-  total_emission_market_based: { type: 'number', description: 'Total emissions based on market-based methods' },
-  total_emission_location_based: { type: 'number', description: 'Total emissions based on location-based methods' },
-  total_reported_emission_scope_1_2: { type: 'number', description: 'Total reported emissions for Scope 1 and 2' },
-  total_reported_emission_scope_1_2_3: { type: 'number', description: 'Total reported emissions for Scope 1, 2, and 3' },
   cat_1: { type: 'number', description: 'Emissions in Category 1: Purchased goods and services' },
   cat_2: { type: 'number', description: 'Emissions in Category 2: Capital goods' },
   cat_3: { type: 'number', description: 'Emissions in Category 3: Fuel- and energy-related activities not included in Scope 1 or 2' },
@@ -144,15 +140,9 @@ const YEARLY_REPORT_FIELDS: Record<keyof EmissionInsert, OpenAIFunctionParameter
   cat_14: { type: 'number', description: 'Emissions in Category 14: Franchises' },
   cat_15: { type: 'number', description: 'Emissions in Category 15: Investments' },
   all_cats: { type: 'number', description: 'Total emissions from all categories' },
-  upstream_scope_3: { type: 'number', description: 'Total upstream Scope 3 emissions' },
-  share_upstream_of_scope_3: { type: 'number', description: '% share of total upstream emissions in Scope 3' },
-  scope_1_share_of_total_upstream_emissions: { type: 'number', description: '% share of Scope 1 emissions in total upstream emissions' },
-  total_upstream_emissions: { type: 'number', description: 'Total upstream emissions in CO₂ equivalents' },
-  revenue: { type: 'number', description: 'Company revenue' },
+  revenue_local: { type: 'number', description: 'Company revenue' },
   currency: { type: 'string', description: 'Currency of the revenue' },
-  cradle_to_gate: { type: 'number', description: 'Emissions from cradle-to-gate activities' },
   ghg_standard: { type: 'string', description: 'Greenhouse gas accounting standard used' },
-  emission_intensity: { type: 'number', description: 'Emission intensity (t CO₂e / million)' },
 
   source_emissions_page_move: { type: 'integer', description: 'Report page number for emissions data' },
   source_emission_report: { type: 'string', description: 'Source report for emissions data' },

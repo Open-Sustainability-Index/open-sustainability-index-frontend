@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
 
-import { Emission, EmissionInsert } from 'types/global'
+import { ViewEmission, EmissionInsert } from 'types/global'
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
@@ -186,13 +186,13 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
         <Button onClick={handleAddYear}>+ Add year</Button>
       </Box>
       <Grid item xs={12}>
-        <RevenueTable emissions={emissions as Emission[]} onChange={handleValueChange} />
+        <RevenueTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
-        <EmissionsOverviewTable emissions={emissions as Emission[]} onChange={handleValueChange} />
+        <EmissionsOverviewTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
-        <EmissionsDetailsTable emissions={emissions as Emission[]} onChange={handleValueChange} />
+        <EmissionsDetailsTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12}>
         <Typography variant='body2'>Your info (optional)</Typography>
