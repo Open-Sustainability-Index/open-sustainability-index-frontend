@@ -16,10 +16,12 @@ Running [`climate-wiki-backend`](https://github.com/Open-Sustainability-Index/op
 
 ## Pages
 
+- Start: http://localhost:5174/
 - Companies:
   - List: http://localhost:5174/companies?sort=company_name&order=asc
   - Company: http://localhost:5174/company/ap-moller-maersk
 - Industries: http://localhost:5174/industries
+- Report data: http://localhost:5174/report
 
 ## API
 
