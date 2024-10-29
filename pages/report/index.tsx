@@ -294,9 +294,9 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
   return (
     <>
       <Box component='form' onSubmit={(e) => { void handleSubmitImage(e) }} sx={{ mt: 2 }}>
-        <Typography variant='body1'>
-          To simplify adding data, drop a screenshot from an emissions report here, or click to select files
-        </Typography>
+        <InfoHelpBox
+          title='To simplify adding data, drop a screenshot from an emissions report here, or click to select files'
+        />
         <TextField
           type='file'
           inputProps={{ accept: 'image/*' }}

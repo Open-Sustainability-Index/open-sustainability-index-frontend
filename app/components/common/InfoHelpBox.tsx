@@ -13,11 +13,12 @@ const InfoHelpBox: React.FC<InfoHelpBoxProps> = ({ title = 'Information', instru
         backgroundColor: '#FFF9C4',
         border: '1px solid #F0E68C',
         borderRadius: '8px',
-        padding: '1em'
+        padding: '1em',
+        margin: '0.5em 0'
       }}
     >
       {title !== undefined && (
-        <Typography variant='h3' sx={{ fontSize: '1em' }} gutterBottom>
+        <Typography variant={(instructions?.length ?? 0) > 0 ? 'h3' : 'body2'} sx={{ fontSize: '1em', margin: '0' }} gutterBottom>
           {title}
         </Typography>
       )}
