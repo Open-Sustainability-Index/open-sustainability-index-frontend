@@ -295,7 +295,7 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
     <>
       <Box component='form' onSubmit={(e) => { void handleSubmitImage(e) }} sx={{ mt: 2 }}>
         <InfoHelpBox
-          title='To simplify adding data, drop a screenshot from an emissions report here, or click to select files'
+          title='To simplify adding data, drop a screenshot from an emissions report below, or click to select files'
         />
         <TextField
           type='file'
