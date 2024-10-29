@@ -160,6 +160,12 @@ interface DataTableHeaderCellProps {
   onChange?: DataTableOnChangeFunction
 }
 
+const TEXTFIELD_STYLE: React.CSSProperties = {
+  textAlign: 'right',
+  fontSize: '14px',
+  padding: '0.5em'
+}
+
 const DataTableHeaderCell = ({
   index,
   header,
@@ -178,10 +184,12 @@ const DataTableHeaderCell = ({
         value={headerTitle}
         placeholder={header.field.replace(/_/g, ' ')}
         onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
-        type={header.type === 'number' ? 'number' : 'text'}
+        type='text'
         InputProps={{
-          inputProps: { step: 1 },
-          style: { textAlign: 'right', fontSize: '16px' }
+          inputProps: {
+            step: 1,
+            style: TEXTFIELD_STYLE
+          }
         }}
       />
       )
@@ -256,10 +264,12 @@ const DataTableCell = ({ index, row, header, align, detailPageLink, rowKeyField,
         value={row[header.field] ?? ''}
         placeholder={header.field.replace(/_/g, ' ')}
         onChange={(event) => onChange(index, header.field, { id: index, name: event.target.value })}
-        type={header.type === 'number' ? 'number' : 'text'}
+        type='text'
         InputProps={{
-          inputProps: { step: 0.01 },
-          style: { textAlign: 'right', fontSize: '16px' }
+          inputProps: {
+            step: 0.01,
+            style: TEXTFIELD_STYLE
+          }
         }}
       />
       )
