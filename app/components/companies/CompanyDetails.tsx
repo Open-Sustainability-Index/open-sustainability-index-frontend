@@ -118,16 +118,16 @@ const emissionsOverviewHeaders: EmissionsDataTableHeader[] = [
 ]
 const emissionsDetailsHeaders: EmissionsDataTableHeader[] = [
   { field: 'year', label: 'Year', type: 'number', align: 'right' },
-  { field: 'scope_1', label: 'Scope 1', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'scope_1', label: 'Scope 1 Emissions (t CO₂e)', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
-  { field: 'just_header', label: 'Scope 2', isHorizontalHeader: true, type: 'none', align: 'right' },
+  { field: 'just_header', label: 'Scope 2 Emissions (t CO₂e)', isHorizontalHeader: true, type: 'none', align: 'right' },
   { field: 'scope_2_location_based', label: 'Scope 2 - Location Based', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'scope_2_market_based', label: 'Scope 2 - Market Based', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'scope_2_unknown', label: 'Scope 2 - Not specified', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
-  { field: 'total_scope_3', label: 'Scope 3', isHorizontalHeader: true, type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'total_scope_3', label: 'Scope 3 Emissions (t CO₂e)', isHorizontalHeader: true, type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
-  { field: 'just_header', label: 'Upstream Emissions', isHorizontalHeader: true, type: 'none', align: 'right' },
+  { field: 'just_header', label: 'Upstream Emissions (t CO₂e)', isHorizontalHeader: true, type: 'none', align: 'right' },
   { field: 'cat_1', label: '1. Purchased goods and services', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'cat_2', label: '2. Capital goods', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'cat_3', label: '3. Fuel- and energy-related activities', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
@@ -137,7 +137,7 @@ const emissionsDetailsHeaders: EmissionsDataTableHeader[] = [
   { field: 'cat_7', label: '7. Employee commuting', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'cat_8', label: '8. Upstream leased assets', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
-  { field: 'just_header', label: 'Downstream Emissions', isHorizontalHeader: true, type: 'none', align: 'right' },
+  { field: 'just_header', label: 'Downstream Emissions (t CO₂e)', isHorizontalHeader: true, type: 'none', align: 'right' },
   { field: 'cat_9', label: '9. Downstream transportation and distribution', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'cat_10', label: '10. Processing of sold products', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'cat_11', label: '11. Use of sold products', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
@@ -146,7 +146,7 @@ const emissionsDetailsHeaders: EmissionsDataTableHeader[] = [
   { field: 'cat_14', label: '14. Franchises', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'cat_15', label: '15. Investments', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
-  { field: 'total_reported_emission_scope_1_2_3', label: 'Total Emissions', isHorizontalHeader: true, type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'total_reported_emission_scope_1_2_3', label: 'Total Emissions (t CO₂e)', isHorizontalHeader: true, type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
 
   { field: 'source_emission_link', label: 'Emission Source', type: 'link', align: 'right' }
 ]
