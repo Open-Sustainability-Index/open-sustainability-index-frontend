@@ -194,6 +194,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
 
   return (
     <form>
+      <Typography variant='body2'>Add or adjust data submitted by the AI image processing.</Typography>
       <Box sx={{ textAlign: 'right', mb: 0, mt: 4 }}>
         <Button variant='contained' onClick={handleAddYear}>+ Add Year</Button>
       </Box>
@@ -277,14 +278,13 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
   return (
     <>
       <Box component='form' onSubmit={(e) => { void handleSubmitImages(e) }} sx={{ mt: 2 }}>
-        <InfoHelpBox
-          title='To simplify adding data, drop a screenshot from an emissions report below, or click to select files'
-        />
+        <Typography variant='body2'>To simplify adding data, drop a screenshot from an emissions report below, or click to select files.</Typography>
         <DropzoneArea
           inputProps={{ accept: 'image/*' }}
           onChange={handleFilesChange}
           fileObjects={selectedFiles}
         />
+        <Typography variant='body2'>Special instructions to the AI, like “Emissions are reported in millions of metric tons and needs to be converted” (optional).</Typography>
         <TextField
           label='Special instructions to the AI (optional)'
           placeholder='e.g. “Emissions are reported as millions of tonnes and need to be converted”'
