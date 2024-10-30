@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Box from '@mui/material/Box'
 import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
+import TextField, { TextFieldProps } from '@mui/material/TextField'
 
 import useDebounce from 'app/hooks/useDebounce'
 import { fetchSearch } from 'app/services/search'
@@ -36,9 +36,10 @@ interface SearchFieldProps {
   label?: string
   doReroute?: boolean
   onChange?: (newValue: string, searchResult?: SearchResult) => void
+  textFieldProps?: TextFieldProps
 }
 
-export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for company', doReroute = true, onChange }) => {
+export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for company', doReroute = true, onChange, textFieldProps }) => {
   const [userInput, setUserInput] = useState<string>('')
   const debouncedUserInput = useDebounce(userInput, 500)
 
@@ -85,6 +86,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for co
           label={label}
           size='small'
           margin='normal'
+          {...textFieldProps}
         />
       )}
       onInputChange={(event, newInputValue) => {
@@ -96,7 +98,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ label = 'Search for co
       isOptionEqualToValue={(option, value) => option === value}
       */
       sx={{
-        width: { xs: '90%', md: '30em' }
+        width: { xs: '100%', md: '30em' }
       }}
     />
   )

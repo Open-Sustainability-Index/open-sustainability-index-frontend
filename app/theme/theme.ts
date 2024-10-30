@@ -107,6 +107,21 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          padding: '0 !important',
+          marginLeft: theme.spacing(2),
+          marginRight: theme.spacing(2),
+          width: 'calc(100% - 2em)',
+          [theme.breakpoints.up('lg')]: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            width: '100%'
+          }
+        })
+      }
+    },
     MuiLink: {
       styleOverrides: {
         root: {
@@ -148,10 +163,35 @@ const theme = createTheme({
         }
       }
     },
-    MuiContainer: {
+    MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          padding: '0 !important'
+          fontSize: '1rem'
+        }
+      }
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          fontSize: '1rem',
+          '&::placeholder': {
+          }
+        }
+      }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem'
+        }
+      }
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem'
+        },
+        icon: {
         }
       }
     }

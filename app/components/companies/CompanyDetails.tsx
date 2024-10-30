@@ -27,7 +27,7 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
         <StatsGrid emission={lastEmission} />
       </PageTopBanner>
       <Container>
-        <Grid container spacing={4} sx={{ padding: { xs: '0 30px', lg: 0 } }} mb={5}>
+        <Grid container spacing={4} mb={5}>
           <Grid item md={6} xs={12} mt={5}>
             <AmbitionAndDevelopment company={company} />
           </Grid>
