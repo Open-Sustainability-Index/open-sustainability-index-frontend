@@ -91,7 +91,8 @@ const theme = createTheme({
     },
     body2: {
       color: COLORS.GRAY_MEDIUM,
-      margin: '0.5em 0'
+      fontSize: '1rem',
+      margin: '0.5rem 0'
     },
     subtitle1: {
       color: COLORS.BLUE_MEDIUM,

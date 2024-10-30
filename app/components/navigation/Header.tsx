@@ -63,7 +63,7 @@ function Header (): React.ReactElement {
     setMobileOpen(!mobileOpen)
   }
 
-  const menuLinks = (
+  const menuLinksForMobile = (
     <>
       <List>
         {links.filter(link => link.display.includes('header')).map((link) => (
@@ -74,15 +74,15 @@ function Header (): React.ReactElement {
           </NextMUILink>
         ))}
       </List>
-      <Button href='/report' variant='contained' color='primary'>
+      <Button href='/report' variant='contained' color='primary' sx={{ mx: 2 }}>
         Report Data
       </Button>
     </>
   )
 
-  const drawer = (
+  const drawerOnMobile = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      {menuLinks}
+      {menuLinksForMobile}
     </Box>
   )
 
@@ -131,7 +131,7 @@ function Header (): React.ReactElement {
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          {drawer}
+          {drawerOnMobile}
         </Drawer>
       </AppBar>
     </ThemeProvider>
