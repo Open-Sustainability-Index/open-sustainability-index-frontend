@@ -173,14 +173,14 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       </Grid>
 
       <Typography variant='h3'>Contact info</Typography>
-      <Typography variant='body2'>If you want, add your name and email so we can get in touch if any questions occur.</Typography>
+      <Typography variant='body2'>If you want, add your name and email so we can get in touch if we have any questions.</Typography>
       <TextField
         label='Name'
         placeholder='Enter your name'
         fullWidth
         value={submitterName}
         onChange={(event) => setSubmitterName(event.target.value)}
-        sx={{ mb: 2 }}
+        sx={{ mb: 1 }}
       />
       <TextField
         label='Email'
@@ -192,7 +192,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       />
 
       <Typography variant='h3'>Submit data</Typography>
-      <Typography variant='body2'>When you feel ready, submit the data for review with the big Submit Data button. We review and publish data within 48 hours.</Typography>
+      <Typography variant='body2' sx={{ mb: 6 }}>When you feel ready, submit the data for review with the big purple “Submit Data” button. We review and publish data within 48 hours.</Typography>
       <Grow in timeout={800}>
         <Fab
           variant='extended'
@@ -266,7 +266,7 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
         />
         <Typography variant='body2'>Special instructions to the AI, like “Emissions are reported in millions of metric tons and needs to be converted” (optional).</Typography>
         <TextField
-          label='Special instructions to the AI (optional)'
+          label='Instructions to the AI (optional)'
           placeholder='e.g. “Emissions are reported as millions of tonnes and need to be converted”'
           fullWidth
           value={specialInstructions}
