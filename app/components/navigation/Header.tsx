@@ -23,23 +23,6 @@ import Image from 'next/image'
 
 const headerTheme = createTheme({
   ...theme,
-  palette: {
-    background: {
-      default: '#FFFFFF'
-    },
-    text: {
-      primary: COLORS.BLUE_MEDIUM
-    }
-  },
-  typography: {
-    ...theme.typography,
-    fontSize: 15,
-    h6: {
-      '@media (max-width:600px)': {
-        fontSize: '1em'
-      }
-    }
-  },
   components: {
     ...theme.components,
     MuiAppBar: {
@@ -53,10 +36,8 @@ const headerTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: COLORS.BLUE_MEDIUM,
           textDecoration: 'none',
           '&:hover': {
-            color: COLORS.BLUE_HOVER,
             textDecoration: 'underline'
           }
         }
@@ -93,7 +74,7 @@ function Header (): React.ReactElement {
           </NextMUILink>
         ))}
       </List>
-      <Button href='/report' variant='contained' color='secondary' sx={{ margin: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
+      <Button href='/report' variant='contained' color='primary'>
         Report Data
       </Button>
     </>
@@ -135,7 +116,7 @@ function Header (): React.ReactElement {
                       </NextMUILink>
                     ))}
                   </Box>
-                  <Button href='/report' variant='contained' color='secondary' sx={{ marginLeft: 2, textTransform: 'none', fontSize: '1rem', padding: '10px 30px', borderRadius: '50px' }}>
+                  <Button href='/report' variant='contained' color='primary'>
                     Report Data
                   </Button>
                 </Box>

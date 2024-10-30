@@ -44,6 +44,7 @@ const CompanyDetails = ({ company = DEFAULT_COMPANY as Company, loading = false 
 
           <Grid item xs={12}>
             <Button
+              variant='contained'
               component='a'
               href={`/report?companyName=${company?.company_name}`}
               sx={{ textDecoration: 'none', mb: 4 }}

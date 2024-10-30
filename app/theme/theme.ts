@@ -27,12 +27,30 @@ export const COLORS = {
 // Define custom MUI theme
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#171d3a'
+    // Body text color
+    text: {
+      primary: COLORS.BLACK,
+      secondary: COLORS.GRAY_MEDIUM,
+      disabled: COLORS.GRAY_LIGHTER
     },
+    // primary: Primary color, usually the main color of your app.
+    primary: {
+      main: COLORS.BLUE_MEDIUM,
+      dark: COLORS.BLUE_HOVER, // Dark variant for hover/focus states
+      light: COLORS.BLUE_LIGHT_ALT,
+      contrastText: COLORS.WHITE
+    },
+    // secondary: Secondary color, often used for accents.
     secondary: {
-      main: '#f598ff'
+      main: COLORS.PURPLE_DARK,
+      dark: COLORS.PURPLE_DARKER, // Dark variant for hover/focus states
+      light: COLORS.PURPLE_LIGHT,
+      contrastText: COLORS.WHITE
     }
+    // error: Color used to indicate errors (e.g., for form validation).
+    // warning: Color used for warning indicators or notifications.
+    // info: Used for informational messages, hints, or help prompts.
+    // success: Color for success messages or indicators.
   },
   typography: {
     fontFamily: [
@@ -46,17 +64,20 @@ const theme = createTheme({
       fontWeight: '100',
       fontSize: '3em',
       color: 'black',
+      margin: '1em 0 0.5em',
       '@media (maxWidth:600px)': {
         fontSize: '1.2em'
       }
     },
     h2: {
       fontWeight: 'bold',
-      fontSize: '2em'
+      fontSize: '2em',
+      margin: '1em 0 0.5em'
     },
     h3: {
       fontWeight: 'bold',
-      fontSize: '1.5em'
+      fontSize: '1.5em',
+      margin: '1em 0 0.5em'
     },
     body2: {
       color: COLORS.GRAY_MEDIUM,
@@ -75,17 +96,44 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: 'inherit'
+        }
+      }
+    },
+    // default variant: 'text', color 'primary'
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: COLORS.BLUE_MEDIUM,
+          // backgroundColor: COLORS.BLUE_MEDIUM,
           color: 'white',
-          borderRadius: '20px',
+          borderRadius: '3em',
           boxShadow: 'none',
           '&:hover': {
-            backgroundColor: COLORS.BLUE_HOVER,
+            // backgroundColor: COLORS.BLUE_HOVER,
             boxShadow: 'none'
+          },
+          fontSize: '1em',
+          textTransform: 'none',
+          padding: '0.6em 1.8em'
+        }
+      },
+      // Use 'color' prop to change button color, not 'variant'
+      variants: [
+        {
+          props: { variant: 'text' },
+          style: {
+            color: COLORS.BLACK
           }
+        }
+      ]
+    },
+    MuiFab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
         }
       }
     },
