@@ -16,7 +16,7 @@ interface PostToSlackProps {
 // Send the message to a specific channel
 export async function postToSlack ({ companyName, jsonData, email, name }: PostToSlackProps): Promise<ChatPostMessageResponse | string | unknown | undefined> {
   try {
-    const message = `${name as string || '(Someone)'} with email ${email || '(n/a)'} just submitted the following data for *${companyName}*:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
+    const message = `${(name !== undefined ? name : '(Someone)')} with email ${email !== undefined ? email : '(n/a)'} just submitted the following data for *${companyName}*:\n\`\`\`${JSON.stringify(jsonData, null, 2)}\`\`\`\nHere is the CSV version for easy insert into Supabase:\n\`\`\`${jsonToTSV(jsonData, undefined, undefined, ',')}\`\`\``
 
     if (config.sendRealMessages === false) {
       console.log('Message not sent because sendRealMessages is false:', message)
