@@ -195,9 +195,6 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
         <RevenueTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
       <Grid item xs={12} sx={{ my: 2 }}>
-        <EmissionsOverviewTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
-      </Grid>
-      <Grid item xs={12} sx={{ my: 2 }}>
         <EmissionsDetailsTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
 
@@ -224,7 +221,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       <Typography variant='body2'>When you feel ready, submit the data for review with the big Submit Data button. We review and publish data within 48 hours.</Typography>
       <Fab
         variant='extended'
-        color='primary'
+        color='secondary'
         aria-label='submit'
         onClick={(e) => { void handleSubmitDataForm(e) }}
         disabled={inProgress}

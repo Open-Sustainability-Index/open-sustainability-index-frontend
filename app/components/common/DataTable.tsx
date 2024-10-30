@@ -316,22 +316,24 @@ export const DataTableHorizontal = ({
             ))}
           </TableRow>
           {/* Rest of rows */}
-          {headers.slice(1).map((header, index) => (
-            <TableRow key={index} sx={header.isHorizontalHeader === true ? { backgroundColor: COLORS.GRAY_LIGHT } : null}>
-              <DataTableHeaderCell index={index} header={header} align='left' />
-              {data.map((row, rowIndex) => (
-                <DataTableCell
-                  index={rowIndex}
-                  key={`${index}-${rowIndex}`}
-                  row={row}
-                  header={header}
-                  detailPageLink={detailPageLink}
-                  rowKeyField={rowKeyField}
-                  onChange={onChange}
-                />
-              ))}
-            </TableRow>
-          ))}
+          {headers.slice(1)
+            .filter((header) => !(onChange !== undefined && header.isEditable === false))
+            .map((header, index) => (
+              <TableRow key={index} sx={header.isHorizontalHeader === true ? { backgroundColor: COLORS.GRAY_LIGHT } : null}>
+                <DataTableHeaderCell index={index} header={header} align='left' />
+                {data.map((row, rowIndex) => (
+                  <DataTableCell
+                    index={rowIndex}
+                    key={`${index}-${rowIndex}`}
+                    row={row}
+                    header={header}
+                    detailPageLink={detailPageLink}
+                    rowKeyField={rowKeyField}
+                    onChange={onChange}
+                  />
+                ))}
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
