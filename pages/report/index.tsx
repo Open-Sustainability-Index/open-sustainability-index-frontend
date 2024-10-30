@@ -6,7 +6,7 @@ import { PageProps, ViewEmission, EmissionInsert } from 'types/global'
 import { dateAsISO } from 'lib/formatDate'
 
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
-import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
+import { RevenueTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
 import InfoHelpBox from 'app/components/common/InfoHelpBox'
 import PageTopBanner from 'app/components/page/PageTopBanner'

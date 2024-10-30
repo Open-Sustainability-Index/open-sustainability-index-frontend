@@ -140,9 +140,11 @@ const YEARLY_REPORT_FIELDS: Record<keyof EmissionAiInsert, OpenAIFunctionParamet
   cat_14: { type: 'number', description: 'Emissions in Category 14: Franchises' },
   cat_15: { type: 'number', description: 'Emissions in Category 15: Investments' },
   all_cats: { type: 'number', description: 'Total emissions from all categories' },
-  revenue_local: { type: 'number', description: 'Company revenue' },
-  currency: { type: 'string', description: 'Currency of the revenue' },
   ghg_standard: { type: 'string', description: 'Greenhouse gas accounting standard used' },
+
+  revenue: { type: 'number', description: 'Company revenue, converted to million USD' },
+  revenue_local: { type: 'number', description: 'Company revenue, in millions in the specified currency' },
+  currency: { type: 'string', description: 'The specified currency of the revenue' },
 
   source_emissions_page_move: { type: 'integer', description: 'Report page number for emissions data' },
   source_emission_report: { type: 'string', description: 'Source report for emissions data' },

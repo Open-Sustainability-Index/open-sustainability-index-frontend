@@ -181,7 +181,9 @@ export interface ViewEmission extends EmissionInsert {
 }
 
 // TODO: annoying workaround to get uploadAnalysis to build
-export type EmissionAiInsert = Omit<EmissionInsert, 'company_slug' | 'created_at' | 'updated_at'>
+export type EmissionAiInsert = Omit<EmissionInsert, 'company_slug' | 'created_at' | 'updated_at'> & {
+  revenue: number
+}
 
 export interface Target {
   lei: string
