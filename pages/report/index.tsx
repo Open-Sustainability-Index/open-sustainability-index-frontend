@@ -1,13 +1,15 @@
 import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
-import { Grid, Container, Typography, Button, Box, TextField, CircularProgress } from '@mui/material'
+import { Grid, Container, Typography, Button, Box, TextField, CircularProgress, Fab } from '@mui/material'
 
-import { ViewEmission, EmissionInsert } from 'types/global'
+import { PageProps, ViewEmission, EmissionInsert } from 'types/global'
+import { dateAsISO } from 'lib/formatDate'
+
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsOverviewTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
 import InfoHelpBox from 'app/components/common/InfoHelpBox'
-import { dateAsISO } from 'lib/formatDate'
+import PageTopBanner from 'app/components/page/PageTopBanner'
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
@@ -50,18 +52,17 @@ interface AnalysisResults {
   }
 }
 
-const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
+const UploadReportPage = ({ title, description }: PageProps): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
   const [companyName, setCompanyName] = useState<string>('')
   const [companySlug, setCompanySlug] = useState<string | undefined>('')
   const [emissions, setEmissions] = useState<EmissionInsert[]>(DEFAULT_EMISSIONS)
 
   return (
-    <Container>
-      <Typography variant='h1' gutterBottom>{title}</Typography>
-
-      <Grid item xs={12}>
+    <>
+      <PageTopBanner subtitle={description} title={title}>
         <InfoHelpBox
+          embedded
           title='Instructions'
           instructions={[
             'Search / add name of the company that you’d like to add missing data for',
@@ -71,35 +72,40 @@ const UploadReportPage = ({ title }: { title: string }): React.ReactElement => {
             'Submit the data'
           ]}
         />
+      </PageTopBanner>
+      <Container>
 
+        <Typography variant='h3'>1. Company name</Typography>
         <SearchField
           label='Company name' doReroute={false} onChange={(name, option) => {
             setCompanyName(name)
             setCompanySlug(option?.slug)
           }}
         />
-      </Grid>
 
-      <ImageAnalysisForm
-        companySlug={companySlug}
-        companyName={companyName}
-        setCompanyName={setCompanyName}
-        emissions={emissions}
-        setEmissions={setEmissions}
-        inProgress={inProgress}
-        setInProgress={setInProgress}
-      />
+        <Typography variant='h3'>2. Upload screenshot</Typography>
+        <ImageAnalysisForm
+          companySlug={companySlug}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          emissions={emissions}
+          setEmissions={setEmissions}
+          inProgress={inProgress}
+          setInProgress={setInProgress}
+        />
 
-      <CompanyDataForm
-        companySlug={companySlug}
-        companyName={companyName}
-        setCompanyName={setCompanyName}
-        emissions={emissions}
-        setEmissions={setEmissions}
-        inProgress={inProgress}
-        setInProgress={setInProgress}
-      />
-    </Container>
+        <Typography variant='h3'>3. Verify / Adjust / Add Data</Typography>
+        <CompanyDataForm
+          companySlug={companySlug}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          emissions={emissions}
+          setEmissions={setEmissions}
+          inProgress={inProgress}
+          setInProgress={setInProgress}
+        />
+      </Container>
+    </>
   )
 }
 export default UploadReportPage
@@ -182,47 +188,46 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
 
   return (
     <form>
-      <Box sx={{ textAlign: 'right', mb: 4 }}>
-        <Button onClick={handleAddYear}>+ Add year</Button>
+      <Box sx={{ textAlign: 'right', mb: 0, mt: 4 }}>
+        <Button variant='contained' onClick={handleAddYear}>+ Add Year</Button>
       </Box>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ my: 2 }}>
         <RevenueTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ my: 2 }}>
         <EmissionsOverviewTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ my: 2 }}>
         <EmissionsDetailsTable emissions={emissions as ViewEmission[]} onChange={handleValueChange} />
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant='body2'>Your info (optional)</Typography>
-        <TextField
-          label='Name'
-          placeholder='Enter your name'
-          fullWidth
-          value={submitterName}
-          onChange={(event) => setSubmitterName(event.target.value)}
-          sx={{ mb: 2 }}
-        />
-        <TextField
-          label='Email'
-          placeholder='Enter your email'
-          fullWidth
-          value={submitterEmail}
-          onChange={(event) => setSubmitterEmail(event.target.value)}
-          sx={{ mb: 2 }}
-        />
-        <Button
-          variant='contained'
-          color='primary'
-          type='button'
-          sx={{ mt: 2, mb: 4 }}
-          disabled={inProgress}
-          onClick={(e) => { void handleSubmitDataForm(e) }}
-        >
-          Submit data
-        </Button>
-      </Grid>
+
+      <Typography variant='h3'>Contact info</Typography>
+      <TextField
+        label='Name'
+        placeholder='Enter your name'
+        fullWidth
+        value={submitterName}
+        onChange={(event) => setSubmitterName(event.target.value)}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label='Email'
+        placeholder='Enter your email'
+        fullWidth
+        value={submitterEmail}
+        onChange={(event) => setSubmitterEmail(event.target.value)}
+        sx={{ mb: 2 }}
+      />
+      <Fab
+        variant='extended'
+        color='primary'
+        aria-label='submit'
+        onClick={(e) => { void handleSubmitDataForm(e) }}
+        disabled={inProgress}
+        sx={{ position: 'fixed', width: '10em', left: 'calc(50vw - 5em)', bottom: '3em' }}
+      >
+        Submit Data
+      </Fab>
     </form>
   )
 }
@@ -305,7 +310,8 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
     props: {
-      title: 'Report Data'
+      title: 'Report Data',
+      description: 'Add sustainability data for companies'
     }
   }
 }
