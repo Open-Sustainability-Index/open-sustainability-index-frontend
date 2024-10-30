@@ -9,11 +9,13 @@ import { dateAsISO } from 'lib/formatDate'
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
 import { SearchField } from 'app/components/navigation/SearchBlock'
+import Toast, { ToastMessage } from 'app/components/common/Toast'
 import InfoHelpBox from 'app/components/common/InfoHelpBox'
 import PageTopBanner from 'app/components/page/PageTopBanner'
 
 const UploadReportPage = ({ title, description }: PageProps): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
+  const [toastMessage, setToastMessage] = useState<ToastMessage | undefined>()
   const [companyName, setCompanyName] = useState<string>('')
   const [companySlug, setCompanySlug] = useState<string | undefined>('')
   const [emissions, setEmissions] = useState<EmissionInsert[]>(DEFAULT_EMISSIONS)
@@ -55,6 +57,7 @@ const UploadReportPage = ({ title, description }: PageProps): React.ReactElement
           setEmissions={setEmissions}
           inProgress={inProgress}
           setInProgress={setInProgress}
+          setToastMessage={setToastMessage}
         />
 
         <Typography variant='h3'>3. Verify / Adjust / Add Data</Typography>
@@ -66,8 +69,13 @@ const UploadReportPage = ({ title, description }: PageProps): React.ReactElement
           setEmissions={setEmissions}
           inProgress={inProgress}
           setInProgress={setInProgress}
+          setToastMessage={setToastMessage}
         />
       </Container>
+
+      <Toast
+        message={toastMessage}
+      />
     </>
   )
 }
@@ -81,9 +89,10 @@ interface EmissionsFormProps {
   setEmissions: (emissions: EmissionInsert[]) => void
   inProgress: boolean
   setInProgress: (inProgress: boolean) => void
+  setToastMessage: (message: ToastMessage | undefined) => void
 }
 
-const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyName, setCompanyName, emissions, setEmissions, inProgress, setInProgress }) => {
+const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyName, setCompanyName, emissions, setEmissions, inProgress, setInProgress, setToastMessage }) => {
   const [submitterName, setSubmitterName] = useState<string>('')
   const [submitterEmail, setSubmitterEmail] = useState<string>('')
 
@@ -123,6 +132,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       return
     }
     setInProgress(true)
+    setToastMessage({ text: 'Submitting data...' })
     // Fix slug on all rows
     const jsonData = insertCompanySlug()
     const response = await fetch('/api/slack', {
@@ -138,13 +148,13 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       })
     })
     if (response.ok) {
-      window.alert('Data submitted successfully!')
+      setToastMessage({ text: 'Data submitted successfully!', severity: 'success' })
       setEmissions(DEFAULT_EMISSIONS)
       setCompanyName('')
       setSubmitterName('')
       setSubmitterEmail('')
     } else {
-      window.alert('Failed to submit data.')
+      setToastMessage({ text: 'Failed to submit data', severity: 'error' })
     }
     setInProgress(false)
   }
@@ -208,22 +218,23 @@ interface AnalysisResults {
 
 // import testImageAnalysis from 'test/imageAnalysis.json'
 
-const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
+const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress, setToastMessage }) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [specialInstructions, setSpecialInstructions] = useState<string>('')
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
   const inProgressAnalysis = useMemo(() => analysisResults === null, [analysisResults])
 
   const handleFilesChange = (files: File[]): void => {
-    if (files?.[0] !== null) {
-      setSelectedFiles(files)
-    }
+    setSelectedFiles(files)
   }
 
   const handleSubmitImages = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     if (selectedFiles !== undefined) {
+      setInProgress(true)
+      setToastMessage({ text: 'Analyzing image...' })
       setAnalysisResults(null)
+
       const formData = new FormData()
       selectedFiles.forEach((file) => {
         formData.append('file', file)
@@ -239,7 +250,8 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
       setAnalysisResults(analysisData)
       setEmissions(analysisData?.analysis?.yearlyReports ?? [])
       setSelectedFiles([])
-      // window.alert('Analysis completed')
+      setInProgress(false)
+      setToastMessage({ text: 'Analysis completed', severity: 'success' })
     }
   }
 
