@@ -202,6 +202,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       </Grid>
 
       <Typography variant='h3'>Contact info</Typography>
+      <Typography variant='body2'>If you want, add your name and email so we can get in touch if any questions occur.</Typography>
       <TextField
         label='Name'
         placeholder='Enter your name'
@@ -220,7 +221,7 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
       />
 
       <Typography variant='h3'>Submit data</Typography>
-      <Typography>When you feel ready, submit the data for review with the big Submit Data button. We review and publish data within 48 hours.</Typography>
+      <Typography variant='body2'>When you feel ready, submit the data for review with the big Submit Data button. We review and publish data within 48 hours.</Typography>
       <Fab
         variant='extended'
         color='primary'
