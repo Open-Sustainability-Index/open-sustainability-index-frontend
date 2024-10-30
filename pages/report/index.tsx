@@ -73,8 +73,8 @@ const UploadReportPage = ({ title, description }: PageProps): React.ReactElement
           ]}
         />
       </PageTopBanner>
-      <Container>
 
+      <Container>
         <Typography variant='h3'>1. Company name</Typography>
         <SearchField
           label='Company name' doReroute={false} onChange={(name, option) => {
@@ -218,6 +218,9 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
         onChange={(event) => setSubmitterEmail(event.target.value)}
         sx={{ mb: 2 }}
       />
+
+      <Typography variant='h3'>Submit data</Typography>
+      <Typography>When you feel ready, submit the data for review with the big Submit Data button. We review and publish data within 48 hours.</Typography>
       <Fab
         variant='extended'
         color='primary'
