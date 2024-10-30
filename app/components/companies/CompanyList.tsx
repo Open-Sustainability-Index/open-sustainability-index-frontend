@@ -1,4 +1,5 @@
 import React from 'react'
+import { Container } from '@mui/material'
 
 import { CompaniesCompany } from 'types/global'
 import { formatAmount } from 'lib/strings'
@@ -80,9 +81,11 @@ interface CompanyListProps {
 const CompanyList = ({ companies, page, detailPageLink = '/company/:key' }: CompanyListProps): React.ReactElement | string => {
   return (
     <>
-      <SearchBlock>
-        <FiltersBlock />
-      </SearchBlock>
+      <Container>
+        <SearchBlock>
+          <FiltersBlock />
+        </SearchBlock>
+      </Container>
       <DataTable
         data={companies ?? []}
         headers={headers}
