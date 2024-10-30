@@ -12,47 +12,6 @@ import { SearchField } from 'app/components/navigation/SearchBlock'
 import InfoHelpBox from 'app/components/common/InfoHelpBox'
 import PageTopBanner from 'app/components/page/PageTopBanner'
 
-// import testImageAnalysis from 'test/imageAnalysis.json'
-
-const DEFAULT_YEAR = new Date().getFullYear() - 1
-
-const DEFAULT_EMISSIONS: EmissionInsert[] = [
-  {
-    company_slug: '?',
-    year: DEFAULT_YEAR,
-    created_at: dateAsISO(new Date()) as string,
-    updated_at: dateAsISO(new Date()) as string,
-    fiscal_year: null,
-    scope_1: null,
-    scope_2_market_based: null,
-    scope_2_location_based: null,
-    scope_2_unknown: null,
-    total_scope_3: null,
-    cat_1: null,
-    cat_2: null,
-    cat_3: null,
-    cat_4: null,
-    cat_5: null,
-    cat_6: null,
-    cat_7: null,
-    cat_8: null,
-    cat_9: null,
-    cat_10: null,
-    cat_11: null,
-    cat_12: null,
-    cat_13: null,
-    cat_14: null,
-    cat_15: null
-  }
-]
-
-interface AnalysisResults {
-  message?: string
-  analysis: {
-    yearlyReports: Array<Record<string, string>>
-  }
-}
-
 const UploadReportPage = ({ title, description }: PageProps): React.ReactElement => {
   const [inProgress, setInProgress] = useState<boolean>(false)
   const [companyName, setCompanyName] = useState<string>('')
@@ -240,6 +199,15 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
   )
 }
 
+interface AnalysisResults {
+  message?: string
+  analysis: {
+    yearlyReports: Array<Record<string, string>>
+  }
+}
+
+// import testImageAnalysis from 'test/imageAnalysis.json'
+
 const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [specialInstructions, setSpecialInstructions] = useState<string>('')
@@ -313,6 +281,38 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
     </>
   )
 }
+
+const DEFAULT_YEAR = new Date().getFullYear() - 1
+
+const DEFAULT_EMISSIONS: EmissionInsert[] = [
+  {
+    company_slug: '?',
+    year: DEFAULT_YEAR,
+    created_at: dateAsISO(new Date()) as string,
+    updated_at: dateAsISO(new Date()) as string,
+    fiscal_year: null,
+    scope_1: null,
+    scope_2_market_based: null,
+    scope_2_location_based: null,
+    scope_2_unknown: null,
+    total_scope_3: null,
+    cat_1: null,
+    cat_2: null,
+    cat_3: null,
+    cat_4: null,
+    cat_5: null,
+    cat_6: null,
+    cat_7: null,
+    cat_8: null,
+    cat_9: null,
+    cat_10: null,
+    cat_11: null,
+    cat_12: null,
+    cat_13: null,
+    cat_14: null,
+    cat_15: null
+  }
+]
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<{}>> => {
   return {
