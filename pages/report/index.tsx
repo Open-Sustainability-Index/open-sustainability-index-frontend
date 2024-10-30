@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
 import { Grid, Container, Typography, Button, Box, TextField, CircularProgress, Fab } from '@mui/material'
+import { DropzoneArea } from 'mui-file-dropzone'
 
 import { PageProps, ViewEmission, EmissionInsert } from 'types/global'
 import { dateAsISO } from 'lib/formatDate'
@@ -234,23 +235,25 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
 }
 
 const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissions, inProgress, setInProgress }) => {
-  const [selectedFile, setSelectedFile] = useState<File | undefined>()
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [specialInstructions, setSpecialInstructions] = useState<string>('')
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>() // testImageAnalysis
   const inProgressAnalysis = useMemo(() => analysisResults === null, [analysisResults])
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files?.[0] !== null) {
-      setSelectedFile(event.target.files?.[0])
+  const handleFilesChange = (files: File[]): void => {
+    if (files?.[0] !== null) {
+      setSelectedFiles(files)
     }
   }
 
-  const handleSubmitImage = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmitImages = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
-    if (selectedFile !== undefined) {
+    if (selectedFiles !== undefined) {
       setAnalysisResults(null)
       const formData = new FormData()
-      formData.append('file', selectedFile)
+      selectedFiles.forEach((file) => {
+        formData.append('file', file)
+      })
       formData.append('specialInstructions', specialInstructions)
 
       const res = await fetch('/api/uploadAnalysis', {
@@ -261,20 +264,21 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
       const analysisData = await res.json()
       setAnalysisResults(analysisData)
       setEmissions(analysisData?.analysis?.yearlyReports ?? [])
+      setSelectedFiles([])
+      // window.alert('Analysis completed')
     }
   }
 
   return (
     <>
-      <Box component='form' onSubmit={(e) => { void handleSubmitImage(e) }} sx={{ mt: 2 }}>
+      <Box component='form' onSubmit={(e) => { void handleSubmitImages(e) }} sx={{ mt: 2 }}>
         <InfoHelpBox
           title='To simplify adding data, drop a screenshot from an emissions report below, or click to select files'
         />
-        <TextField
-          type='file'
+        <DropzoneArea
           inputProps={{ accept: 'image/*' }}
-          onChange={handleFileChange}
-          fullWidth
+          onChange={handleFilesChange}
+          fileObjects={selectedFiles}
         />
         <TextField
           label='Special instructions to the AI (optional)'
@@ -284,11 +288,8 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
           onChange={(event) => setSpecialInstructions(event.target.value)}
           sx={{ mb: 2 }}
         />
-        {(selectedFile !== undefined) && (
+        {(selectedFiles.length > 0) && (
           <Box sx={{ mt: 2 }}>
-            <Typography variant='body1'>
-              Selected file: {selectedFile?.name}
-            </Typography>
             <Button
               variant='contained'
               color='primary'

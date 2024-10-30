@@ -164,7 +164,8 @@ interface DataTableHeaderCellProps {
 const TEXTFIELD_STYLE: React.CSSProperties = {
   textAlign: 'right',
   fontSize: '14px',
-  padding: '0.5em'
+  padding: '0.5em 0.3em',
+  minWidth: '5em'
 }
 
 const DataTableHeaderCell = ({
