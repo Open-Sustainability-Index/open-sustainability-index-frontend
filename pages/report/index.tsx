@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import type { GetStaticPropsResult } from 'next'
-import { Grid, Container, Typography, Button, Box, TextField, CircularProgress, Fab } from '@mui/material'
+import { Grid, Container, Typography, Button, Box, TextField, CircularProgress, Fab, Grow } from '@mui/material'
 import { DropzoneArea } from 'mui-file-dropzone'
 
 import { PageProps, ViewEmission, EmissionInsert } from 'types/global'
@@ -224,16 +224,18 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
 
       <Typography variant='h3'>Submit data</Typography>
       <Typography variant='body2'>When you feel ready, submit the data for review with the big Submit Data button. We review and publish data within 48 hours.</Typography>
-      <Fab
-        variant='extended'
-        color='secondary'
-        aria-label='submit'
-        onClick={(e) => { void handleSubmitDataForm(e) }}
-        disabled={inProgress}
-        sx={{ position: 'fixed', width: '10em', left: 'calc(50vw - 5em)', bottom: '3em' }}
-      >
-        Submit Data
-      </Fab>
+      <Grow in timeout={800}>
+        <Fab
+          variant='extended'
+          color='secondary'
+          aria-label='submit'
+          onClick={(e) => { void handleSubmitDataForm(e) }}
+          disabled={inProgress}
+          sx={{ position: 'fixed', width: '10em', left: 'calc(50vw - 5em)', bottom: '3em' }}
+        >
+          Submit Data
+        </Fab>
+      </Grow>
     </form>
   )
 }
