@@ -24,6 +24,14 @@ export const COLORS = {
 
 }
 
+/*
+- xs: Extra small screens, typically mobile devices. Min Width: 0px (applies to all screens smaller than 600px)
+- sm: Small screens, such as larger mobile devices and small tablets. Min Width: 600px
+- md: Medium screens, typically tablets and smaller laptops. Min Width: 900px
+- lg: Large screens, typically desktops. Min Width: 1200px
+- xl: Extra large screens, typically very large monitors. Min Width: 1536px
+*/
+
 // Define custom MUI theme
 const theme = createTheme({
   palette: {

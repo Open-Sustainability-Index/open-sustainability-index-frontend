@@ -75,7 +75,12 @@ const UploadReportPage = ({ title, description }: PageProps): React.ReactElement
         />
       </PageTopBanner>
 
-      <Container>
+      <Container
+        sx={{
+          mx: { xs: 2, sm: 2, md: 2, lg: 'auto' },
+          width: { xs: 'calc(100% - 2em)', sm: 'calc(100% - 2em)', md: 'calc(100% - 2em)', lg: '100%' }
+        }}
+      >
         <Typography variant='h3'>1. Company name</Typography>
         <SearchField
           label='Company name' doReroute={false} onChange={(name, option) => {
