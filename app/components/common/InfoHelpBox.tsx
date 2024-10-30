@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
+import { COLORS } from 'app/theme/theme'
 
 interface InfoHelpBoxProps {
   title?: string
@@ -10,9 +11,8 @@ const InfoHelpBox: React.FC<InfoHelpBoxProps> = ({ title = 'Information', instru
   return (
     <Box
       sx={{
-        backgroundColor: '#FFF9C4',
-        border: '1px solid #F0E68C',
-        borderRadius: '8px',
+        backgroundColor: COLORS.GRAY_LIGHT,
+        borderRadius: '4px',
         padding: '1em',
         margin: '0.5em 0'
       }}
@@ -23,9 +23,9 @@ const InfoHelpBox: React.FC<InfoHelpBoxProps> = ({ title = 'Information', instru
         </Typography>
       )}
       {(instructions?.length ?? 0) > 0 && (
-        <Box component='ul' sx={{ paddingLeft: '2em', margin: 0 }}>
+        <Box component='ol' sx={{ paddingLeft: '2em', margin: 0 }}>
           {instructions?.map((instruction, index) => (
-            <Typography component='li' variant='body2' key={index} sx={{ fontSize: '1em' }}>
+            <Typography component='li' variant='body2' key={index} sx={{ fontSize: '1em', margin: '0.5em' }}>
               {instruction}
             </Typography>
           ))}
