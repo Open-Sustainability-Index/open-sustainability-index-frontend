@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useRouter } from 'next/router'
 import {
   AppBar,
   Toolbar,
@@ -59,6 +60,9 @@ function Header (): React.ReactElement {
   const theme = useTheme()
   const showHamburgerMenu = useMediaQuery(theme.breakpoints.down('md'))
 
+  const { pathname } = useRouter()
+  const isReportPage = useMemo(() => pathname === '/report', [pathname])
+
   const handleDrawerToggle = (): void => {
     setMobileOpen(!mobileOpen)
   }
@@ -74,9 +78,11 @@ function Header (): React.ReactElement {
           </NextMUILink>
         ))}
       </List>
-      <Button href='/report' variant='contained' color='primary' sx={{ mx: 2 }}>
-        Report Data
-      </Button>
+      {!isReportPage && (
+        <Button href='/report' variant='contained' color='primary' sx={{ mx: 2 }}>
+          Report Data
+        </Button>
+      )}
     </>
   )
 
@@ -116,9 +122,11 @@ function Header (): React.ReactElement {
                       </NextMUILink>
                     ))}
                   </Box>
-                  <Button href='/report' variant='contained' color='primary'>
-                    Report Data
-                  </Button>
+                  {!isReportPage && (
+                    <Button href='/report' variant='contained' color='primary'>
+                      Report Data
+                    </Button>
+                  )}
                 </Box>
                 )}
           </Toolbar>
