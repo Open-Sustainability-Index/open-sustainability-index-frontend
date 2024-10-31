@@ -249,7 +249,7 @@ const ImageAnalysisForm: React.FC<EmissionsFormProps> = ({ emissions, setEmissio
       const analysisData = await res.json()
       setAnalysisResults(analysisData)
       setEmissions(analysisData?.analysis?.yearlyReports ?? [])
-      setSelectedFiles([])
+      // setSelectedFiles([]) // Keep files for now
       setInProgress(false)
       setToastMessage({ text: 'Analysis completed', severity: 'success' })
     }
