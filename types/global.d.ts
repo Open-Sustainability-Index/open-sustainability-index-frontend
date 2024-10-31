@@ -149,7 +149,7 @@ export interface EmissionInsert {
 
   all_cats?: string | null
   revenue_local?: number | null // In millions, in local currency
-  currency?: string // 3-character code, defaults to 'USD'
+  currency?: string | null // 3-character code, defaults to 'USD'
 
   source_emission_report?: string | null
   emission_page?: string | null

@@ -34,6 +34,7 @@ export interface DataTableHeader {
   displayOnMobile?: boolean
   defaultSortOrder?: 'asc' | 'desc'
   isHorizontalHeader?: boolean
+  isShowable?: boolean
   isEditable?: boolean
   format?: (value: any) => string
 }
@@ -318,7 +319,10 @@ export const DataTableHorizontal = ({
           </TableRow>
           {/* Rest of rows */}
           {headers.slice(1)
-            .filter((header) => !(onChange !== undefined && header.isEditable === false))
+            .filter((header) => (onChange === undefined)
+              ? header.isShowable !== false // Company page
+              : header.isEditable !== false // Report form
+            )
             .map((header, index) => (
               <TableRow key={index} sx={header.isHorizontalHeader === true ? { backgroundColor: COLORS.GRAY_LIGHT } : null}>
                 <DataTableHeaderCell index={index} header={header} align='left' />

@@ -108,7 +108,9 @@ type EmissionsDataTableHeader = Omit<DataTableHeader, 'field'> & { field: keyof 
 
 const revenueHeaders: EmissionsDataTableHeader[] = [
   { field: 'year', label: 'Year', type: 'number', align: 'right' },
-  { field: 'revenue', label: 'Net Revenue (M USD)', type: 'number', align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'revenue_local', label: 'Net Revenue (millions)', type: 'number', isShowable: false, align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'currency', label: 'Currency (e.g. USD)', type: 'string', isShowable: false, align: 'right', format: (value: number): string => formatAmount(value) },
+  { field: 'revenue', label: 'Net Revenue (M USD)', type: 'number', isEditable: false, align: 'right', format: (value: number): string => formatAmount(value) },
   { field: 'source_revenue', label: 'Revenue Source', type: 'link', align: 'right' }
 ]
 const emissionsOverviewHeaders: EmissionsDataTableHeader[] = [

@@ -299,10 +299,14 @@ const DEFAULT_YEAR = new Date().getFullYear() - 1
 const DEFAULT_EMISSIONS: EmissionInsert[] = [
   {
     company_slug: '?',
-    year: DEFAULT_YEAR,
     created_at: dateAsISO(new Date()) as string,
     updated_at: dateAsISO(new Date()) as string,
+    year: DEFAULT_YEAR,
     fiscal_year: null,
+
+    revenue_local: null,
+    currency: null,
+
     scope_1: null,
     scope_2_market_based: null,
     scope_2_location_based: null,
