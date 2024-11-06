@@ -86,11 +86,13 @@ const CompanyIntensityChart = ({ company }: { company: Company }): React.ReactEl
         yAxis={[
           {
             id: 'emissionsAxis',
-            scaleType: 'linear'
+            scaleType: 'linear',
+            min: 0
           },
           {
             id: 'revenueAxis',
-            scaleType: 'linear'
+            scaleType: 'linear',
+            min: 0
           },
           {
             id: 'intensityAxis',
