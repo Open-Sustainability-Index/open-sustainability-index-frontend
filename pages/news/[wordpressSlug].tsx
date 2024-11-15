@@ -63,7 +63,7 @@ export async function getStaticProps (context: GetStaticPropsContext<WordpressPa
       wordpressSlug,
       wordpressPost
     },
-    revalidate: 5 * 60
+    revalidate: 5 * 60 // 5 min refresh
   }
 }
 

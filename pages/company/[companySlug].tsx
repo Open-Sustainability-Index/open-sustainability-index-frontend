@@ -36,7 +36,8 @@ export async function getStaticProps (context: GetStaticPropsContext<CompanyPage
       company,
       canonicalPath: `/company/${company?.slug}`,
       ...(company?.slug_new !== undefined ? { redirectTo: `/company/${company?.slug_new}` } : {})
-    }
+    },
+    revalidate: 30 * 60 // 30 min refresh
   }
 }
 
