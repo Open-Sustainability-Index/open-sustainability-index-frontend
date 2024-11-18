@@ -39,3 +39,11 @@ export function removeUndefinedOrNullProps<T> (obj: T): Partial<T> {
   }
   return result
 }
+
+export function isUndefinedOrNull<T> (obj: T | null | undefined): obj is null | undefined {
+  return obj === null || obj === undefined
+}
+
+export function isUndefinedOrNullOrEmptyString<T> (obj: T | null | undefined | string): boolean {
+  return isUndefinedOrNull(obj) || obj === ''
+}

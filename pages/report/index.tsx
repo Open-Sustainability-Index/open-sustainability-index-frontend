@@ -5,6 +5,7 @@ import { DropzoneArea } from 'mui-file-dropzone'
 
 import { PageProps, ViewEmission, EmissionInsert } from 'types/global'
 import { dateAsISO } from 'lib/formatDate'
+import { isUndefinedOrNullOrEmptyString } from 'lib/lodashy'
 
 import { DataTableOnChangeFunction } from 'app/components/common/DataTable'
 import { RevenueTable, EmissionsDetailsTable } from 'app/components/companies/CompanyDetails'
@@ -125,10 +126,21 @@ const CompanyDataForm: React.FC<EmissionsFormProps> = ({ companySlug, companyNam
     return newEmissions
   }
 
+  const validateForm = (): boolean => {
+    if (isUndefinedOrNullOrEmptyString(companyName)) {
+      window.alert('Missing company name')
+      return false
+    }
+    if (emissions.some(emission => isUndefinedOrNullOrEmptyString(emission.source_emission_link))) {
+      window.alert('Missing a link to a source for one or more years')
+      return false
+    }
+    return true
+  }
+
   const handleSubmitDataForm = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     event.preventDefault()
-    if (companyName === '') {
-      window.alert('Missing company name')
+    if (!validateForm()) {
       return
     }
     setInProgress(true)
